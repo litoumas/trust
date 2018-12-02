@@ -1,0 +1,292 @@
+<ui:composition template="../template/common.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+
+
+	<ui:define name="content">
+
+
+		<p:messages id="messages" showDetail="true" closable="true">
+
+		</p:messages>
+
+		<p:panel>
+			<p:layout style="min-width:50px;min-height:200px;">
+				<p:layoutUnit header="Entête vente " position="west"
+					resizable="false" size="800">
+					<h:form id="V_entete">
+						<p:messages id="msg_v_entete" closable="true"></p:messages>
+						<h:panelGrid columns="4" columnClasses="label, value">
+
+							<h:outputText value="Date Vente  : " />
+							<p:inputMask id="date_f" value="#{VenteController.date}"
+								mask="99/99/9999" />
+							<h:outputText />
+							<h:outputText />
+							<h:outputText value="Remise (%) : *" />
+							<p:inputNumber id="tva" value="#{VenteController.remise}"
+								required="true" label="tva" symbol="%" symbolPosition="s"
+								emptyValue="sign" minValue="0.00" maxValue="100">
+								<p:ajax event="keyup" update="prix_ttc"
+									listener="#{VenteController.updateGenralRemise}" />
+							</p:inputNumber>
+							<h:outputText />
+							<h:outputText />
+
+							<h:outputText value="Arrêter facture à  : *" />
+							<p:inputNumber id="prix_ttc" value="#{VenteController.prixtotal}"
+								required="true" label="remise" symbol=" DT" symbolPosition="s"
+								emptyValue="sign" minValue="-000.000" />
+						</h:panelGrid>
+					</h:form>
+				</p:layoutUnit>
+				<p:layoutUnit position="center">
+					<p:panel header="Information générale" toggleable="true">
+						<h:panelGrid columns="2" columnClasses="label, value">
+
+							<h:outputText value="Total vente Total minimal =" />
+							<h:outputText value="000.000 DT" />
+
+							<h:outputText value="Total Gain TTC =" />
+							<h:outputText value="000.000 DT (000%)" />
+
+
+							<h:outputText value="Total TTC =" />
+							<h:outputText value="000.000 DT" />
+
+
+
+						</h:panelGrid>
+					</p:panel>
+
+				</p:layoutUnit>
+			</p:layout>
+		</p:panel>
+		<h:form id="v_addarticle">
+			<p:panel header="Ajouter un article :">
+				<p:layout style="min-width:50px;min-height:280px;">
+					<p:layoutUnit position="west" resizable="false" size="800">
+
+						<p:messages id="msg_v_addarticle" closable="true"></p:messages>
+						<h:panelGrid columns="7" columnClasses="label, value">
+							<h:outputText value="Article : *" />
+							<p:inputText id="id_article"
+								value="#{VenteController.ligneVente.article.id}" required="true"
+								disabled="true" label="Client" />
+							<p:commandButton icon="ui-icon-search" title="Recherche"
+								type="button" onclick="PF('selecteArticle').show();" />
+							<h:outputText id="article_marque"
+								value="#{VenteController.ligneVente.article.marque.designation}" />
+							<h:outputText id="article_code"
+								value="#{VenteController.ligneVente.article.item.code}" />
+							<h:outputText value=" : " />
+							<h:outputText id="article_designation"
+								value="#{VenteController.ligneVente.article.item.designation}" />
+
+
+							<h:outputText value="Prix de vente unitaire : " />
+							<p:inputText id="prix_article"
+								value="#{VenteController.ligneVente.article.prixvente}"
+								disabled="true">
+								<p:ajax event="keyup"
+									update="prix_article_reelle,prix_total_article,remise_article" />
+							</p:inputText>
+							<h:outputText value="" />
+							<h:outputText value="" />
+							<h:outputText value="" />
+							<h:outputText value="" />
+							<h:outputText value="" />
+							<h:outputText value="Prix de vente Reel : " />
+							<p:inputNumber id="prix_article_reelle"
+								value="#{VenteController.ligneVente.prix_vente_reelle}">
+								<p:ajax event="keyup"
+									update="prix_article_reelle,prix_total_article,remise_article" />
+							</p:inputNumber>
+							<h:outputText value="" />
+							<h:outputText value="" />
+							<h:outputText value="" />
+							<h:outputText value="" />
+							<h:outputText value="" />
+							<h:outputText value="Quantité : " />
+							<p:inputNumber id="qte_article"
+								value="#{VenteController.ligneVente.qte}">
+								<p:ajax event="keyup"
+									update="prix_article_reelle,prix_total_article,remise_article" />
+							</p:inputNumber>
+							<h:outputText value="" />
+							<h:outputText value="" />
+							<h:outputText value="" />
+							<h:outputText value="" />
+							<h:outputText value="" />
+							<h:outputText value="Prix total : " />
+							<p:inputNumber id="prix_total_article"
+								value="#{VenteController.ligneVente.prix_vente_total}">
+								<p:ajax event="keyup"
+									update="prix_article_reelle,prix_total_article,remise_article" />
+							</p:inputNumber>
+							<h:outputText value="" />
+							<h:outputText value="" />
+							<h:outputText value="" />
+							<h:outputText value="" />
+							<h:outputText value="" />
+							<h:outputText value="Remise : " />
+							<p:inputNumber id="remise_article"
+								value="#{VenteController.ligneVente.remise}">
+								<p:ajax event="keyup"
+									update="prix_article_reelle,prix_total_article,remise_article" />
+							</p:inputNumber>
+							<h:outputText value="" />
+							<h:outputText value="" />
+							<h:outputText value="" />
+							<h:outputText value="" />
+							<h:outputText value="" />
+							<h:outputText value="N ?" />
+							<p:selectBooleanButton id="isblasck"
+								value="#{VenteController.ligneVente.black}" onLabel="Oui"
+								offLabel="Non" onIcon="ui-icon-check" offIcon="ui-icon-close"
+								style="width:70px" />
+							<h:outputText value="" />
+							<h:outputText value="" />
+							<h:outputText value="" />
+							<h:outputText value="" />
+							<h:outputText value="" />
+
+							<p:commandButton value="Ajouter" id="addArtcile"
+								update="lignie_v" actionListener="#{VenteController.addLigne}" />
+						</h:panelGrid>
+
+					</p:layoutUnit>
+					<p:layoutUnit position="center">
+
+						<p:panel header="Détails Article" toggleable="true">
+							<h:panelGrid columns="2" columnClasses="label, value">
+
+								<h:outputText value="Stock non declaré =" />
+								<h:outputText value="000 Pcs" />
+
+								<h:outputText value="Stock declaré =" />
+								<h:outputText value="000 Pcs" />
+
+
+								<h:outputText value="Stock Total =" />
+								<h:outputText value="000 Pcs" />
+
+
+
+								<h:outputText value="Prix de vente =" />
+								<h:outputText value="000.000 DT" />
+
+								<h:outputText value="Prix minimal =" />
+								<h:outputText value="000.000 DT" />
+
+								<h:outputText value="Remise maximal =" />
+								<h:outputText value="00.00%" />
+
+							</h:panelGrid>
+
+						</p:panel>
+					</p:layoutUnit>
+
+				</p:layout>
+
+			</p:panel>
+
+			<p:panel>
+				<p:dataTable id="lignie_v" var="ligne"
+					value="#{VenteController.ligneVentes}">
+					<p:column headerText="Code" width="70">
+						<h:outputText value="#{ligne.article.item.code}" />
+					</p:column>
+					<p:column headerText="Marque" width="70">
+						<h:outputText value="#{ligne.article.marque.designation}" />
+					</p:column>
+					<p:column headerText="Désignation">
+						<h:outputText value="#{ligne.article.item.designation}" />
+					</p:column>
+
+
+					<p:column headerText="Prix U" width="70">
+						<h:outputText value="#{ligne.prix_vente}" />
+					</p:column>
+					<p:column headerText="Remise" width="70">
+						<h:outputText value="#{ligne.remise}" />
+					</p:column>
+					<p:column headerText="Prix U TTC" width="70">
+						<h:outputText value="#{ligne.prix_vente_reelle}" />
+					</p:column>
+					<p:column headerText="Quantité" width="70">
+						<h:outputText value="#{ligne.qte}" />
+					</p:column>
+					<p:column headerText="Prix TTC" width="70">
+						<h:outputText value="#{ligne.prix_vente_reelle}" />
+					</p:column>
+
+
+
+					<p:column headerText="N">
+						<h:outputText value="#{ligne.black}" width="20" />
+					</p:column>
+
+
+
+					<p:column headerText="Supprimer" width="70">
+						<p:commandLink value="Supprimer" update="lignie_v"
+							process="lignie_v"
+							actionListener="#{VenteController.updateTable}">
+							<p:collector value="#{ligne}"
+								removeFrom="#{VenteController.ligneVentes}" unique="true" />
+						</p:commandLink>
+					</p:column>
+
+
+
+
+				</p:dataTable>
+
+			</p:panel>
+		</h:form>
+
+
+		<p:dialog header="Liste des Article" widgetVar="selecteArticle"
+			modal="true" width="800">
+			<h:form>
+				<p:dataTable process="singleDT" var="article"
+					value="#{VenteController.listArticles}" selectionMode="single"
+					selection="#{VenteController.ligneVente.article}"
+					rowKey="#{article.id}">
+
+					<p:ajax event="rowSelect"
+						listener="#{VenteController.onRowSelectArticle}"
+						update="v_addarticle"
+						oncomplete="PF('selecteArticle').hide();" />
+
+					<p:column headerText="Marque"
+						filterBy="#{article.marque.designation}"
+						filterMatchMode="contains" width="100">
+						<h:outputText value="#{article.marque.designation}" />
+					</p:column>
+
+					<p:column headerText="Code" filterBy="#{article.item.code}"
+						filterMatchMode="contains">
+						<h:outputText value="#{article.item.code}" />
+					</p:column>
+					<p:column headerText="Désignation"
+						filterBy="#{article.item.designation}" filterMatchMode="contains">
+						<h:outputText value="#{article.item.designation}" />
+					</p:column>
+
+				</p:dataTable>
+			</h:form>
+		</p:dialog>
+
+	</ui:define>
+
+
+
+</ui:composition>

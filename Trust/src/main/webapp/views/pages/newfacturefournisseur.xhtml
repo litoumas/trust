@@ -1,0 +1,140 @@
+<ui:composition template="../template/common.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+
+
+	<ui:define name="content">
+
+
+		<p:messages id="messages" showDetail="true" closable="true">
+
+		</p:messages>
+		<h:form id="F_facture_entete">
+			<p:panel header="Entete facture">
+				<h:panelGrid columns="4" columnClasses="label, value">
+
+					<h:outputText value="Fournisseur : *" />
+					<p:inputText id="id_fournisseur"
+						value="#{NewFactureFournisseurController.selectedFournisseur.id}"
+						required="true" label="Fournisseur" />
+					<p:commandButton icon="ui-icon-search" title="Recherche"
+						type="button" onclick="PF('selecteFournisseur').show();" />
+					<h:outputText id="nom_fournisseur"
+						value="#{NewFactureFournisseurController.selectedFournisseur.nom}" />
+
+
+					<h:outputText for="numero_f" value="Facture : *" />
+					<p:inputText id="numero_f"
+						value="#{NewFactureFournisseurController.factureFournisseur.numero}"
+						required="true" label="Numero" />
+					<h:outputText value="" />
+					<h:outputText value="" />
+					<h:outputText value="Date Facture  : " />
+					<p:inputMask id="date_f"
+						value="#{NewFactureFournisseurController.factureFournisseur.dateFacture}"
+						mask="99/99/9999" />
+					<h:outputText value="" />
+					<h:outputText value="" />
+					<h:outputText value="Prix HTVA : " />
+					<p:inputNumber id="prix_htva"
+						value="#{NewFactureFournisseurController.factureFournisseur.total_htva}"
+						minValue="0.0">
+					</p:inputNumber>
+					<h:outputText value="" />
+					<h:outputText value="" />
+					<h:outputText value="Prix TTC : " />
+					<p:inputNumber id="prix_ttc"
+						value="#{NewFactureFournisseurController.factureFournisseur.total_ttc}"
+						minValue="0.0">
+					</p:inputNumber>
+
+					<h:outputText value="" />
+					<h:outputText value="" />
+					<h:outputText rendered="#{SecurityManager.hasPermissionToSeeBlack}"
+						value="Non Declaré" />
+					<p:selectBooleanButton id="isblasck"
+						rendered="#{SecurityManager.hasPermissionToSeeBlack}"
+						value="#{NewReceptionControllers.bonreception.black}"
+						onLabel="Oui" offLabel="Non" onIcon="ui-icon-check"
+						offIcon="ui-icon-close" style="width:70px" />
+					<h:outputText value="" />
+					<h:outputText value="" />
+
+				</h:panelGrid>
+				<p:dataTable id="checkboxDT" var="bonreception"
+					value="#{BonReceptionBean.listBonReceptions}"
+					selection="#{NewFactureFournisseurController.factureFournisseur.receptions}"
+					rowKey="#{bonreception.id}" style="margin-bottom:0">
+					<f:facet name="header">
+         Liste Bon de reception
+        			</f:facet>
+					<p:column selectionMode="multiple"
+						style="width:16px;text-align:center" />
+					<p:column headerText="Id" width="100">
+						<h:outputText value="#{bonreception.id}" />
+					</p:column>
+					<p:column headerText="Numero BL" width="150">
+						<h:outputText value="#{bonreception.numero_bl}" />
+					</p:column>
+					<p:column headerText="Date BL" width="150">
+						<h:outputText value="#{bonreception.date_bl}" />
+					</p:column>
+					<p:column headerText="Date Reception" width="150">
+						<h:outputText value="#{bonreception.dateReception}" />
+					</p:column>
+
+					<p:column headerText="Total HTVA" width="100">
+						<h:outputText value="#{bonreception.totalHTVA} DT" />
+					</p:column>
+					<p:column headerText="Total TTC" width="100">
+						<h:outputText value="#{bonreception.totalTTC} DT" />
+					</p:column>
+
+
+
+				</p:dataTable>
+
+
+
+
+			</p:panel>
+		</h:form>
+
+
+		<h:form>
+			<p:dialog header="Liste des Fournisseurs"
+				widgetVar="selecteFournisseur" modal="true" width="600">
+				<p:dataTable process="singleDT" var="fournisseur"
+					value="#{FournisseurBean.listFournisseurs}" selectionMode="single"
+					selection="#{NewFactureFournisseurController.selectedFournisseur}"
+					rowKey="#{fournisseur.id}">
+
+					<p:ajax event="rowSelect"
+						update="F_facture_entete:id_fournisseur,F_facture_entete:nom_fournisseur"
+						oncomplete="PF('selecteFournisseur').hide();" />
+
+					<p:column headerText="Id" filterBy="#{fournisseur.id}"
+						filterMatchMode="contains" width="100">
+						<h:outputText value="#{fournisseur.id}" />
+					</p:column>
+
+					<p:column headerText="nom" filterBy="#{fournisseur.nom}"
+						filterMatchMode="contains">
+						<h:outputText value="#{fournisseur.nom}" />
+					</p:column>
+				</p:dataTable>
+			</p:dialog>
+		</h:form>
+
+
+	</ui:define>
+
+
+
+</ui:composition>

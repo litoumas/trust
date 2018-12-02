@@ -1,0 +1,307 @@
+<ui:composition template="../template/common.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+
+
+	<ui:define name="content">
+
+		<h:form id="R_entete">
+			<p:panel header="Entête Reception : ">
+				<p:messages id="msg_R_entete" closable="true"></p:messages>
+				<h:panelGrid columns="4" columnClasses="label, value">
+					<h:outputText value="Fournisseur : *" />
+					<p:inputText id="id_fournisseur"
+						value="#{NewReceptionControllers.selectedFournisseur.id}"
+						required="true" label="Fournisseur" />
+
+					<p:commandButton icon="ui-icon-search" title="Recherche"
+						type="button" onclick="PF('selecteFournisseur').show();" />
+					<h:outputText id="nom_fournisseur"
+						value="#{NewReceptionControllers.selectedFournisseur.nom}" />
+					<h:outputText for="numero_bl" value="Numero BL : *" />
+					<p:inputText id="numero_bl"
+						value="#{NewReceptionControllers.bonreception.numero_bl}"
+						required="true" label="Numero" />
+					<h:outputText value="" />
+					<h:outputText value="" />
+					<h:outputText value="Date BL  : " />
+					<p:calendar id="date_f"
+						value="#{NewReceptionControllers.bonreception.date_bl}"
+						pattern="dd/MM/yyyy" mask="true" />
+					<h:outputText value="" />
+					<h:outputText value="" />
+					<h:outputText value="Date Reception  : " />
+					<p:calendar id="date_r"
+						value="#{NewReceptionControllers.bonreception.dateReception}"
+						pattern="dd/MM/yyyy" mask="true" />
+					<h:outputText value="" />
+					<h:outputText value="" />
+					<h:outputText rendered="#{SecurityManager.hasPermissionToSeeBlack}"
+						value="Non Declaré" />
+					<p:selectBooleanButton id="isblasck"
+						rendered="#{SecurityManager.hasPermissionToSeeBlack}"
+						value="#{NewReceptionControllers.bonreception.black}"
+						onLabel="Oui" offLabel="Non" onIcon="ui-icon-check"
+						offIcon="ui-icon-close" style="width:70px" />
+					<h:outputText value="" />
+					<h:outputText value="" />
+				</h:panelGrid>
+
+				<p:commandButton value="Confirmer" id="submit"
+					update="F_ligne:lignie_f,R_entete"
+					actionListener="#{NewReceptionControllers.submit}" />
+
+			</p:panel>
+		</h:form>
+		<h:form id="F_ligne">
+			<p:panel header="Liste d'article">
+				<p:messages id="msg_F_ligne" showDetail="true" closable="true"></p:messages>
+				<p:layout style="min-width:400px;min-height:350px;">
+					<p:layoutUnit position="west" resizable="false" size="1000"
+						minSize="800" maxSize="900">
+						<h:panelGrid columns="4" columnClasses="label, value">
+
+							<h:outputText value="Marque : " />
+							<p:inputText id="marque_id"
+								value="#{NewReceptionControllers.selectedArticle.marque.id}"
+								label="marque" required="true" />
+							<p:commandButton icon="ui-icon-search" title="Recherche"
+								type="button" onclick="PF('selecteMarque').show();"
+								update="prix_v" />
+							<h:outputText id="desig_marque"
+								value="#{NewReceptionControllers.selectedArticle.marque.designation}" />
+
+							<h:outputText value="Article : " />
+							<p:inputText id="item_id"
+								value="#{NewReceptionControllers.selectedArticle.item.code}"
+								label="Article" required="true" />
+							<p:commandButton icon="ui-icon-search" title="Recherche"
+								type="button" onclick="PF('selecteItem').show();" />
+							<h:outputText id="desig_Item"
+								value="#{NewReceptionControllers.selectedArticle.item.designation}" />
+
+							<h:outputText value="Prix HTVA : " />
+							<p:inputNumber id="prix_ht"
+								value="#{NewReceptionControllers.ligneReception.prix_ht}"
+								label="Prix HTVA" symbol=" DT" symbolPosition="s"
+								emptyValue="sign" minValue="000.000">
+								<p:ajax event="keyup" update="tva,remise,prix_ttc,qte,prix_Tttc" />
+							</p:inputNumber>
+							<h:outputText value="" />
+							<h:outputText value="" />
+							<h:outputText value="TVA (%) : " />
+							<p:inputNumber id="tva"
+								value="#{NewReceptionControllers.ligneReception.tva}"
+								label="tva" symbol="%" symbolPosition="s" emptyValue="sign"
+								minValue="0" maxValue="100">
+								<p:ajax event="keyup"
+									update="prix_ht,remise,prix_ttc,qte,prix_Tttc" />
+							</p:inputNumber>
+							<h:outputText value="" />
+							<h:outputText value="" />
+							<h:outputText value="Remise (%) : " />
+							<p:inputNumber id="remise"
+								value="#{NewReceptionControllers.ligneReception.remise}"
+								label="remise" symbol="%" symbolPosition="s" emptyValue="sign"
+								minValue="0" maxValue="100">
+								<p:ajax event="keyup"
+									update="prix_ht,tva,prix_ttc,qte,prix_Tttc" />
+							</p:inputNumber>
+							<h:outputText value="" />
+							<h:outputText value="" />
+
+							<h:outputText value="Prix d'achat U TTC : " />
+							<p:inputNumber id="prix_ttc" disabled="true"
+								value="#{NewReceptionControllers.ligneReception.prix_ttc}"
+								required="true" label="remise" symbol=" DT" symbolPosition="s"
+								emptyValue="sign" minValue="000.000">
+								<p:ajax event="keyup" update="prix_ht,tva,remise,qte,prix_Tttc" />
+							</p:inputNumber>
+							<h:outputText value="" />
+							<h:outputText value="" />
+
+							<h:outputText value="Quantitée Reçue : " />
+							<p:inputNumber id="qte"
+								value="#{NewReceptionControllers.ligneReception.qte}"
+								minValue="0.0">
+								<p:ajax event="keyup"
+									update="prix_ht,tva,remise,prix_ttc,prix_Tttc" />
+							</p:inputNumber>
+
+							<h:outputText value="" />
+							<h:outputText value="" />
+							<h:outputText value="Prix d'achat total TTC : " />
+							<p:inputNumber id="prix_Tttc" disabled="true"
+								value="#{NewReceptionControllers.ligneReception.prix_total_ttc}"
+								required="true" label="remise" symbol=" DT" symbolPosition="s"
+								emptyValue="sign" minValue="000.000">
+								<p:ajax event="keyup" update="prix_ht,tva,remise,prix_ttc,qte" />
+							</p:inputNumber>
+
+							<h:outputText value="" />
+							<h:outputText value="" />
+
+							<p:commandButton value="Ajouter" id="addligne" update="F_ligne"
+								actionListener="#{NewReceptionControllers.addligne}" />
+
+						</h:panelGrid>
+					</p:layoutUnit>
+
+					<p:layoutUnit position="center">
+
+ ici des information concernant l'article en question 
+					</p:layoutUnit>
+				</p:layout>
+
+
+
+
+				<p:dataTable id="lignie_f" var="ligne"
+					value="#{NewReceptionControllers.listeLigneReceptions}">
+
+					<p:column headerText="Code" width="70">
+						<h:outputText value="#{ligne.article.item.code}" />
+					</p:column>
+					<p:column headerText="Marque" width="70">
+						<h:outputText value="#{ligne.article.marque.designation}" />
+					</p:column>
+					<p:column headerText="Désignation">
+						<h:outputText value="#{ligne.article.item.designation}" />
+					</p:column>
+
+					<p:column headerText="Prix U HTV" width="70">
+						<h:outputText value="#{ligne.prix_ht}" />
+					</p:column>
+					<p:column headerText="Remise " width="50">
+						<h:outputText value="#{ligne.remise} %" />
+					</p:column>
+					<p:column headerText="TVA" width="40">
+						<h:outputText value="#{ligne.tva} %" />
+					</p:column>
+					<p:column headerText="Prix TTC" width="70">
+						<h:outputText value="#{ligne.prix_ttc}" />
+					</p:column>
+					<p:column headerText="Quantité" width="70">
+						<h:outputText value="#{ligne.qte}" />
+					</p:column>
+					<p:column headerText="TOTAL HTVA" width="70">
+						<h:outputText value="#{ligne.prix_total_HTVA}" />
+					</p:column>
+					<p:column headerText="Prix Total TTC" width="70">
+						<h:outputText value="#{ligne.prix_total_ttc}" />
+					</p:column>
+
+					<p:column headerText="Supprimer" width="70">
+						<p:commandLink value="Supprimer" update="lignie_f"
+							process="lignie_f">
+							<p:collector value="#{ligne}"
+								removeFrom="#{NewReceptionControllers.listeLigneReceptions}"
+								unique="true" />
+						</p:commandLink>
+					</p:column>
+
+					<p:columnGroup type="footer">
+						<p:row>
+							<p:column colspan="9" style="text-align:right"
+								footerText="Total HTVA:" />
+							<p:column footerText="#{NewReceptionControllers.totalHTVA}" />
+						</p:row>
+						<p:row>
+							<p:column colspan="9" style="text-align:right"
+								footerText="Total TTC" />
+							<p:column footerText="#{NewReceptionControllers.totalTTC}" />
+						</p:row>
+					</p:columnGroup>
+
+				</p:dataTable>
+
+
+			</p:panel>
+		</h:form>
+
+		<h:form>
+			<p:dialog header="Liste des Fournisseurs"
+				widgetVar="selecteFournisseur" modal="true" width="600">
+				<p:dataTable process="singleDT" var="fournisseur"
+					value="#{FournisseurBean.listFournisseurs}" selectionMode="single"
+					selection="#{NewReceptionControllers.selectedFournisseur}"
+					rowKey="#{fournisseur.id}">
+
+					<p:ajax event="rowSelect"
+						update="R_entete:id_fournisseur,R_entete:nom_fournisseur"
+						oncomplete="PF('selecteFournisseur').hide();" />
+
+					<p:column headerText="Id" filterBy="#{fournisseur.id}"
+						filterMatchMode="contains" width="100">
+						<h:outputText value="#{fournisseur.id}" />
+					</p:column>
+
+					<p:column headerText="nom" filterBy="#{fournisseur.nom}"
+						filterMatchMode="contains">
+						<h:outputText value="#{fournisseur.nom}" />
+					</p:column>
+				</p:dataTable>
+			</p:dialog>
+		</h:form>
+		<h:form>
+			<p:dialog header="Liste des Marque" widgetVar="selecteMarque"
+				modal="true" width="600">
+				<p:dataTable process="singleDT" var="marque"
+					value="#{MarqueBean.listMarque}" selectionMode="single"
+					selection="#{NewReceptionControllers.selectedArticle.marque}"
+					rowKey="#{marque.id}">
+
+					<p:ajax event="rowSelect"
+						update="F_ligne:marque_id,F_ligne:desig_marque"
+						oncomplete="PF('selecteMarque').hide();" />
+
+					<p:column headerText="Id" filterBy="#{marque.id}"
+						filterMatchMode="contains" width="100">
+						<h:outputText value="#{marque.id}" />
+					</p:column>
+
+					<p:column headerText="Désignation" filterBy="#{marque.designation}"
+						filterMatchMode="contains">
+						<h:outputText value="#{marque.designation}" />
+					</p:column>
+				</p:dataTable>
+			</p:dialog>
+		</h:form>
+		<h:form>
+			<p:dialog header="Liste des Article" widgetVar="selecteItem"
+				modal="true" width="600">
+
+
+
+				<p:dataTable process="singleDT" var="item"
+					value="#{ItemBean.listItems}" selectionMode="single"
+					selection="#{NewReceptionControllers.selectedArticle.item}"
+					rowKey="#{item.id}">
+
+					<p:ajax event="rowSelect"
+						update="F_ligne:item_id,F_ligne:desig_Item"
+						oncomplete="PF('selecteItem').hide();" />
+
+					<p:column headerText="Code" filterBy="#{item.code}"
+						filterMatchMode="contains" width="100">
+						<h:outputText value="#{item.code}" />
+					</p:column>
+
+					<p:column headerText="Désignation" filterBy="#{item.designation}"
+						filterMatchMode="contains">
+						<h:outputText value="#{item.designation}" />
+					</p:column>
+				</p:dataTable>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+
+
+
+</ui:composition>

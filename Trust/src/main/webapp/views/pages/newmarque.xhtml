@@ -1,0 +1,31 @@
+<ui:composition template="../template/common.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+
+
+	<ui:define name="content">
+
+
+		  <p:messages id="messages" showDetail="true" closable="true">
+       
+    </p:messages>
+		<h:form id="F_marque">
+		<p:panel header="Nouvelle marque">
+		<h:outputText value="Marque  : " />
+		<p:inputText id="desig" value="#{NewMarqueController.designiation}" required="true" label="Désigniation" /><br/><br/>
+		<p:commandButton value="Ajouter" id="ajax" update="messages,desig" actionListener="#{NewMarqueController.Submit}"/>
+		</p:panel>
+		
+		</h:form>
+
+	</ui:define>
+
+
+
+</ui:composition>

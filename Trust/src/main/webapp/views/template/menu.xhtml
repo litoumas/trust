@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<body>
+	<ui:composition>
+		<h:form>
+			<p:growl id="messages" />
+
+			<p:menubar>
+				<p:submenu label="Artiles" icon="ui-icon-document">
+					<p:separator />
+					<p:menuitem value="Nouvelle Article" url="#" />
+					<p:menuitem value="Liste des Article" url="#" />
+					<p:separator />
+					<p:menuitem
+						rendered="#{SecurityManager.verifPermission(PathManager.path_newmarque_page)}"
+						value="Nouvelle Marque" url="#{PathManager.path_newmarque_page}" />
+					<p:menuitem value="Liste des Marques" url="#" />
+					<p:separator />
+					<p:menuitem value="Nouvelle Marque Tracteur" url="#" />
+					<p:menuitem value="Liste Marque Tracteur" url="#" />
+					<p:separator />
+					<p:menuitem value="Nouveau Tracteur" url="#" />
+					<p:menuitem value="Liste des Tracteur" url="#" />
+					<p:separator />
+				</p:submenu>
+
+
+				<p:submenu label="Client" icon="ui-icon-document">
+					<p:separator />
+					<p:menuitem value="Liste des commandes" url="#" />
+					<p:menuitem value="Liste Bon des Receptions" url="#" />
+					<p:menuitem value="Historique Clients" url="#" />
+					<p:menuitem value="Liste Clients" url="#" />
+					<p:separator />
+					<p:menuitem
+						rendered="#{SecurityManager.verifPermission(PathManager.path_newclient_page)}"
+						value="Nouveau Client" url="#{PathManager.path_newclient_page}" />
+				</p:submenu>
+
+
+				<p:submenu label="Fournisseur" icon="ui-icon-document">
+					<p:separator />
+					<p:menuitem
+						rendered="#{SecurityManager.verifPermission(PathManager.path_newreception_page)}"
+						value="Saisie Bon Réception"
+						url="#{PathManager.path_newreception_page}" />
+					<p:menuitem
+						rendered="#{SecurityManager.verifPermission(PathManager.path_newfacturefourniseur_page)}"
+						value="Saisie Facture Fournisseur"
+						url="#{PathManager.path_newfacturefourniseur_page}" />
+
+					<p:separator />
+
+					<p:menuitem value="Liste Bon de Receptions" url="#" />
+					<p:menuitem value="Liste Bon de commandes" url="#" />
+					<p:menuitem value="Historique Fournisseurs" url="#" />
+					<p:menuitem value="Liste Fournisseurs" url="#" />
+					<p:separator />
+					<p:menuitem
+						rendered="#{SecurityManager.verifPermission(PathManager.path_newfourniseur_page)}"
+						value="Nouveau Fournisseur"
+						url="#{PathManager.path_newfourniseur_page}" />
+				</p:submenu>
+
+
+
+				<p:menuitem value="#{SecurityManager.verifPermission}" url="#" />
+
+				<f:facet name="options">
+					<h:form id="f_logout">
+						<p:commandButton value="Logout" icon="pi pi-home"
+							actionListener="#{SecurityManager.logout}" />
+					</h:form>
+				</f:facet>
+			</p:menubar>
+		</h:form>
+	</ui:composition>
+</body>
+</html>

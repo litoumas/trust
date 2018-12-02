@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans
+	xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<!-- DispatcherServlet Context: defines this servlet's request-processing 
+		infrastructure -->
+
+	<!-- Enables the Spring MVC @Controller programming model -->
+	<annotation-driven />
+
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
+		up static resources in the ${webappRoot}/resources directory -->
+	<resources mapping="/resources/**" location="/resources/" />
+	<beans:bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="suffix" value=".xhtml" />
+	</beans:bean>
+	<context:component-scan
+		base-package="app.controllers" />
+
+	<beans:bean id="dataSource"
+		class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<beans:property name="driverClassName"
+			value="com.mysql.jdbc.Driver" />
+		<beans:property name="url"
+			value="jdbc:mysql://localhost:3306/DB_trust?createDatabaseIfNotExist=true" />
+		<beans:property name="username" value="root" />
+		<beans:property name="password" value="root" />
+	</beans:bean>
+
+	<!-- Hibernate 4 SessionFactory Bean definition -->
+	<beans:bean id="hibernate4AnnotatedSessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<beans:property name="dataSource" ref="dataSource" />
+		<beans:property name="annotatedClasses">
+			<beans:list>
+
+
+				<beans:value>com.trust.app.model.Article</beans:value>
+				<beans:value>com.trust.app.model.BonReception</beans:value>
+				<beans:value>com.trust.app.model.Client</beans:value>
+				<beans:value>com.trust.app.model.Droit</beans:value>
+				<beans:value>com.trust.app.model.Exercice</beans:value>
+				<beans:value>com.trust.app.model.FactureFournisseur
+				</beans:value>
+				<beans:value>com.trust.app.model.Fournisseur</beans:value>
+				<beans:value>com.trust.app.model.Item</beans:value>
+				<beans:value>com.trust.app.model.LigneReception</beans:value>
+				<beans:value>com.trust.app.model.LigneVente</beans:value>
+				<beans:value>com.trust.app.model.Marque</beans:value>
+				<beans:value>com.trust.app.model.MarqueTracteur</beans:value>
+				<beans:value>com.trust.app.model.MvtStock</beans:value>
+				<beans:value>com.trust.app.model.Parametre</beans:value>
+				
+				<beans:value>com.trust.app.model.Tracteur</beans:value>
+				<beans:value>com.trust.app.model.User</beans:value>
+				
+
+
+
+
+			</beans:list>
+		</beans:property>
+		<beans:property name="hibernateProperties">
+			<beans:props>
+				<beans:prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect
+				</beans:prop>
+				<beans:prop key="hibernate.show_sql">true</beans:prop>
+				<beans:prop key="hibernate.hbm2ddl.auto">update</beans:prop>
+			</beans:props>
+		</beans:property>
+	</beans:bean>
+
+
+
+	<beans:bean id="articleDAO"
+		class="com.trust.app.dao.ArticleDAOImpl">
+		<beans:property name="sessionFactory"
+			ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+	<beans:bean id="articleService"
+		class="com.trust.app.service.ArticleServiceImpl">
+		<beans:property name="articleDAO" ref="articleDAO"></beans:property>
+	</beans:bean>
+	<beans:bean id="clientDAO"
+		class="com.trust.app.dao.ClientDAOImpl">
+		<beans:property name="sessionFactory"
+			ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+	<beans:bean id="clientService"
+		class="com.trust.app.service.ClientServiceImpl">
+		<beans:property name="clientDAO" ref="clientDAO"></beans:property>
+	</beans:bean>
+
+
+
+	<beans:bean id="exerciceDAO"
+		class="com.trust.app.dao.ExerciceDAOImpl">
+		<beans:property name="sessionFactory"
+			ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+	<beans:bean id="exerciceService"
+		class="com.trust.app.service.ExerciceServiceImpl">
+		<beans:property name="exerciceDAO" ref="exerciceDAO"></beans:property>
+	</beans:bean>
+
+	<beans:bean id="parametreDAO"
+		class="com.trust.app.dao.ParametreDAOImpl">
+		<beans:property name="sessionFactory"
+			ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+	<beans:bean id="parametreService"
+		class="com.trust.app.service.ParametreServiceImpl">
+		<beans:property name="parametreDAO" ref="parametreDAO"></beans:property>
+	</beans:bean>
+
+
+
+
+	<beans:bean id="bonReceptionDAO"
+		class="com.trust.app.dao.BonReceptionDAOImpl">
+		<beans:property name="sessionFactory"
+			ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+	<beans:bean id="bonReceptionService"
+		class="com.trust.app.service.BonReceptionServiceImpl">
+		<beans:property name="bonReceptionDAO" ref="bonReceptionDAO"></beans:property>
+	</beans:bean>
+
+
+	<beans:bean id="fournisseurDAO"
+		class="com.trust.app.dao.FournisseurDAOImpl">
+		<beans:property name="sessionFactory"
+			ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+	<beans:bean id="fournisseurService"
+		class="com.trust.app.service.FournisseurServiceImpl">
+		<beans:property name="fournisseurDAO"
+			ref="fournisseurDAO"></beans:property>
+	</beans:bean>
+
+
+	<beans:bean id="factureFournisseurDAO"
+		class="com.trust.app.dao.FactureFournisseurDAOImpl">
+		<beans:property name="sessionFactory"
+			ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+	<beans:bean id="factureFournisseurService"
+		class="com.trust.app.service.FactureFournisseurServiceImpl">
+		<beans:property name="factureFournisseurDAO"
+			ref="factureFournisseurDAO"></beans:property>
+	</beans:bean>
+
+
+	<beans:bean id="itemDAO"
+		class="com.trust.app.dao.ItemDAOImpl">
+		<beans:property name="sessionFactory"
+			ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+	<beans:bean id="itemService"
+		class="com.trust.app.service.ItemServiceImpl">
+		<beans:property name="itemDAO" ref="itemDAO"></beans:property>
+	</beans:bean>
+
+
+	<beans:bean id="ligneReceptionDAO"
+		class="com.trust.app.dao.LigneReceptionDAOImpl">
+		<beans:property name="sessionFactory"
+			ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+	<beans:bean id="ligneReceptionService"
+		class="com.trust.app.service.LigneReceptionServiceImpl">
+		<beans:property name="ligneReceptionDAO"
+			ref="ligneReceptionDAO"></beans:property>
+	</beans:bean>
+
+	<beans:bean id="ligneVenteDAO"
+		class="com.trust.app.dao.LigneVenteDAOImpl">
+		<beans:property name="sessionFactory"
+			ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+	<beans:bean id="ligneVenteService"
+		class="com.trust.app.service.LigneVenteServiceImpl">
+		<beans:property name="ligneVenteDAO"
+			ref="ligneVenteDAO"></beans:property>
+	</beans:bean>
+
+	<beans:bean id="marqueDAO"
+		class="com.trust.app.dao.MarqueDAOImpl">
+		<beans:property name="sessionFactory"
+			ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+	<beans:bean id="marqueService"
+		class="com.trust.app.service.MarqueServiceImpl">
+		<beans:property name="marqueDAO" ref="marqueDAO"></beans:property>
+	</beans:bean>
+
+
+	<beans:bean id="marqueTracteurDAO"
+		class="com.trust.app.dao.MarqueTracteurDAOImpl">
+		<beans:property name="sessionFactory"
+			ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+	<beans:bean id="marqueTracteurService"
+		class="com.trust.app.service.MarqueTracteurServiceImpl">
+		<beans:property name="marqueTracteurDAO"
+			ref="marqueTracteurDAO"></beans:property>
+	</beans:bean>
+	<beans:bean id="mvtStockDAO"
+		class="com.trust.app.dao.MvtStockDAOImpl">
+		<beans:property name="sessionFactory"
+			ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+	<beans:bean id="mvtStockService"
+		class="com.trust.app.service.MvtStockServiceImpl">
+		<beans:property name="mvtStockDAO" ref="mvtStockDAO"></beans:property>
+	</beans:bean>
+
+	<beans:bean id="tracteurDAO"
+		class="com.trust.app.dao.TracteurDAOImpl">
+		<beans:property name="sessionFactory"
+			ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+	<beans:bean id="tracteurService"
+		class="com.trust.app.service.TracteurServiceImpl">
+		<beans:property name="tracteurDAO" ref="tracteurDAO"></beans:property>
+	</beans:bean>
+	<beans:bean id="droitDAO"
+		class="com.trust.app.dao.DroitDAOImpl">
+		<beans:property name="sessionFactory"
+			ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+	<beans:bean id="droitService"
+		class="com.trust.app.service.DroitServiceImpl">
+		<beans:property name="droitDAO" ref="droitDAO"></beans:property>
+	</beans:bean>
+
+	<beans:bean id="userDAO"
+		class="com.trust.app.dao.UserDAOImpl">
+		<beans:property name="sessionFactory"
+			ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+	<beans:bean id="userService"
+		class="com.trust.app.service.UserServiceImpl">
+		<beans:property name="userDAO" ref="userDAO"></beans:property>
+	</beans:bean>
+
+	<beans:bean id="LoginController"
+		class="com.trust.app.controllers.LoginController">
+		<beans:property name="sessionFactory"
+			ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+
+	<context:component-scan
+		base-package="com.trust.app" />
+
+	<tx:annotation-driven
+		transaction-manager="transactionManager" />
+
+	<beans:bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<beans:property name="sessionFactory"
+			ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+
+</beans:beans>

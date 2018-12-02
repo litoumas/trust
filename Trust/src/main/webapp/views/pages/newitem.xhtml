@@ -1,0 +1,95 @@
+<ui:composition template="../template/common.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+
+
+	<ui:define name="content">
+
+
+		<p:messages id="messages" showDetail="true" closable="true">
+
+		</p:messages>
+
+
+		<h:form id="F_marque">
+
+			<p:panel header="nouvel article">
+				<h:panelGrid columns="2" columnClasses="label, value">
+					<h:outputText value="Code  : " />
+					<p:inputText id="code" value="#{NewItemController.code}"
+						required="true" label="Code" />
+					<h:outputText value="Désigniation  : " />
+					<p:inputText id="desig" value="#{NewItemController.designiation}"
+						required="true" label="Désigniation" />
+
+					<h:outputText value="Liste des Tracteur compatible  : " />
+					<p:commandButton icon="ui-icon-plusthick" title="Recherche"
+						type="button" onclick="PF('addtractordialog').show();" />
+
+
+
+				</h:panelGrid>
+				<br />
+				<p:dataTable id="suppotedtracteurstable" var="tracteur"
+					value="#{NewItemController.suppotedtracteurs}">
+					<p:column headerText="Marque" width="300">
+						<h:outputText value="#{tracteur.marqueTracteurs.designation}" />
+					</p:column>
+
+					<p:column headerText="Model">
+						<h:outputText value="#{tracteur.designation}" />
+					</p:column>
+
+				</p:dataTable>
+				<br />
+				<p:commandButton value="Valider" id="ajax"
+					update="code,messages,desig,suppotedtracteurstable"
+					actionListener="#{NewItemController.Submit}" />
+			</p:panel>
+
+
+
+			<p:dialog header="Ajouter un tracteur compatible "
+				widgetVar="addtractordialog" modal="true" width="600">
+
+
+				<p:dataTable process="singleDTXS" var="Tracteur"
+					value="#{NewItemController.allTracteur}" 
+					selectionMode="single"
+					selection="#{NewItemController.selectedTracteur}"
+					rowKey="#{Tracteur.id}">
+
+					<p:ajax event="rowSelect"
+						listener="#{NewItemController.onRowSelectTracteur}"
+						update="F_marque:suppotedtracteurstable"
+						oncomplete="PF('addtractordialog').hide();" />
+
+
+					<p:column headerText="Marque" filterBy="#{Tracteur.marqueName}"
+						filterMatchMode="contains">
+						<h:outputText value="#{Tracteur.marqueName}" />
+					</p:column>
+
+					<p:column headerText="Model" filterBy="#{Tracteur.designation}"
+						filterMatchMode="contains">
+						<h:outputText value="#{Tracteur.designation}" />
+					</p:column>
+
+				</p:dataTable>
+
+			</p:dialog>
+
+		</h:form>
+
+
+	</ui:define>
+
+
+
+</ui:composition>

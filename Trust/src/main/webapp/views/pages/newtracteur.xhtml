@@ -1,0 +1,89 @@
+<ui:composition template="../template/common.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+
+
+	<ui:define name="content">
+
+
+		<p:messages id="messages" showDetail="true" closable="true">
+
+		</p:messages>
+		<h:form id="F_modelMarqueTracteur">
+			<p:panel header="Nouveau Model Tracteur">
+				<p:messages />
+				<h:panelGrid columns="4" columnClasses="label, value">
+					<h:outputText value="Marque du Tracteur : *" />
+					<p:inputText id="id_MarqueTracteur"
+						value="#{NewTracteurController.selectedMarqueTracteur.id}"
+						required="true" label="MarqueTracteur" />
+					<p:commandButton icon="ui-icon-search" title="Recherche"
+						type="button" onclick="PF('selecteMarqueTracteur').show();" />
+					<h:outputText id="nom_MarqueTracteur" required="true"
+						value="#{NewTracteurController.selectedMarqueTracteur.designation}" />
+					<h:outputText value="Nom du Model : " />
+					<p:inputText id="desig"
+						value="#{NewTracteurController.designation}" required="true"
+						label="Désigniation" />
+					<h:outputText value="" />
+					<h:outputText value="" />
+					<p:commandButton value="Ajouter" id="ajax" update="messages,desig"
+						actionListener="#{NewTracteurController.Submit}" />
+
+				</h:panelGrid>
+			</p:panel>
+
+
+
+
+
+			<p:dialog header="Liste des MarqueTracteurs"
+				widgetVar="selecteMarqueTracteur" modal="true" width="600">
+
+				<p:dataTable process="singleDT" var="MarqueTracteur"
+					value="#{NewTracteurController.listMarqueTracteurs}"
+					selectionMode="single"
+					selection="#{NewTracteurController.selectedMarqueTracteur}"
+					rowKey="#{MarqueTracteur.id}">
+
+					<p:ajax event="rowSelect"
+						listener="#{NewTracteurController.onRowSelectMarqueTracteur}"
+						update="F_modelMarqueTracteur:id_MarqueTracteur,F_modelMarqueTracteur:nom_MarqueTracteur"
+						oncomplete="PF('selecteMarqueTracteur').hide();" />
+
+
+					<p:column headerText="Id" filterBy="#{MarqueTracteur.id}"
+						filterMatchMode="contains" width="100">
+						<h:outputText value="#{MarqueTracteur.id}" />
+					</p:column>
+
+					<p:column headerText="nom" filterBy="#{MarqueTracteur.designation}"
+						filterMatchMode="contains">
+						<h:outputText value="#{MarqueTracteur.designation}" />
+					</p:column>
+
+				</p:dataTable>
+
+
+
+			</p:dialog>
+
+		</h:form>
+
+	</ui:define>
+
+
+
+</ui:composition>
+
+
+
+
+
+
