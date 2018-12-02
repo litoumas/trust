@@ -18,7 +18,7 @@ import lombok.Data;
 @Data
 public class LigneReception extends MvtStock {
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "Document_id")
 	BonReception bonReception;
 

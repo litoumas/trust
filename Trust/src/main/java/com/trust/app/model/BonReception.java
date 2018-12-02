@@ -31,10 +31,14 @@ public class BonReception implements Document {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
+	@Column(name = "numero")
+	private String numero;
+	
+	
 	@Column(name = "numero_bl")
 	private String numero_bl;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	Fournisseur fournisseur;
 
 	@Column(name = "datereception")
@@ -50,6 +54,9 @@ public class BonReception implements Document {
 	@JoinColumn(name = "Document_id")
 	private List<LigneReception> ligneReceptions;
 
+	
+
+	
 	public float getTotalHTVA() {
 		if (getLigneReceptions() == null)
 			return 0;

@@ -68,7 +68,7 @@
 
 				</h:panelGrid>
 				<p:dataTable id="checkboxDT" var="bonreception"
-					value="#{BonReceptionBean.listBonReceptions}"
+					value="#{BonReceptionBean.getListBonReceptions(NewFactureFournisseurController.selectedFournisseur)}"
 					selection="#{NewFactureFournisseurController.factureFournisseur.receptions}"
 					rowKey="#{bonreception.id}" style="margin-bottom:0">
 					<f:facet name="header">
@@ -76,8 +76,8 @@
         			</f:facet>
 					<p:column selectionMode="multiple"
 						style="width:16px;text-align:center" />
-					<p:column headerText="Id" width="100">
-						<h:outputText value="#{bonreception.id}" />
+					<p:column headerText="Numero" width="100">
+						<h:outputText value="#{bonreception.numero}" />
 					</p:column>
 					<p:column headerText="Numero BL" width="150">
 						<h:outputText value="#{bonreception.numero_bl}" />

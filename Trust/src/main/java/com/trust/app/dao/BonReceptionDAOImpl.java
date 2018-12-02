@@ -40,6 +40,25 @@ public class BonReceptionDAOImpl implements BonReceptionDAO {
 		} catch (HibernateException e) {
 			logger.error("Hibernate exception: " + e.getMessage());
 		}
+		
+	// on utilise le id comme numero en attendent de devlopper la classe parametreManager
+		
+		int nbr0 = 5; // nombre de chifre que comporte le numero
+		String prefix="BR-19/"; //prefix du nemero
+		String suffixe=""; //suffixe du nemero
+		
+		String numero=prefix;
+		
+		int nbr = String.valueOf(p.getId()).length();  // ici on utilise le ID a la place de nemero
+		
+		
+		for(int i=0;i<=(nbr0-nbr)-1;i++) // on ajoute les 0 manquant
+		{
+			numero+="0";
+		}
+		numero+=p.getId()+suffixe; // ici on utilise le ID a la place de nemero
+		p.setNumero(numero);
+		updateBonReception(p);  // on update le bon de reception
 	}
 
 	@Override
@@ -69,7 +88,7 @@ public class BonReceptionDAOImpl implements BonReceptionDAO {
 
 		Session session = this.sessionFactory.getCurrentSession();
 
-		Criteria cr = session.createCriteria(BonReception.class);
+	//	Criteria cr = session.createCriteria(BonReception.class);
 		
 		
 		List<BonReception> listBonReception = session.createQuery("from BonReception").list();
@@ -84,11 +103,7 @@ public class BonReceptionDAOImpl implements BonReceptionDAO {
 	@Override
 	public List<BonReception> listBonReceptions(Fournisseur fournisseur) {
 		Session session = this.sessionFactory.getCurrentSession();
-		Criteria cr = session.createCriteria(BonReception.class);
-		Criterion c_Fournisseur = Restrictions.eq("fournisseur", fournisseur);
-		cr.add(c_Fournisseur);
-		List<BonReception> listBonReception = cr.list();
-		
+		List<BonReception> listBonReception = session.createQuery("from BonReception where fournisseur_id="+fournisseur.getId()).list();
 		
 		
 		
