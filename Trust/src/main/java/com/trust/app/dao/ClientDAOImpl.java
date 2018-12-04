@@ -39,6 +39,10 @@ public class ClientDAOImpl implements ClientDAO {
 
 	@Override
 	public List<Client> listClients() {
+		
+		
+		
+		
 		try {
 			Session session = this.sessionFactory.getCurrentSession();
 			@SuppressWarnings("unchecked")

@@ -22,7 +22,7 @@ import lombok.Data;
 
 @Entity
 @Table(name = "BonReception")
-@ManagedBean(name = "reception")
+@ManagedBean(name = "BonReception")
 @Data
 public class BonReception implements Document {
 
@@ -53,6 +53,8 @@ public class BonReception implements Document {
 	@OneToMany(fetch=FetchType.EAGER) 
 	@JoinColumn(name = "Document_id")
 	private List<LigneReception> ligneReceptions;
+	
+	
 
 	
 

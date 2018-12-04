@@ -2,6 +2,7 @@ package com.trust.app.dao;
 
 import java.util.List;
 
+import javax.persistence.criteria.CriteriaQuery;
 
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
@@ -15,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.trust.app.model.BonReception;
+import com.trust.app.model.Client;
 import com.trust.app.model.Fournisseur;
 import com.trust.app.model.User;
 
@@ -40,25 +42,25 @@ public class BonReceptionDAOImpl implements BonReceptionDAO {
 		} catch (HibernateException e) {
 			logger.error("Hibernate exception: " + e.getMessage());
 		}
-		
-	// on utilise le id comme numero en attendent de devlopper la classe parametreManager
-		
+
+		// on utilise le id comme numero en attendent de devlopper la classe
+		// parametreManager
+
 		int nbr0 = 5; // nombre de chifre que comporte le numero
-		String prefix="BR-19/"; //prefix du nemero
-		String suffixe=""; //suffixe du nemero
-		
-		String numero=prefix;
-		
-		int nbr = String.valueOf(p.getId()).length();  // ici on utilise le ID a la place de nemero
-		
-		
-		for(int i=0;i<=(nbr0-nbr)-1;i++) // on ajoute les 0 manquant
+		String prefix = "BR-19/"; // prefix du nemero
+		String suffixe = ""; // suffixe du nemero
+
+		String numero = prefix;
+
+		int nbr = String.valueOf(p.getId()).length(); // ici on utilise le ID a la place de nemero
+
+		for (int i = 0; i <= (nbr0 - nbr) - 1; i++) // on ajoute les 0 manquant
 		{
-			numero+="0";
+			numero += "0";
 		}
-		numero+=p.getId()+suffixe; // ici on utilise le ID a la place de nemero
+		numero += p.getId() + suffixe; // ici on utilise le ID a la place de nemero
 		p.setNumero(numero);
-		updateBonReception(p);  // on update le bon de reception
+		updateBonReception(p); // on update le bon de reception
 	}
 
 	@Override
@@ -85,54 +87,52 @@ public class BonReceptionDAOImpl implements BonReceptionDAO {
 
 	@Override
 	public List<BonReception> listBonReceptions() {
-
 		Session session = this.sessionFactory.getCurrentSession();
 
-	//	Criteria cr = session.createCriteria(BonReception.class);
-		
-		
-		List<BonReception> listBonReception = session.createQuery("from BonReception").list();
-		//https://www.jmdoudoux.fr/java/dej/chap-hibernate.htm
-		
-		
-		
+		String Query = "from BonReception " ;
+
+		List<BonReception> listBonReception = session.createQuery(Query).list();
+
+		// TODO Auto-generated method stub
 		return listBonReception;
-		
 	}
 
 	@Override
 	public List<BonReception> listBonReceptions(Fournisseur fournisseur) {
 		Session session = this.sessionFactory.getCurrentSession();
-		List<BonReception> listBonReception = session.createQuery("from BonReception where fournisseur_id="+fournisseur.getId()).list();
-		
-		
-		
-		
-		
+
+		String Query = "from BonReception where fournisseur_id=" + fournisseur.getId();
+
+		List<BonReception> listBonReception = session.createQuery(Query).list();
+
 		// TODO Auto-generated method stub
 		return listBonReception;
 	}
 
 	@Override
 	public List<BonReception> listBonReceptions(Fournisseur fournisseur, boolean isblack) {
+
+		Session session = this.sessionFactory.getCurrentSession();
+
+		String Query = "from BonReception where fournisseur_id=" + fournisseur.getId() + " AND isblack= "+isblack;
+
+		List<BonReception> listBonReception = session.createQuery(Query).list();
+
 		// TODO Auto-generated method stub
-		return null;
+		return listBonReception;
 	}
 
 	@Override
 	public List<BonReception> listBonReceptions(Fournisseur fournisseur, boolean isblack, boolean hasInvoice) {
-		Session session = this.sessionFactory.getCurrentSession();
-		Criteria cr = session.createCriteria(BonReception.class);
-		Criterion c_Fournisseur = Restrictions.eq("fournisseur", fournisseur);
-		Criterion c_isblack = Restrictions.eq("isblack", fournisseur);
-		Criterion c_hasInvoice = Restrictions.eq("fournisseur_id", fournisseur.getId());
 
-		cr.add(c_Fournisseur);
-		cr.add(c_isblack);
-		cr.add(c_hasInvoice);
-		List<BonReception> listBonReception = cr.list();
-	
+		Session session = this.sessionFactory.getCurrentSession();
+
+		String Query = "from BonReception where fournisseur_id=" + fournisseur.getId() + " AND isblack= "+isblack +" AND factureFournisseur_id=null";
+
+		List<BonReception> listBonReception = session.createQuery(Query).list();
+
 		// TODO Auto-generated method stub
 		return listBonReception;
 	}
+
 }

@@ -29,30 +29,30 @@
 						value="#{NewFactureFournisseurController.selectedFournisseur.nom}" />
 
 
-					<h:outputText for="numero_f" value="Facture : *" />
+					<h:outputText for="numero_f" value="Numero Facture : *" />
 					<p:inputText id="numero_f"
 						value="#{NewFactureFournisseurController.factureFournisseur.numero}"
 						required="true" label="Numero" />
 					<h:outputText value="" />
 					<h:outputText value="" />
 					<h:outputText value="Date Facture  : " />
-					<p:inputMask id="date_f"
+					<p:calendar id="date_f"
 						value="#{NewFactureFournisseurController.factureFournisseur.dateFacture}"
-						mask="99/99/9999" />
+						pattern="dd/MM/yyyy" mask="true" />
 					<h:outputText value="" />
 					<h:outputText value="" />
 					<h:outputText value="Prix HTVA : " />
 					<p:inputNumber id="prix_htva"
 						value="#{NewFactureFournisseurController.factureFournisseur.total_htva}"
-						minValue="0.0">
-					</p:inputNumber>
+						symbol=" DT" symbolPosition="s" emptyValue="sign"
+						minValue="000.000" />
 					<h:outputText value="" />
 					<h:outputText value="" />
 					<h:outputText value="Prix TTC : " />
 					<p:inputNumber id="prix_ttc"
 						value="#{NewFactureFournisseurController.factureFournisseur.total_ttc}"
-						minValue="0.0">
-					</p:inputNumber>
+						symbol=" DT" symbolPosition="s" emptyValue="sign"
+						minValue="000.000" />
 
 					<h:outputText value="" />
 					<h:outputText value="" />
@@ -60,15 +60,17 @@
 						value="Non Declaré" />
 					<p:selectBooleanButton id="isblasck"
 						rendered="#{SecurityManager.hasPermissionToSeeBlack}"
-						value="#{NewReceptionControllers.bonreception.black}"
+						value="#{NewFactureFournisseurController.factureFournisseur.black}"
 						onLabel="Oui" offLabel="Non" onIcon="ui-icon-check"
-						offIcon="ui-icon-close" style="width:70px" />
+						offIcon="ui-icon-close" style="width:70px">
+						<p:ajax update="listeBR" />
+					</p:selectBooleanButton>
 					<h:outputText value="" />
 					<h:outputText value="" />
 
 				</h:panelGrid>
-				<p:dataTable id="checkboxDT" var="bonreception"
-					value="#{BonReceptionBean.getListBonReceptions(NewFactureFournisseurController.selectedFournisseur)}"
+				<p:dataTable id="listeBR" var="bonreception"
+					value="#{BonReceptionBean.getListBonReceptions(NewFactureFournisseurController.selectedFournisseur,NewFactureFournisseurController.factureFournisseur.black,false)}"
 					selection="#{NewFactureFournisseurController.factureFournisseur.receptions}"
 					rowKey="#{bonreception.id}" style="margin-bottom:0">
 					<f:facet name="header">
@@ -101,7 +103,8 @@
 				</p:dataTable>
 
 
-
+				<p:commandButton value="Valider" id="ajax" update="F_facture_entete"
+					actionListener="#{NewFactureFournisseurController.submit}" />
 
 			</p:panel>
 		</h:form>
@@ -116,7 +119,7 @@
 					rowKey="#{fournisseur.id}">
 
 					<p:ajax event="rowSelect"
-						update="F_facture_entete:id_fournisseur,F_facture_entete:nom_fournisseur"
+						update="F_facture_entete:id_fournisseur,F_facture_entete:nom_fournisseur,F_facture_entete:listeBR"
 						oncomplete="PF('selecteFournisseur').hide();" />
 
 					<p:column headerText="Id" filterBy="#{fournisseur.id}"

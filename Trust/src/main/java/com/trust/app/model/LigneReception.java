@@ -18,9 +18,6 @@ import lombok.Data;
 @Data
 public class LigneReception extends MvtStock {
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "Document_id")
-	BonReception bonReception;
 
 	@Column(name = "prix_ht")
 	float prix_ht;
@@ -72,12 +69,12 @@ public class LigneReception extends MvtStock {
 
 	public float getTotalBrute() { // prix brut sans TVA et sans Remise
 
-		return prix_ht * getQte();
+		return getPrix_ht() * getQte();
 	}
 
 	public float getPrix_total_ttc() { // prix brut TTC
 
-		return arrondir(prix_ttc * getQte());
+		return arrondir(getPrix_ttc() * getQte());
 	}
 
 	public void setPrix_total_ttc(float prix_total_ttc) {
@@ -85,8 +82,8 @@ public class LigneReception extends MvtStock {
 	}
 
 	public float getPrix_total_HTVA() {
-		float p_remise = (float) prix_ht * ((float) remise / 100);
-		return arrondir((prix_ht - p_remise) * getQte());
+		float p_remise = (float) getPrix_ht() * ((float) getRemise() / 100);
+		return arrondir((getPrix_ht() - p_remise) * getQte());
 	}
 
 	public float arrondir(float nombre) {
