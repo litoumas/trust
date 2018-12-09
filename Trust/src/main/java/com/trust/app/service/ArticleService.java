@@ -9,7 +9,7 @@ import com.trust.app.model.Marque;
 public interface ArticleService {
 	public List<Article> listArticles();
 	public List<Article> researchArticles(String s);
-	public Article getArticle(String code);
+	public Article getArticle(int id);
 	public Article findWithMarqueAndCode(Marque marque, Item sitem);
 	public void addArticle(Article article);
 }

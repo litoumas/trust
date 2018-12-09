@@ -47,15 +47,16 @@
 
 				<beans:value>com.trust.app.model.Article</beans:value>
 				<beans:value>com.trust.app.model.BonReception</beans:value>
+				<beans:value>com.trust.app.model.Caisse</beans:value>
 				<beans:value>com.trust.app.model.Client</beans:value>
 				<beans:value>com.trust.app.model.Droit</beans:value>
 				<beans:value>com.trust.app.model.Exercice</beans:value>
-				<beans:value>com.trust.app.model.FactureFournisseur
+				<beans:value>com.trust.app.model.FactureAchat
 				</beans:value>
 				<beans:value>com.trust.app.model.Fournisseur</beans:value>
 				<beans:value>com.trust.app.model.Item</beans:value>
 				<beans:value>com.trust.app.model.LigneReception</beans:value>
-				<beans:value>com.trust.app.model.LigneVente</beans:value>
+				<beans:value>com.trust.app.model.LigneLivraison</beans:value>
 				<beans:value>com.trust.app.model.Marque</beans:value>
 				<beans:value>com.trust.app.model.MarqueTracteur</beans:value>
 				<beans:value>com.trust.app.model.MvtStock</beans:value>
@@ -100,6 +101,20 @@
 		class="com.trust.app.service.ClientServiceImpl">
 		<beans:property name="clientDAO" ref="clientDAO"></beans:property>
 	</beans:bean>
+
+
+	<beans:bean id="caisseDAO"
+		class="com.trust.app.dao.CaisseDAOImpl">
+		<beans:property name="sessionFactory"
+			ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+	<beans:bean id="caisseService"
+		class="com.trust.app.service.CaisseServiceImpl">
+		<beans:property name="caisseDAO" ref="caisseDAO"></beans:property>
+	</beans:bean>
+
+
+
 
 
 
@@ -149,15 +164,15 @@
 	</beans:bean>
 
 
-	<beans:bean id="factureFournisseurDAO"
-		class="com.trust.app.dao.FactureFournisseurDAOImpl">
+	<beans:bean id="factureAchatDAO"
+		class="com.trust.app.dao.FactureAchatDAOImpl">
 		<beans:property name="sessionFactory"
 			ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
-	<beans:bean id="factureFournisseurService"
-		class="com.trust.app.service.FactureFournisseurServiceImpl">
-		<beans:property name="factureFournisseurDAO"
-			ref="factureFournisseurDAO"></beans:property>
+	<beans:bean id="factureAchatService"
+		class="com.trust.app.service.FactureAchatServiceImpl">
+		<beans:property name="factureAchatDAO"
+			ref="factureAchatDAO"></beans:property>
 	</beans:bean>
 
 
@@ -183,15 +198,15 @@
 			ref="ligneReceptionDAO"></beans:property>
 	</beans:bean>
 
-	<beans:bean id="ligneVenteDAO"
-		class="com.trust.app.dao.LigneVenteDAOImpl">
+	<beans:bean id="ligneLivraisonDAO"
+		class="com.trust.app.dao.LigneLivraisonDAOImpl">
 		<beans:property name="sessionFactory"
 			ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
-	<beans:bean id="ligneVenteService"
-		class="com.trust.app.service.LigneVenteServiceImpl">
-		<beans:property name="ligneVenteDAO"
-			ref="ligneVenteDAO"></beans:property>
+	<beans:bean id="ligneLivraisonService"
+		class="com.trust.app.service.LigneLivraisonServiceImpl">
+		<beans:property name="ligneLivraisonDAO"
+			ref="ligneLivraisonDAO"></beans:property>
 	</beans:bean>
 
 	<beans:bean id="marqueDAO"

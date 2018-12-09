@@ -31,26 +31,26 @@
 
 					<h:outputText for="numero_f" value="Numero Facture : *" />
 					<p:inputText id="numero_f"
-						value="#{NewFactureFournisseurController.factureFournisseur.numero}"
+						value="#{NewFactureFournisseurController.factureAchat.numero}"
 						required="true" label="Numero" />
 					<h:outputText value="" />
 					<h:outputText value="" />
 					<h:outputText value="Date Facture  : " />
 					<p:calendar id="date_f"
-						value="#{NewFactureFournisseurController.factureFournisseur.dateFacture}"
+						value="#{NewFactureFournisseurController.factureAchat.dateFacture}"
 						pattern="dd/MM/yyyy" mask="true" />
 					<h:outputText value="" />
 					<h:outputText value="" />
 					<h:outputText value="Prix HTVA : " />
 					<p:inputNumber id="prix_htva"
-						value="#{NewFactureFournisseurController.factureFournisseur.total_htva}"
+						value="#{NewFactureFournisseurController.factureAchat.total_htva}"
 						symbol=" DT" symbolPosition="s" emptyValue="sign"
 						minValue="000.000" />
 					<h:outputText value="" />
 					<h:outputText value="" />
 					<h:outputText value="Prix TTC : " />
 					<p:inputNumber id="prix_ttc"
-						value="#{NewFactureFournisseurController.factureFournisseur.total_ttc}"
+						value="#{NewFactureFournisseurController.factureAchat.total_ttc}"
 						symbol=" DT" symbolPosition="s" emptyValue="sign"
 						minValue="000.000" />
 
@@ -60,7 +60,7 @@
 						value="Non Declaré" />
 					<p:selectBooleanButton id="isblasck"
 						rendered="#{SecurityManager.hasPermissionToSeeBlack}"
-						value="#{NewFactureFournisseurController.factureFournisseur.black}"
+						value="#{NewFactureFournisseurController.factureAchat.black}"
 						onLabel="Oui" offLabel="Non" onIcon="ui-icon-check"
 						offIcon="ui-icon-close" style="width:70px">
 						<p:ajax update="listeBR" />
@@ -70,8 +70,8 @@
 
 				</h:panelGrid>
 				<p:dataTable id="listeBR" var="bonreception"
-					value="#{BonReceptionBean.getListBonReceptions(NewFactureFournisseurController.selectedFournisseur,NewFactureFournisseurController.factureFournisseur.black,false)}"
-					selection="#{NewFactureFournisseurController.factureFournisseur.receptions}"
+					value="#{BonReceptionBean.getListBonReceptions(NewFactureFournisseurController.selectedFournisseur,NewFactureFournisseurController.factureAchat.black,false)}"
+					selection="#{NewFactureFournisseurController.factureAchat.bonReceptions}"
 					rowKey="#{bonreception.id}" style="margin-bottom:0">
 					<f:facet name="header">
          Liste Bon de reception

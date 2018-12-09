@@ -18,7 +18,7 @@ import com.trust.app.model.Marque;
 import com.trust.app.model.BonReception;
 
 import com.trust.app.service.ArticleService;
-import com.trust.app.service.FactureFournisseurService;
+import com.trust.app.service.FactureAchatService;
 import com.trust.app.service.FournisseurService;
 import com.trust.app.service.ItemService;
 import com.trust.app.service.LigneReceptionService;
@@ -30,6 +30,11 @@ import lombok.Setter;
 @ManagedBean(name = "NewReceptionControllers")
 @SessionScoped
 public class NewReceptionControllers implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4983158690157940731L;
 
 	@Getter
 	@Setter
@@ -64,7 +69,7 @@ public class NewReceptionControllers implements Serializable {
 	@Getter
 	@Setter
 	@ManagedProperty("#{factureFournisseurService}")
-	private FactureFournisseurService factureFournisseurService;
+	private FactureAchatService factureFournisseurService;
 
 	@Getter
 	@Setter

@@ -18,10 +18,10 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name="FactureFournisseur")
-@ManagedBean(name="FactureFournisseur")
+@Table(name="FactureAchat")
+@ManagedBean(name="FactureAchat")
 @Data
-public class FactureFournisseur {
+public class FactureAchat {
 	
 	@Id
     @Column(name="id")
@@ -44,13 +44,15 @@ public class FactureFournisseur {
 	@Column(name="total_htva")
 	float total_htva;
 
+	@Column(name="Payee")
+	boolean Payee;
 	
 	@Column(name="total_ttc")
 	float total_ttc;
 	
 	@OneToMany(fetch=FetchType.EAGER) 
 	@JoinColumn(name = "factureFournisseur_id")
-	private List<BonReception> receptions;
+	private List<BonReception> bonReceptions;
 
 	
 	

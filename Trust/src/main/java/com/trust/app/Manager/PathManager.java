@@ -32,16 +32,17 @@ public class PathManager implements Serializable{
 	public static String PATH_NEWRECEPTION_PAGE="/views/pages/newreception.xhtml";
 	public static String PATH_TRACTEUR_PAGE="/views/pages/newtracteur.xhtml";
 	public static String PATH_NEWUSER_PAGE="/views/pages/newuser.xhtml";
-	
+	public static String PATH_OPENCAISSE_PAGE="/views/pages/caisse/opencaisse.xhtml";
+	public static String PATH_LIVECAISSE_PAGE="/views/pages/caisse/livecaisse.xhtml";
+	public static String PATH_CLOSECAISSE_PAGE="/views/pages/caisse/closecaisse.xhtml";
+
 	
 	
 	public static String PATH_LOGIN_PAGE="/views/login.xhtml";
 	
 	
 	
-	
-	
-	
+
 	
 	
 	public static List<String> getPathListe() {
@@ -59,7 +60,9 @@ public class PathManager implements Serializable{
 		pathList.add(PATH_NEWRECEPTION_PAGE);
 		pathList.add(PATH_TRACTEUR_PAGE);
 		pathList.add(PATH_NEWUSER_PAGE);
-		
+		pathList.add(PATH_OPENCAISSE_PAGE);
+		pathList.add(PATH_LIVECAISSE_PAGE);
+		pathList.add(PATH_CLOSECAISSE_PAGE);
 		
 		return pathList;
 	}
@@ -98,10 +101,15 @@ public class PathManager implements Serializable{
 	public String getPath_newfourniseur_page() {
 		return PATH_NEWFOURNISEUR_PAGE;
 	}
-
-
-	
-	
+	public String getPath_opencaisse_page() {
+		return PATH_OPENCAISSE_PAGE;
+	}
+	public String getPath_livecaisse_page() {
+		return PATH_LIVECAISSE_PAGE;
+	}
+	public String getPath_closecaisse_page() {
+		return PATH_CLOSECAISSE_PAGE;
+	}
 	
 	
 	

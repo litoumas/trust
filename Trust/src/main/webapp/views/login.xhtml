@@ -11,7 +11,7 @@
 	<style type="text/css">
 	/*Center login form */
 #form {
-	width: 400px;
+	width: 420px;
 	height: 300px;
 	position: absolute; /*it can be fixed too*/
 	left: 0;
@@ -28,7 +28,7 @@
 <h:body>
 #{StarterController.controleall}
 	<h:form id="form" >
-		<p:fieldset id="addForm" legend="Login to database">
+		<p:fieldset id="addForm" legend="Connexion">
 			<p:growl id="growl" sticky="true" showDetail="true" life="3000" />
 			<h:panelGrid columns="2" cellpadding="5">
 				<h:outputLabel for="username" value="Username:" />
@@ -37,7 +37,7 @@
 				<h:outputLabel for="password" value="Password:" />
 				<p:password id="password" value="#{LoginController.pass}"
 					required="true" label="password" />
-				<p:commandButton value="Confirm" update="growl"
+				<p:commandButton value="confirmer" update="growl"
 					action="#{LoginController.login}" />
 			</h:panelGrid>
 		</p:fieldset>

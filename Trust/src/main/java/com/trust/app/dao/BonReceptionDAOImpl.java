@@ -91,8 +91,11 @@ public class BonReceptionDAOImpl implements BonReceptionDAO {
 
 		String Query = "from BonReception " ;
 
+
 		List<BonReception> listBonReception = session.createQuery(Query).list();
 
+		
+		
 		// TODO Auto-generated method stub
 		return listBonReception;
 	}
@@ -124,12 +127,16 @@ public class BonReceptionDAOImpl implements BonReceptionDAO {
 
 	@Override
 	public List<BonReception> listBonReceptions(Fournisseur fournisseur, boolean isblack, boolean hasInvoice) {
-
+			
+		
 		Session session = this.sessionFactory.getCurrentSession();
+		
+		String Query = "from BonReception where fournisseur_id="+fournisseur.getId()+" AND isblack= "+isblack +" AND factureFournisseur_id=null";
 
-		String Query = "from BonReception where fournisseur_id=" + fournisseur.getId() + " AND isblack= "+isblack +" AND factureFournisseur_id=null";
-
+		
 		List<BonReception> listBonReception = session.createQuery(Query).list();
+		
+		
 
 		// TODO Auto-generated method stub
 		return listBonReception;

@@ -42,8 +42,8 @@ public class ArticleServiceImpl implements ArticleService,Serializable {
 	}
 	@Override
 	@Transactional
-	public Article getArticle(String code) {
-		return this.articleDAO.getArticle(code);
+	public Article getArticle(int id) {
+		return this.articleDAO.getArticle(id);
 	}
 	@Override
 	public Article findWithMarqueAndCode(Marque marque, Item item) {

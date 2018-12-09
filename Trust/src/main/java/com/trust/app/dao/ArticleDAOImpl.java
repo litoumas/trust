@@ -34,7 +34,8 @@ public class ArticleDAOImpl implements ArticleDAO {
 		try {
 			Session session = this.sessionFactory.getCurrentSession();
 			@SuppressWarnings("unchecked")
-			List<Article> articleList = session.createQuery("from Article").list();
+			List<Article> articleList = session.createQuery("from Article order by item_id").list();
+			System.out.println("====>"+articleList.size());
 			for (Article c : articleList) {
 				logger.info("Article List::" + c);
 			}
@@ -66,12 +67,12 @@ public class ArticleDAOImpl implements ArticleDAO {
 		}
 	}
 
-	@Override
-	public Article getArticle(String code) {
+//	@Override
+	public Article getArticle(int id) {
 		Session session = this.sessionFactory.getCurrentSession();
 		Criteria crit = session.createCriteria(Article.class);
 
-		List<Article> articles = crit.add(Restrictions.like("code", code)).list();
+		List<Article> articles = crit.add(Restrictions.like("id", id)).list();
 		if (articles.isEmpty()) {
 			return null;
 		} else {

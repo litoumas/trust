@@ -33,16 +33,31 @@ public class Article {
 
 	@Column(name = "prixvente")
 	private float prixvente;
+
 	
 	@Column(name = "prixmini")
 	private float prixmini;
+	
+	@Column(name = "prixVenteDeclare")
+	private float prixVenteDeclare;
 
+	@Column(name = "position")
+	private String position;
+	
 	@OneToOne
 	Item item;
 
 	@OneToOne
 	Marque marque;
-
 	
+	public float getStockTotal() {
+		return 0;
+	}
+	public float getStockDeclarer() {
+		return 0;
+	}
+	public float getStockNoir() {
+		return 0;
+	}
 
 }

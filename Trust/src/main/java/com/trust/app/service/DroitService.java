@@ -3,7 +3,6 @@ package com.trust.app.service;
 import java.util.List;
 
 import com.trust.app.model.Droit;
-import com.trust.app.model.User;
 
 public interface DroitService {
 	

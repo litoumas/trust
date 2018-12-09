@@ -12,7 +12,7 @@ public interface ArticleDAO {
 
 	public List<Article> researchArticles(String s);
 
-	public Article getArticle(String code);
+	public Article getArticle(int id);
 
 	public Article findWithMarqueAndCode(Marque marque, Item item);
 

@@ -33,9 +33,8 @@ public class BonReceptionBean  implements Serializable{
 	
 	
 	public List<BonReception> getListBonReceptions() {
-		List<BonReception> dd=bonreceptionService.listBonReceptions();
+		return bonreceptionService.listBonReceptions();
 		
-		return dd;
 		
 	}
 	
@@ -45,6 +44,7 @@ public class BonReceptionBean  implements Serializable{
 	}
 	
 	public List<BonReception> getListBonReceptions(Fournisseur fournisseur, boolean isblack){
+	
 		return bonreceptionService.listBonReceptions(fournisseur, isblack);
 	}
 	

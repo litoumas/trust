@@ -8,17 +8,17 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
-import com.trust.app.model.FactureFournisseur;
+import com.trust.app.model.FactureAchat;
 import com.trust.app.model.Fournisseur;
 import com.trust.app.service.BonReceptionService;
-import com.trust.app.service.FactureFournisseurService;
+import com.trust.app.service.FactureAchatService;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @ManagedBean(name = "NewFactureFournisseurController")
 @SessionScoped
-public class NewFactureFournisseurController implements Serializable{
+public class NewFactureFournisseurController implements Serializable {
 	/**
 	 * 
 	 */
@@ -26,46 +26,33 @@ public class NewFactureFournisseurController implements Serializable{
 
 	@Getter
 	@Setter
-	@ManagedProperty("#{factureFournisseurService}")
-	private FactureFournisseurService factureFournisseurService;
-	
-	
+	@ManagedProperty("#{factureAchatService}")
+	private FactureAchatService factureAchatService;
+
 	@Getter
 	@Setter
 	@ManagedProperty("#{bonReceptionService}")
 	private BonReceptionService bonReceptionService;
-	
-	
 
 	@Getter
 	@Setter
 	Fournisseur selectedFournisseur = new Fournisseur();
-	
-	
+
 	@Getter
 	@Setter
-	FactureFournisseur factureFournisseur=new FactureFournisseur();
-	
-	
-	
+	FactureAchat factureAchat = new FactureAchat();
+
 	public void submit() {
 
-		factureFournisseur.setFournisseur(selectedFournisseur);
-		
-		System.out.println("=====================================================================================================================");
-		System.out.println("=====================================================================================================================");
-	
-		
-		factureFournisseurService.addFactureFournisseur(factureFournisseur);
-		
-			
-		
-		 selectedFournisseur = new Fournisseur();
-		 factureFournisseur=new FactureFournisseur();
-		 
-		 
-		 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Facture enregistrée avec succès"));
-		 
-	
+		factureAchat.setFournisseur(selectedFournisseur);
+
+		factureAchatService.addFactureAchat(factureAchat);
+
+		selectedFournisseur = new Fournisseur();
+		factureAchat = new FactureAchat();
+
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Facture enregistrée avec succès"));
+
 	}
 }

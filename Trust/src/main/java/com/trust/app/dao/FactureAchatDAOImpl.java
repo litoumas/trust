@@ -9,14 +9,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
-import com.trust.app.model.FactureFournisseur;
+import com.trust.app.model.FactureAchat;
 /**
- * FactureFournisseur data access object interface implementation
+ * FactureAchat data access object interface implementation
  * */
 @Repository
-public class FactureFournisseurDAOImpl implements FactureFournisseurDAO {
+public class FactureAchatDAOImpl implements FactureAchatDAO {
 
-	private static final Logger logger = LoggerFactory.getLogger(FactureFournisseurDAOImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(FactureAchatDAOImpl.class);
 	private SessionFactory sessionFactory;
      
     public void setSessionFactory(SessionFactory sf){
@@ -24,11 +24,11 @@ public class FactureFournisseurDAOImpl implements FactureFournisseurDAO {
     }
     
 	@Override
-	public void addFactureFournisseur(FactureFournisseur p) {
+	public void addFactureAchat(FactureAchat p) {
 		try {
 			Session session = this.sessionFactory.getCurrentSession();
 	        session.save(p);
-	        logger.info("FactureFournisseur saved successfully, FactureFournisseur Details="+p);
+	        logger.info("FactureAchat saved successfully, FactureAchat Details="+p);
 		}
 		catch(HibernateException e) {
 			logger.error("Hibernate exception: "+e.getMessage());
@@ -36,15 +36,15 @@ public class FactureFournisseurDAOImpl implements FactureFournisseurDAO {
 	}
 
 	@Override
-	public List<FactureFournisseur> listFactureFournisseurs() {
+	public List<FactureAchat> listFactureAchats() {
 		try {
 			Session session = this.sessionFactory.getCurrentSession();
 			@SuppressWarnings("unchecked")
-			List<FactureFournisseur> FactureFournisseursList = session.createQuery("from FactureFournisseur").list();
-	        for(FactureFournisseur c : FactureFournisseursList) {
-	            logger.info("FactureFournisseur List::"+c);
+			List<FactureAchat> FactureAchatsList = session.createQuery("from FactureAchat").list();
+	        for(FactureAchat c : FactureAchatsList) {
+	            logger.info("FactureAchat List::"+c);
 	        }
-	        return FactureFournisseursList;
+	        return FactureAchatsList;
 		}
 		catch(HibernateException e) {
 			logger.error("Hibernate exception: "+e.getMessage());
@@ -53,11 +53,11 @@ public class FactureFournisseurDAOImpl implements FactureFournisseurDAO {
 	}
 
 	@Override
-	public void deleteFactureFournisseur(FactureFournisseur c) {
+	public void deleteFactureAchat(FactureAchat c) {
 		try {
 			Session session = this.sessionFactory.getCurrentSession();
 			session.delete(c);
-	        logger.info("FactureFournisseur deleted successfully, FactureFournisseur Details="+c);
+	        logger.info("FactureAchat deleted successfully, FactureAchat Details="+c);
 		}
 		catch(HibernateException e) {
 			logger.error("Hibernate exception: "+e.getMessage());
@@ -65,11 +65,11 @@ public class FactureFournisseurDAOImpl implements FactureFournisseurDAO {
 	}
 
 	@Override
-	public void updateFactureFournisseur(FactureFournisseur c) {
+	public void updateFactureAchat(FactureAchat c) {
 		try {
 			Session session = this.sessionFactory.getCurrentSession();
 			session.update(c);
-	        logger.info("FactureFournisseur updated successfully, FactureFournisseur Details="+c);
+	        logger.info("FactureAchat updated successfully, FactureAchat Details="+c);
 		}
 		catch(HibernateException e)
 		{

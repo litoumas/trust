@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.trust.app.dao.DroitDAO;
 import com.trust.app.model.Droit;
-import com.trust.app.model.User;
 
 @Service
 @ManagedBean(name = "droitService")
