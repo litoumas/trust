@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+
+<h:head>
+	<title>Caisse</title>
+</h:head>
+<h:body>
+#{CaisseBean.getThereIsOpened()}"
+
+	<p:layout fullPage="true">
+
+
+		<p:layoutUnit position="south" size="100" header="Bottom"
+			resizable="true" closable="true" collapsible="true">
+			<h:outputText value="South unit content." />
+		</p:layoutUnit>
+
+		<p:layoutUnit header="Panier" position="west" size="800"
+			resizable="true">
+			<h:panelGrid columns="2">
+				<h:outputText value="" />
+				<h:outputText value="" />
+				
+				<h:outputText value="Total :" />
+				<h:outputText value="543.265 DT" />
+				
+				<h:outputText value="" />
+				<h:outputText value="" />
+			</h:panelGrid>
+			<h:form id="panier">
+
+				<p:dataTable id="listeLigneVente" var="lignevente"
+					value="#{LiveCaisseController.bonLivraison.ligneLivraisons}"
+					selectionMode="single"
+					selection="#{LiveCaisseController.selectedLigneVente}"
+					rowKey="#{lignevente.article.id}">
+					<p:column headerText="Marque" width="100">
+						<h:outputText value="#{lignevente.article.marque.designation}" />
+					</p:column>
+
+					<p:column headerText="Code" width="70">
+						<h:outputText value="#{lignevente.article.item.code}" />
+					</p:column>
+
+					<p:column headerText="Designation">
+						<h:outputText value="#{lignevente.article.item.designation}" />
+					</p:column>
+
+					<p:column headerText="prix" width="60">
+						<h:outputText value="#{lignevente.prix_ttc}" />
+					</p:column>
+
+					<p:column headerText="Qte" width="60">
+						<h:outputText value="#{lignevente.qte}" />
+					</p:column>
+
+					<p:ajax event="rowSelect"
+						listener="#{LiveCaisseController.onRowSelectLignevente}"
+						oncomplete="PF('DetailArticle').show()" update="detail_article" />
+
+				</p:dataTable>
+
+
+			</h:form>
+
+		</p:layoutUnit>
+
+		<p:layoutUnit header="Liste Article" position="center"
+			collapsible="true">
+
+			<h:form>
+				<p:dataTable var="article" value="#{ArticleBean.listArticles}"
+					selectionMode="single"
+					selection="#{LiveCaisseController.selectedArticle}"
+					rowKey="#{article.id}">
+
+
+					<p:column headerText="Marque"
+						filterBy="#{article.marque.designation}"
+						filterMatchMode="contains" width="100">
+						<h:outputText value="#{article.marque.designation}" />
+					</p:column>
+
+					<p:column headerText="Code" filterBy="#{article.item.code}"
+						filterMatchMode="contains" width="100">
+						<h:outputText value="#{article.item.code}" />
+					</p:column>
+					<p:column headerText="Designation"
+						filterBy="#{article.item.designation}" filterMatchMode="contains">
+						<h:outputText value="#{article.item.designation}" />
+					</p:column>
+					<p:column headerText="Prix vente" filterBy="#{article.prixvente}"
+						filterMatchMode="contains" width="100">
+						<h:outputText value="#{article.prixvente}" />
+					</p:column>
+					<p:column headerText="Stock" filterBy="#{article.stockTotal}"
+						filterMatchMode="contains" width="70">
+						<h:outputText value="#{article.stockTotal}" />
+					</p:column>
+					<p:column headerText="Position" filterBy="#{article.position}"
+						filterMatchMode="contains" width="100">
+						<h:outputText value="#{article.position}" />
+					</p:column>
+
+					<p:ajax event="rowSelect"
+						listener="#{LiveCaisseController.onRowSelectArticle}"
+						oncomplete="PF('DetailArticle').show()" update="detail_article" />
+
+
+				</p:dataTable>
+
+			</h:form>
+
+			<p:dialog header="Detail Article" widgetVar="DetailArticle"
+				width="600">
+
+				<h:panelGrid id="detail_article" columns="2"
+					columnClasses="label, value">
+
+					<h:outputText value="Marque : " />
+					<h:outputText
+						value="#{LiveCaisseController.selectedArticle.marque.designation}" />
+					<h:outputText value="Code : " />
+					<h:outputText
+						value="#{LiveCaisseController.selectedArticle.item.code}" />
+					<h:outputText value="Designation : " />
+					<h:outputText
+						value="#{LiveCaisseController.selectedArticle.item.designation}" />
+					<h:outputText value="Prix de vente : " />
+					<h:outputText
+						value="#{LiveCaisseController.selectedArticle.prixvente}" />
+					<h:outputText value="Prix Mini : " />
+					<h:outputText
+						value="#{LiveCaisseController.selectedArticle.prixmini}" />
+					<h:outputText value="Stock : " />
+					<h:outputText
+						value="#{LiveCaisseController.selectedArticle.stockTotal}" />
+					<h:outputText value="Position : " />
+					<h:outputText
+						value="#{LiveCaisseController.selectedArticle.position}" />
+				</h:panelGrid>
+				<h:form>
+
+					<h:outputText value="Quantitée : " />
+					<p:inputNumber id="qte" value="#{LiveCaisseController.qteToAdd}"
+						size="30" emptyValue="sign">
+					</p:inputNumber>
+
+
+					<p:commandButton
+						action="#{LiveCaisseController.addLigneToPanier(LiveCaisseController.selectedArticle)}"
+						icon="ui-icon-plus" value="Ajouter au panier" title="add"
+						update="panier:listeLigneVente,qte"
+						oncomplete="PF('DetailArticle').hide()">
+					</p:commandButton>
+					<p:commandButton
+						action="#{LiveCaisseController.removeLigneFromPanier(LiveCaisseController.selectedArticle)}"
+						icon="ui-icon-plus" value="Supprimer du panier" title="remove"
+						update="panier:listeLigneVente,qte"
+						oncomplete="PF('DetailArticle').hide()">
+					</p:commandButton>
+
+
+				</h:form>
+
+
+
+
+
+			</p:dialog>
+
+		</p:layoutUnit>
+
+	</p:layout>
+
+
+
+</h:body>
+</html>
