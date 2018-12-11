@@ -19,42 +19,30 @@ public class NewFournisseurController implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -8029245018344059604L;
-	
+
 	@ManagedProperty("#{fournisseurService}")
 	private FournisseurService fournisseurService;
-	
+
 	private String nom;
 
-	
 	public void Submit() {
-		
-		Fournisseur fournisseur=fournisseurService.findWithName(nom);
-		if(fournisseur==null)
-		{
-			fournisseur=new Fournisseur();
-			fournisseur.setNom(nom);
-			fournisseurService.addFournisseur(fournisseur);
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Nouveau fournisseur ajouter avec succès"));
-			nom=null;
-		}else
-		{
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Fournisseur déjà existante"));
+		if (nom != "") {
+			Fournisseur fournisseur = fournisseurService.findWithName(nom);
+			if (fournisseur == null) {
+				fournisseur = new Fournisseur();
+				fournisseur.setNom(nom);
+				fournisseurService.addFournisseur(fournisseur);
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
+						"Nouveau fournisseur ajouter avec succès"));
+				nom = null;
+			} else {
+				FacesContext.getCurrentInstance().addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Fournisseur déjà existante"));
+			}
 		}
-		
 
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	public FournisseurService getFournisseurService() {
 		return fournisseurService;
 	}
@@ -70,8 +58,5 @@ public class NewFournisseurController implements Serializable {
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
-	
-	
-	
 
 }

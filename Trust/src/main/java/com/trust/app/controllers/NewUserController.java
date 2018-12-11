@@ -48,7 +48,7 @@ public class NewUserController implements Serializable {
 	@Getter
 	@Setter
 	private String nameUser;
-	
+
 	@Getter
 	@Setter
 	private String passUser;
@@ -61,8 +61,8 @@ public class NewUserController implements Serializable {
 			user.setName(nameUser);
 			user.setPasshash(generatedHash);
 			user.setSeeBlack(true);
-			List<Droit> droits=droitService.listDroits();
-			
+			List<Droit> droits = droitService.listDroits();
+
 			for (int i = 0; i <= droits.size() - 1; i++) {
 
 				user.addDroit(droits.get(i));
@@ -76,7 +76,7 @@ public class NewUserController implements Serializable {
 			RedirectManager.redirect(PathManager.PATH_LOGIN_PAGE);
 
 		} else {
-
+			
 		}
 
 	}

@@ -68,6 +68,7 @@ public class BonLivraisonDAOImpl implements BonLivraisonDAO {
 		try {
 			Session session = this.sessionFactory.getCurrentSession();
 			session.update(u);
+		
 			logger.info("BonLivraison updated successfully, BonLivraison Details=" + u);
 		} catch (HibernateException e) {
 			logger.error("Hibernate exception: " + e.getMessage());

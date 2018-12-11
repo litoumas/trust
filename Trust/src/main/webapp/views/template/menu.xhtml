@@ -15,18 +15,32 @@
 			<p:menubar>
 				<p:submenu label="Artiles" icon="ui-icon-document">
 					<p:separator />
-					<p:menuitem value="Nouvelle Article" url="#" />
-					<p:menuitem value="Liste des Article" url="#" />
+					<p:menuitem
+						rendered="#{SecurityManager.verifPermission(PathManager.path_newitem_page)}"
+						value="Nouvelle Article" url="#{PathManager.path_newitem_page}" />
+					
+						<p:menuitem value="Liste des Article"
+						rendered="#{SecurityManager.verifPermission(PathManager.path_viewarticles_page)}"
+						url="#{PathManager.path_viewarticles_page}" />
+						
+						
+					
 					<p:separator />
 					<p:menuitem
 						rendered="#{SecurityManager.verifPermission(PathManager.path_newmarque_page)}"
 						value="Nouvelle Marque" url="#{PathManager.path_newmarque_page}" />
 					<p:menuitem value="Liste des Marques" url="#" />
 					<p:separator />
-					<p:menuitem value="Nouvelle Marque Tracteur" url="#" />
+					<p:menuitem value="Nouvelle Marque Tracteur"
+						rendered="#{SecurityManager.verifPermission(PathManager.path_newmarquetracteur_page)}"
+						url="#{PathManager.path_newmarquetracteur_page}" />
+
 					<p:menuitem value="Liste Marque Tracteur" url="#" />
 					<p:separator />
-					<p:menuitem value="Nouveau Tracteur" url="#" />
+					<p:menuitem value="Nouveau Tracteur"
+						rendered="#{SecurityManager.verifPermission(PathManager.path_tracteur_page)}"
+						url="#{PathManager.path_tracteur_page}" />
+					
 					<p:menuitem value="Liste des Tracteur" url="#" />
 					<p:separator />
 				</p:submenu>
@@ -70,7 +84,7 @@
 				</p:submenu>
 
 
-				<p:menuitem  value="Caisse" url="#{PathManager.path_livecaisse_page}" />
+				<p:menuitem value="Caisse" url="#{PathManager.path_livecaisse_page}" />
 
 
 

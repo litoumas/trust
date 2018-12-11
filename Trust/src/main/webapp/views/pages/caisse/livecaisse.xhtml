@@ -18,24 +18,60 @@
 	<p:layout fullPage="true">
 
 
-		<p:layoutUnit position="south" size="100" header="Bottom"
-			resizable="true" closable="true" collapsible="true">
-			<h:outputText value="South unit content." />
+		<p:layoutUnit position="south" size="200" header="Bottom"
+			resizable="true" collapsible="true">
+			<h:panelGrid columns="2" id="recap">
+				<h:outputText value="Total Brut:" />
+				<h:outputText
+					value="#{LiveCaisseController.bonLivraison.totalPrixBrute} DT" />
+				<h:outputText value="Remise :" />
+				<h:outputText
+					value="#{LiveCaisseController.bonLivraison.totalRemise} DT" />
+				<h:outputText value="" />
+				<h:outputText value="--------------" />
+				<h:outputText value="Total :" />
+				<h:outputText
+					value="#{LiveCaisseController.bonLivraison.totalPrixTTC} DT" />
+
+				<h:outputText value=" Gain :" />
+				<h:outputText
+					value="#{LiveCaisseController.bonLivraison.totalGain} DT" />
+			</h:panelGrid>
 		</p:layoutUnit>
 
 		<p:layoutUnit header="Panier" position="west" size="800"
 			resizable="true">
-			<h:panelGrid columns="2">
-				<h:outputText value="" />
-				<h:outputText value="" />
-				
-				<h:outputText value="Total :" />
-				<h:outputText value="543.265 DT" />
-				
-				<h:outputText value="" />
-				<h:outputText value="" />
-			</h:panelGrid>
+
 			<h:form id="panier">
+				<h:panelGrid columns="2">
+					<h:outputText value="" />
+					<h:outputText value="" />
+
+					<h:outputText value="Total Brut:" />
+					<h:outputText
+						value="#{LiveCaisseController.bonLivraison.totalPrixBrute} DT" />
+
+					<h:outputText value="Remise :" />
+					<p:inputNumber id="Remise"
+						value="#{LiveCaisseController.remise}" label="Remise"
+						symbol="%" symbolPosition="s" emptyValue="sign" minValue="00.000"
+						maxValue="100">
+						<p:ajax event="keyup" update="total,B_valider" />
+					</p:inputNumber>
+
+					<h:outputText value="Total :" />
+					<p:inputNumber id="total"
+						value="#{LiveCaisseController.totalPrixTTC}" label="Total"
+						symbol="DT" symbolPosition="s" emptyValue="sign" minValue="0.000"
+						maxValue="100">
+						<p:ajax event="keyup" update="Remise,B_valider" />
+					</p:inputNumber>
+
+
+<p:commandButton value="Ajouter" id="B_valider" rendered="#{LiveCaisseController.canvalidate}" update="messages,desig" actionListener="#{NewClientController.Submit}"/>
+
+				</h:panelGrid>
+
 
 				<p:dataTable id="listeLigneVente" var="lignevente"
 					value="#{LiveCaisseController.bonLivraison.ligneLivraisons}"
@@ -60,6 +96,9 @@
 
 					<p:column headerText="Qte" width="60">
 						<h:outputText value="#{lignevente.qte}" />
+					</p:column>
+					<p:column headerText="total" width="60">
+						<h:outputText value="#{lignevente.totalPrixTTC}" />
 					</p:column>
 
 					<p:ajax event="rowSelect"
@@ -110,9 +149,8 @@
 						<h:outputText value="#{article.position}" />
 					</p:column>
 
-					<p:ajax event="rowSelect"
-						listener="#{LiveCaisseController.onRowSelectArticle}"
-						oncomplete="PF('DetailArticle').show()" update="detail_article" />
+					<p:ajax event="rowSelect" oncomplete="PF('DetailArticle').show()"
+						update="detail_article" />
 
 
 				</p:dataTable>
@@ -158,14 +196,12 @@
 					<p:commandButton
 						action="#{LiveCaisseController.addLigneToPanier(LiveCaisseController.selectedArticle)}"
 						icon="ui-icon-plus" value="Ajouter au panier" title="add"
-						update="panier:listeLigneVente,qte"
-						oncomplete="PF('DetailArticle').hide()">
+						update="panier,qte,recap" oncomplete="PF('DetailArticle').hide()">
 					</p:commandButton>
 					<p:commandButton
 						action="#{LiveCaisseController.removeLigneFromPanier(LiveCaisseController.selectedArticle)}"
 						icon="ui-icon-plus" value="Supprimer du panier" title="remove"
-						update="panier:listeLigneVente,qte"
-						oncomplete="PF('DetailArticle').hide()">
+						update="panier,qte,recap" oncomplete="PF('DetailArticle').hide()">
 					</p:commandButton>
 
 

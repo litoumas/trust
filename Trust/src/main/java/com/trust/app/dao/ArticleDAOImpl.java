@@ -35,7 +35,7 @@ public class ArticleDAOImpl implements ArticleDAO {
 			Session session = this.sessionFactory.getCurrentSession();
 			@SuppressWarnings("unchecked")
 			List<Article> articleList = session.createQuery("from Article order by item_id").list();
-			System.out.println("====>"+articleList.size());
+			System.out.println("====>" + articleList.size());
 			for (Article c : articleList) {
 				logger.info("Article List::" + c);
 			}
@@ -93,14 +93,14 @@ public class ArticleDAOImpl implements ArticleDAO {
 		Criterion c_item = null;
 		if (item != null)
 			c_item = Restrictions.eq("item", item);
-		
+
 		LogicalExpression andExp = Restrictions.and(c_marque, c_item);
 		cr.add(andExp);
 
 		List<Article> articlesList = cr.list();
 
 		session.close();
-		
+
 		if (articlesList.size() != 0) {
 			return articlesList.get(0);
 		}
@@ -119,6 +119,19 @@ public class ArticleDAOImpl implements ArticleDAO {
 			logger.error("Hibernate exception: " + e.getMessage());
 		}
 
+	}
+
+	@Override
+	public void updateArticle(Article article) {
+		try {
+			Session session = this.sessionFactory.openSession();
+			session.update(article);
+			session.flush();;
+			session.close();
+			logger.info("article updated successfully, article Details=" + article);
+		} catch (HibernateException e) {
+			logger.error("Hibernate exception: " + e.getMessage());
+		}
 	}
 
 }

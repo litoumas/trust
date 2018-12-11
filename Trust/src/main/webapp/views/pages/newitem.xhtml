@@ -71,9 +71,9 @@
 						oncomplete="PF('addtractordialog').hide();" />
 
 
-					<p:column headerText="Marque" filterBy="#{Tracteur.marqueName}"
+					<p:column headerText="Marque" filterBy="#{Tracteur.marqueTracteurs.designation}"
 						filterMatchMode="contains">
-						<h:outputText value="#{Tracteur.marqueName}" />
+						<h:outputText value="#{Tracteur.marqueTracteurs.designation}" />
 					</p:column>
 
 					<p:column headerText="Model" filterBy="#{Tracteur.designation}"

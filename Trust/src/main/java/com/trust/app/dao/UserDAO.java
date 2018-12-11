@@ -12,9 +12,9 @@ public interface UserDAO {
 
 	public void addUser(User u);
 
-	public void deleteCar(User u);
+	public void deleteUser(User u);
 
-	public void updateCar(User u);
+	public void updateUser(User u);
 
 	public User researchUsers(String login, String passhash);
 

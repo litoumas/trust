@@ -37,15 +37,15 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional
-	public void deleteCar(User u) {
-		this.userDAO.deleteCar(u);
+	public void deleteUser(User u) {
+		this.userDAO.deleteUser(u);
 
 	}
 
 	@Override
 	@Transactional
-	public void updateCar(User u) {
-		this.userDAO.updateCar(u);
+	public void updateUser(User u) {
+		this.userDAO.updateUser(u);
 
 	}
 

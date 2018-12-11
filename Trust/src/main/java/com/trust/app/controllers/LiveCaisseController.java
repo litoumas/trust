@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
@@ -46,12 +48,16 @@ public class LiveCaisseController {
 	@Getter
 	@Setter
 	float qteToAdd = 1;
-
+	
+	@Getter
+	float total;
+	
+	
 
 	public void onRowSelectArticle(SelectEvent event) {
 
 		if ((Article) event.getObject() != null) {
-			this.selectedArticle = (Article) event.getObject();
+		//	this.selectedArticle = (Article) event.getObject();
 		}
 	}
 
@@ -63,7 +69,6 @@ public class LiveCaisseController {
 
 		if ((LigneLivraison) event.getObject() != null) {
 			this.selectedArticle = selectedLigneVente.getArticle();
-			System.out.println(selectedLigneVente.getArticle().getItem().getDesignation());
 
 		}
 	}

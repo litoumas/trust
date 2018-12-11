@@ -53,6 +53,11 @@ public class ArticleServiceImpl implements ArticleService,Serializable {
 	public void addArticle(Article article) {
 		this.articleDAO.addArticle(article);
 	}
+	@Override
+	public void updateArticle(Article article) {
+		
+		this.articleDAO.updateArticle(article);
+	}
 
 	
 	

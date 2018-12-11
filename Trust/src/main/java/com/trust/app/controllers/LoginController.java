@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
 
 import com.trust.app.Manager.PathManager;
 import com.trust.app.Manager.RedirectManager;
+import com.trust.app.model.Droit;
 import com.trust.app.model.User;
 
 @ManagedBean(name = "LoginController")
@@ -100,13 +101,15 @@ public class LoginController implements Serializable {
 			User u = usersList.get(0);
 			loggedIn = true;
 			userName = u.getName();
-
 			ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
 			Map<String, Object> sessionMap = externalContext.getSessionMap();
 			sessionMap.put("User", u);
 
 		}
 		if (loggedIn) {
+			
+			
+			
 			logger.info("First matching user logged in ::" + userName);
 			message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Welcome: " + userName, null);
 			FacesContext.getCurrentInstance().addMessage(null, message);

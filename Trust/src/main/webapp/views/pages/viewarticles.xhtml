@@ -1,0 +1,153 @@
+<ui:composition template="../template/common.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+
+
+	<ui:define name="content">
+
+
+
+		<h:form id="tab_listeArticle">
+			<p:dataTable var="article" value="#{ArticleBean.listArticles}"
+				selectionMode="single"
+				selection="#{ViewArticlesController.selectedArticle}"
+				rowKey="#{article.id}">
+
+
+				<p:column headerText="Marque"
+					filterBy="#{article.marque.designation}" filterMatchMode="contains"
+					width="100">
+					<h:outputText value="#{article.marque.designation}" />
+				</p:column>
+
+				<p:column headerText="Code" filterBy="#{article.item.code}"
+					filterMatchMode="contains" width="100">
+					<h:outputText value="#{article.item.code}" />
+				</p:column>
+				<p:column headerText="Designation"
+					filterBy="#{article.item.designation}" filterMatchMode="contains">
+					<h:outputText value="#{article.item.designation}" />
+				</p:column>
+				<p:column headerText="Prix vente" filterBy="#{article.prixvente}"
+					filterMatchMode="contains" width="100">
+					<h:outputText value="#{article.prixvente}" />
+				</p:column>
+				<p:column headerText="Stock" filterBy="#{article.stockTotal}"
+					filterMatchMode="contains" width="70">
+					<h:outputText value="#{article.stockTotal}" />
+				</p:column>
+				<p:column headerText="Position" filterBy="#{article.position}"
+					filterMatchMode="contains" width="100">
+					<h:outputText value="#{article.position}" />
+				</p:column>
+
+				<p:ajax event="rowSelect" oncomplete="PF('DetailArticle').show()"
+					listener="#{ViewArticlesController.onRowSelect}"
+					update="detail_article,editPosition,editPrixVente,editPrixMini" />
+
+
+			</p:dataTable>
+
+		</h:form>
+
+
+
+		<p:dialog header="Detail Article" widgetVar="DetailArticle"
+			width="600">
+
+			<h:panelGrid id="detail_article" columns="3"
+				columnClasses="label, value">
+
+				<h:outputText value="" />
+				<h:outputText value="Marque : " />
+				<h:outputText
+					value="#{ViewArticlesController.selectedArticle.marque.designation}" />
+				<h:outputText value="" />
+				<h:outputText value="Code : " />
+				<h:outputText
+					value="#{ViewArticlesController.selectedArticle.item.code}" />
+				<h:outputText value="" />
+				<h:outputText value="Designation : " />
+				<h:outputText
+					value="#{ViewArticlesController.selectedArticle.item.designation}" />
+				<h:outputText value="" />
+				<h:outputText value="Stock : " />
+				<h:outputText
+					value="#{ViewArticlesController.selectedArticle.stockTotal}" />
+				<p:commandButton icon="ui-icon-pencil"
+					title="modifier Prix de vente" type="button"
+					onclick="PF('editPrixVente').show();" />
+				<h:outputText value="Prix de vente : " />
+				<h:outputText
+					value="#{ViewArticlesController.selectedArticle.prixvente} DT" />
+
+				<p:commandButton icon="ui-icon-pencil" title="modifier Prix minimal"
+					type="button" onclick="PF('editPrixMini').show();" />
+				<h:outputText value="Prix Minimal : " />
+
+				<h:outputText
+					value="#{ViewArticlesController.selectedArticle.prixmini} DT" />
+
+
+				<p:commandButton icon="ui-icon-pencil" title="modifier position"
+					type="button" onclick="PF('editPosition').show();" />
+				<h:outputText value="Position : " />
+				<h:outputText
+					value="#{ViewArticlesController.selectedArticle.position} " />
+
+			</h:panelGrid>
+
+		</p:dialog>
+
+		<p:dialog header="Modifier Prix de Vente" id="editPrixVente"
+			widgetVar="editPrixVente">
+			<h:form>
+				<p:inputNumber id="prix_vente"
+					value="#{ViewArticlesController.prixVente}" label="Prix vente"
+					symbol=" DT" symbolPosition="s" emptyValue="sign"
+					minValue="000.000"></p:inputNumber>
+				<p:commandButton value="Valider" id="ajax"
+					update="detail_article,tab_listeArticle"
+					onclick="PF('editPrixVente').hide();"
+					actionListener="#{ViewArticlesController.editprixvente}" />
+			</h:form>
+		</p:dialog>
+		<p:dialog header="Modifier Prix Minimal" id="editPrixMini"
+			widgetVar="editPrixMini">
+			<h:form>
+				<p:inputNumber id="prix_mini"
+					value="#{ViewArticlesController.prixMini}" label="Prix vente"
+					symbol=" DT" symbolPosition="s" emptyValue="sign"
+					minValue="000.000"></p:inputNumber>
+				<p:commandButton value="Valider" id="ajax"
+					update="detail_article,tab_listeArticle"
+					onclick="PF('editPrixMini').hide();"
+					actionListener="#{ViewArticlesController.editprixmini}" />
+			</h:form>
+		</p:dialog>
+		<p:dialog header="Modifier Position" id="editPosition"
+			widgetVar="editPosition">
+			<h:form>
+				<p:inputText id="position"
+					value="#{ViewArticlesController.position}" required="true"
+					label="Position" />
+
+				<p:commandButton value="Valider"
+					update="detail_article,tab_listeArticle"
+					onclick="PF('editPosition').hide();"
+					actionListener="#{ViewArticlesController.editPosition}" />
+			</h:form>
+		</p:dialog>
+
+
+	</ui:define>
+
+
+
+</ui:composition>

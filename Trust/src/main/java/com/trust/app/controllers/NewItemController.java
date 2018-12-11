@@ -59,9 +59,10 @@ public class NewItemController implements Serializable {
 		Item item = new Item();
 		item.setCode(code);
 		item.setDesignation(designiation);
-		item.setTracteurs(suppotedtracteurs);
+		//
 		itemService.addItem(item);
-
+		item.setTracteurs(suppotedtracteurs);
+		itemService.updateItem(item);
 		FacesContext.getCurrentInstance().addMessage(null,
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Nouveau fournisseur ajouter avec succès"));
 
@@ -69,7 +70,7 @@ public class NewItemController implements Serializable {
 		designiation = null;
 		suppotedtracteurs = new ArrayList<Tracteur>();
 	}
-
+ 
 	public List<Tracteur> getAllTracteur() {
 
 		return tracteurService.listTracteurs();

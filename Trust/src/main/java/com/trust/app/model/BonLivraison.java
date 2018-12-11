@@ -51,6 +51,82 @@ public class BonLivraison {
 		ligneLivraisons.add(ligneLivraison);
 	}
 	
+	public float getTotalPrixMini() {
+		if(ligneLivraisons==null)
+			return 0;
+		float total=0;
+		
+		for(int i=0;i<=ligneLivraisons.size()-1;i++)
+		{
+			total+=ligneLivraisons.get(i).getTotalPrixMini();
+		}
+		return arrondir(total);
+		
+	}
 	
+	public float getTotalGain() {
+		return arrondir(getTotalPrixTTC()-getTotalPrixMini());
+	}
+	public float getTotalRemise() {
+		return arrondir(getTotalPrixBrute()-getTotalPrixTTC());
+	}
+	
+	
+	public float getTotalPrixTTC()
+	{
+		if(ligneLivraisons==null)
+			return 0;
+		
+		float total=0;
+		
+		for(int i=0;i<=ligneLivraisons.size()-1;i++)
+		{
+			total+=ligneLivraisons.get(i).getTotalPrixTTC();
+		}
+		
+		return arrondir(total);
+	}
+	public float getTotalPrixBrute()
+	{
+		if(ligneLivraisons==null)
+			return 0;
+		
+		float total=0;
+		
+		for(int i=0;i<=ligneLivraisons.size()-1;i++)
+		{
+			total+=ligneLivraisons.get(i).getTotalPrixBrut();
+		}
+		
+		return arrondir(total);
+	}
+	public float getTotalPrixDeclaree()
+	{
+		if(ligneLivraisons==null)
+			return 0;
+		
+		float total=0;
+		
+		for(int i=0;i<=ligneLivraisons.size()-1;i++)
+		{
+			total+=ligneLivraisons.get(i).getTotalPrixDeclaree();
+		}
+		
+		return arrondir(total);
+	}
+	
+	private float arrondir(float nombre) {
+		return (float) ((float) ((int) (nombre * Math.pow(10, 3) + .5)) / Math.pow(10, 3));
+	}
+	
+	public boolean setTotalPrixTTC(float totalTTC)
+	{
+		if(getTotalPrixMini()<totalTTC)
+		{
+			// To Do
+			return true;
+		}
+		return false;
+	}
 	
 }

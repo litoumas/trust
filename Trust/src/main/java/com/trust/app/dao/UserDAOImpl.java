@@ -56,11 +56,11 @@ public class UserDAOImpl implements UserDAO{
 	}
 
 	@Override
-	public void deleteCar(User u) {
+	public void deleteUser(User u) {
 		try {
 			Session session = this.sessionFactory.getCurrentSession();
 			session.delete(u);
-	        logger.info("Car deleted successfully, Car Details="+u);
+	        logger.info("User deleted successfully, User Details="+u);
 		}
 		catch(HibernateException e) {
 			logger.error("Hibernate exception: "+e.getMessage());
@@ -68,12 +68,12 @@ public class UserDAOImpl implements UserDAO{
 	}
 
 	@Override
-	public void updateCar(User u) {
+	public void updateUser(User u) {
 
 		try {
 			Session session = this.sessionFactory.getCurrentSession();
 			session.update(u);
-	        logger.info("Car updated successfully, Car Details="+u);
+	        logger.info("User updated successfully, User Details="+u);
 		}
 		catch(HibernateException e)
 		{

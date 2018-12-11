@@ -12,4 +12,5 @@ public interface ArticleService {
 	public Article getArticle(int id);
 	public Article findWithMarqueAndCode(Marque marque, Item sitem);
 	public void addArticle(Article article);
+	public void updateArticle(Article article);
 }
