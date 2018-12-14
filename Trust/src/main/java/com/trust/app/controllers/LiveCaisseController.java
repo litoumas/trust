@@ -52,7 +52,14 @@ public class LiveCaisseController {
 	@Getter
 	float total;
 	
+	@Getter
+	@Setter
+	float argent;
 	
+	
+	@Getter
+	@Setter
+	float monnaie;
 
 	public void onRowSelectArticle(SelectEvent event) {
 

@@ -5,7 +5,9 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -132,7 +134,8 @@ public class BonLivraison {
 			
 		} else {
 			if (getTotalPrixMini() < totalTTC) {
-
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "sss"));
+				
 				float verif=1;
 				
 				while ((getTotalPrixTTC() > totalTTC)&&(verif>0.010)) {
@@ -181,6 +184,9 @@ public class BonLivraison {
 				
 				
 				
+			}else
+			{
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info", "sss"));
 			}
 		}
 
@@ -203,7 +209,7 @@ public class BonLivraison {
 	float x=	((getTotalPrixBrute()-getTotalPrixTTC())/getTotalPrixBrute())*100;
 		
 	System.out.println("x= " +x);
-		return x;
+		return arrondir(x);
 	}
 
 	private float arrondir(float nombre) {

@@ -11,9 +11,9 @@
 
 <h:head>
 	<title>Caisse</title>
-	
 
-	
+
+
 </h:head>
 <h:body>
 #{CaisseBean.getThereIsOpened()}"
@@ -39,12 +39,12 @@
 				<h:outputText value=" Gain :" />
 				<h:outputText
 					value="#{LiveCaisseController.bonLivraison.totalGain} DT" />
-					
-					<h:outputText value=" Prix mini :" />
+
+				<h:outputText value=" Prix mini :" />
 				<h:outputText
 					value="#{LiveCaisseController.bonLivraison.totalPrixMini} DT" />
-					
-					
+
+
 			</h:panelGrid>
 		</p:layoutUnit>
 
@@ -52,6 +52,11 @@
 			resizable="true">
 
 			<h:form id="panier">
+
+				<p:messages id="messages" showDetail="true" closable="true">
+					<p:autoUpdate />
+				</p:messages>
+
 				<h:panelGrid columns="2">
 					<h:outputText value="" />
 					<h:outputText value="" />
@@ -65,22 +70,28 @@
 						value="#{LiveCaisseController.bonLivraison.remise}" label="Remise"
 						symbol="%" symbolPosition="s" emptyValue="sign" minValue="00.000"
 						maxValue="100">
-						<p:ajax event="keyup" update="total,listeLigneVente,recap" />
+						<p:ajax event="keyup"
+							update="total,listeLigneVente,recap,FormValider" />
 					</p:inputNumber>
 
 					<h:outputText value="Total :" />
 					<p:inputNumber id="total"
-						value="#{LiveCaisseController.bonLivraison.totalPrixTTC}" label="Total"
-						symbol="DT" symbolPosition="s" emptyValue="sign" minValue="00.000"
-						>
-						<p:ajax event="keyup" update="Remise,listeLigneVente,recap" />
+						value="#{LiveCaisseController.bonLivraison.totalPrixTTC}"
+						label="Total" symbol="DT" symbolPosition="s" emptyValue="sign"
+						minValue="00.000">
+						<p:ajax event="keyup"
+							update="Remise,listeLigneVente,recap,FormValider" />
 					</p:inputNumber>
 
+
+					<p:commandButton value="Valider"
+						onclick="PF('WindowsValider').show();" />
+					<p:commandButton value="Remise à zéro" id="zero" />
 
 				</h:panelGrid>
 
 
-				<p:dataTable id="listeLigneVente" var="lignevente" 
+				<p:dataTable id="listeLigneVente" var="lignevente"
 					value="#{LiveCaisseController.bonLivraison.ligneLivraisons}"
 					selectionMode="single"
 					selection="#{LiveCaisseController.selectedLigneVente}"
@@ -203,12 +214,14 @@
 					<p:commandButton
 						action="#{LiveCaisseController.addLigneToPanier(LiveCaisseController.selectedArticle)}"
 						icon="ui-icon-plus" value="Ajouter au panier" title="add"
-						update="panier,qte,recap" oncomplete="PF('DetailArticle').hide()">
+						update="panier,qte,recap,FormValider"
+						oncomplete="PF('DetailArticle').hide()">
 					</p:commandButton>
 					<p:commandButton
 						action="#{LiveCaisseController.removeLigneFromPanier(LiveCaisseController.selectedArticle)}"
 						icon="ui-icon-plus" value="Supprimer du panier" title="remove"
-						update="panier,qte,recap" oncomplete="PF('DetailArticle').hide()">
+						update="panier,qte,recap,FormValider"
+						oncomplete="PF('DetailArticle').hide()">
 					</p:commandButton>
 
 
@@ -224,7 +237,67 @@
 
 	</p:layout>
 
+	<p:dialog header="Valider Vente" widgetVar="WindowsValider"
+		modal="true" width="850">
 
+		<h:form id="FormValider">
+			<h:panelGrid columns="2">
+				<h:outputText value="" />
+				<h:outputText value="" />
+
+				<h:outputText value="Total Brut:" />
+				<h:outputText
+					value="#{LiveCaisseController.bonLivraison.totalPrixBrute} DT" />
+
+				<h:outputText value="Remise :" />
+				<h:outputText value="#{LiveCaisseController.bonLivraison.remise}" />
+
+				<h:outputText value="Total :" />
+				<h:outputText id="total"
+					value="#{LiveCaisseController.bonLivraison.totalPrixTTC}" />
+
+
+				<h:outputText value="Argent reçu :" />
+				<h:outputText value="#{LiveCaisseController.argent}" />
+				<h:outputText value="Monnaie a rendre :" />
+				<h:outputText value="#{LiveCaisseController.monnaie}" />
+
+				<p:commandButton value="Valider" id="B_valider" />
+			</h:panelGrid>
+
+
+			<p:dataTable var="lignevente"
+				value="#{LiveCaisseController.bonLivraison.ligneLivraisons}">
+				<p:column headerText="Marque" width="100">
+					<h:outputText value="#{lignevente.article.marque.designation}" />
+				</p:column>
+
+				<p:column headerText="Code" width="70">
+					<h:outputText value="#{lignevente.article.item.code}" />
+				</p:column>
+
+				<p:column headerText="Designation">
+					<h:outputText value="#{lignevente.article.item.designation}" />
+				</p:column>
+
+				<p:column headerText="prix" width="60">
+					<h:outputText value="#{lignevente.prix_ttc}" />
+				</p:column>
+
+				<p:column headerText="Qte" width="60">
+					<h:outputText value="#{lignevente.qte}" />
+				</p:column>
+				<p:column headerText="total" width="60">
+					<h:outputText value="#{lignevente.totalPrixTTC}" />
+				</p:column>
+
+			</p:dataTable>
+
+
+		</h:form>
+
+
+	</p:dialog>
 
 </h:body>
 </html>
