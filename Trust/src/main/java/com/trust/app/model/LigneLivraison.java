@@ -22,6 +22,8 @@ public class LigneLivraison extends MvtStock {
 	@Column(name = "prix_declaree")
 	float prix_declaree;
 	
+	
+	
 	public float getTotalPrixTTC() {
 		return arrondir(getQte()*prix_ttc);
 	}

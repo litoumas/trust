@@ -110,6 +110,14 @@ public class LiveCaisseController {
 			bonLivraison.addLigne(ligneVente);
 
 		}
+		
+		for (int i = 0; i <= bonLivraison.getLigneLivraisons().size() - 1; i++) {
+			
+				bonLivraison.getLigneLivraisons().get(i).setPrix_ttc(bonLivraison.getLigneLivraisons().get(i).getArticle().getPrixvente());
+				
+		}  
+		
+		
 		qteToAdd = 1;
 	}
 

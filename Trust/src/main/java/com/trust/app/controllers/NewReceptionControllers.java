@@ -133,9 +133,9 @@ public class NewReceptionControllers implements Serializable {
 			bonreceptionService.addBonReception(bonreception);
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Bon de réception ajouter avec succès.", null));
-		
-			selectedFournisseur=new Fournisseur();
-			bonreception=new BonReception();
+
+			selectedFournisseur = new Fournisseur();
+			bonreception = new BonReception();
 			ligneReception = new LigneReception();
 			listeLigneReceptions = new ArrayList<LigneReception>();
 		}
@@ -154,17 +154,16 @@ public class NewReceptionControllers implements Serializable {
 				listeLigneReceptions.add(ligneReception);
 
 				// on remet tout a zero
-			int tva=ligneReception.getTva();
-			int remise=ligneReception.getRemise();
+				int tva = ligneReception.getTva();
+				int remise = ligneReception.getRemise();
 				ligneReception = new LigneReception();
 				ligneReception.setTva(tva);
 				ligneReception.setRemise(remise);
-				
-				
-				Marque marque=selectedArticle.getMarque();
+
+				Marque marque = selectedArticle.getMarque();
 				selectedArticle = new Article();
 				selectedArticle.setMarque(marque);
-				
+
 			}
 		}
 	}
