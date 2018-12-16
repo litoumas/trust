@@ -21,7 +21,7 @@
 
 					<h:outputText value="Fournisseur : *" />
 					<p:inputText id="id_fournisseur"
-						value="#{NewFactureFournisseurController.selectedFournisseur.id}"
+						value="#{NewFactureFournisseurController.selectedFournisseur.code}"
 						required="true" label="Fournisseur" />
 					<p:commandButton icon="ui-icon-search" title="Recherche"
 						type="button" onclick="PF('selecteFournisseur').show();" />
@@ -122,9 +122,9 @@
 						update="F_facture_entete:id_fournisseur,F_facture_entete:nom_fournisseur,F_facture_entete:listeBR"
 						oncomplete="PF('selecteFournisseur').hide();" />
 
-					<p:column headerText="Id" filterBy="#{fournisseur.id}"
+					<p:column headerText="Id" filterBy="#{fournisseur.code}"
 						filterMatchMode="contains" width="100">
-						<h:outputText value="#{fournisseur.id}" />
+						<h:outputText value="#{fournisseur.code}" />
 					</p:column>
 
 					<p:column headerText="nom" filterBy="#{fournisseur.nom}"

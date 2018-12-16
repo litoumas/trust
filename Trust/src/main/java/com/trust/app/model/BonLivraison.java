@@ -181,7 +181,17 @@ public class BonLivraison {
 					
 				}
 				ligneLivraisons.get(j).setPrix_ttc(arrondir(ligneLivraisons.get(j).getPrix_ttc()-(verif/ligneLivraisons.get(j).getQte())));
-				
+				boolean verif2=true;
+				for (int i = 0; i <= ligneLivraisons.size() - 1; i++) {
+					if(verif2)
+					{
+						if(ligneLivraisons.get(i).getQte()==1)
+						{
+							ligneLivraisons.get(i).setPrix_ttc(ligneLivraisons.get(i).getTotalPrixTTC()+(totalTTC-getTotalPrixTTC()));
+						}
+					}
+					
+				}
 				
 				
 			}else

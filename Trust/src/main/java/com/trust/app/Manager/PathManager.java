@@ -79,7 +79,7 @@ public class PathManager implements Serializable{
 		return PATH_HOME_PAGE;
 	}
 	public String getPath_newclient_page() {
-		return PATH_HOME_PAGE;
+		return PATH_NEWCLIENT_PAGE;
 	}
 	public String getPath_newfacturefourniseur_page() {
 		return PATH_NEWFACTUREFOURNISEUR_PAGE;

@@ -14,7 +14,9 @@ import javax.faces.context.FacesContext;
 import com.trust.app.Manager.PathManager;
 import com.trust.app.Manager.RedirectManager;
 import com.trust.app.model.Droit;
+import com.trust.app.model.Parametre;
 import com.trust.app.service.DroitService;
+import com.trust.app.service.ParametreService;
 import com.trust.app.service.UserService;
 
 import lombok.Getter;
@@ -40,6 +42,13 @@ public class StarterController implements Serializable{
 	@Getter
 	@Setter
 	private DroitService droitService;
+	
+	@ManagedProperty("#{parametreService}")
+	@Getter
+	@Setter
+	private ParametreService parametreService;
+	
+	
 
 	/**
 	 * @PostConstruct public void init() {
@@ -82,7 +91,106 @@ public class StarterController implements Serializable{
 			}
 		}
 		
-
+		
+		// verification des parametre est les crée si besoin
+		
+		// ==== Parmetre code Fournisseur==== //
+		if(parametreService.getParametre("codeFournisseur")==null)
+		{
+			Parametre parametre=new Parametre();
+			parametre.setIdentifiant("codeFournisseur");
+			parametre.setValeur(""+0);
+			parametreService.addParametre(parametre);
+		}
+		if(parametreService.getParametre("prefix_codeFournisseur")==null)
+		{
+			Parametre parametre=new Parametre();
+			parametre.setIdentifiant("prefix_codeFournisseur");
+			parametre.setValeur("F");
+			parametreService.addParametre(parametre);
+		}
+		if(parametreService.getParametre("suffixe_codeFournisseur")==null)
+		{
+			Parametre parametre=new Parametre();
+			parametre.setIdentifiant("suffixe_codeFournisseur");
+			parametre.setValeur("");
+			parametreService.addParametre(parametre);
+		}
+		if(parametreService.getParametre("nbr0_codeFournisseur")==null)
+		{
+			Parametre parametre=new Parametre();
+			parametre.setIdentifiant("nbr0_codeFournisseur");
+			parametre.setValeur(""+5);
+			parametreService.addParametre(parametre);
+		}
+		
+		// ==== Parmetre code Client==== //
+		
+		if(parametreService.getParametre("codeClient")==null)
+		{
+			Parametre parametre=new Parametre();
+			parametre.setIdentifiant("codeClient");
+			parametre.setValeur(""+0);
+			parametreService.addParametre(parametre);
+		}
+		if(parametreService.getParametre("prefix_codeClient")==null)
+		{
+			Parametre parametre=new Parametre();
+			parametre.setIdentifiant("prefix_codeClient");
+			parametre.setValeur("C");
+			parametreService.addParametre(parametre);
+		}
+		if(parametreService.getParametre("suffixe_codeClient")==null)
+		{
+			Parametre parametre=new Parametre();
+			parametre.setIdentifiant("suffixe_codeClient");
+			parametre.setValeur("");
+			parametreService.addParametre(parametre);
+		}
+		if(parametreService.getParametre("nbr0_codeClient")==null)
+		{
+			Parametre parametre=new Parametre();
+			parametre.setIdentifiant("nbr0_codeClient");
+			parametre.setValeur(""+5);
+			parametreService.addParametre(parametre);
+		}
+		
+	// ==== Parmetre code Client==== //
+		
+		if(parametreService.getParametre("numeroBonReception")==null)
+		{
+			Parametre parametre=new Parametre();
+			parametre.setIdentifiant("numeroBonReception");
+			parametre.setValeur(""+0);
+			parametreService.addParametre(parametre);
+		}
+		if(parametreService.getParametre("prefix_numeroBonReception")==null)
+		{
+			Parametre parametre=new Parametre();
+			parametre.setIdentifiant("prefix_numeroBonReception");
+			parametre.setValeur("BR2019/");
+			parametreService.addParametre(parametre);
+		}
+		if(parametreService.getParametre("suffixe_numeroBonReception")==null)
+		{
+			Parametre parametre=new Parametre();
+			parametre.setIdentifiant("suffixe_numeroBonReception");
+			parametre.setValeur("");
+			parametreService.addParametre(parametre);
+		}
+		if(parametreService.getParametre("nbr0_numeroBonReception")==null)
+		{
+			Parametre parametre=new Parametre();
+			parametre.setIdentifiant("nbr0_codeClient");
+			parametre.setValeur(""+5);
+			parametreService.addParametre(parametre);
+		}
+		
+		
+		
+		
+		
+		
 		return null;
 	}
 

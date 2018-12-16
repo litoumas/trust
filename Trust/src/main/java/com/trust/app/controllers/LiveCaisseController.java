@@ -49,17 +49,10 @@ public class LiveCaisseController {
 	@Setter
 	float qteToAdd = 1;
 	
-	@Getter
-	float total;
 	
 	@Getter
 	@Setter
-	float argent;
-	
-	
-	@Getter
-	@Setter
-	float monnaie;
+	double argent;
 
 	public void onRowSelectArticle(SelectEvent event) {
 
@@ -148,4 +141,37 @@ public class LiveCaisseController {
 
 		qteToAdd = 1;
 	}
+
+	
+	public void reset()
+	{
+		bonLivraison = new BonLivraison();
+		selectedLigneVente=null;
+		selectedArticle=null;
+		
+	}
+	
+	public void submit()
+	{
+		
+		
+		
+		
+		
+	}
+	
+	
+	
+	public double getMonnaie() {
+
+		return arrondir(argent-bonLivraison.getTotalPrixTTC());
+		
+	}
+	
+	
+	private double arrondir(double d) {
+		return (double) ((double) ((int) (d * Math.pow(10, 3) + .5)) / Math.pow(10, 3));
+	}
+
+	
 }

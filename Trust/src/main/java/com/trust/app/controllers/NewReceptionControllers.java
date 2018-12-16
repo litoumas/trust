@@ -15,6 +15,7 @@ import com.trust.app.model.Article;
 import com.trust.app.model.Fournisseur;
 import com.trust.app.model.LigneReception;
 import com.trust.app.model.Marque;
+import com.trust.app.model.Parametre;
 import com.trust.app.model.BonReception;
 
 import com.trust.app.service.ArticleService;
@@ -23,6 +24,7 @@ import com.trust.app.service.FournisseurService;
 import com.trust.app.service.ItemService;
 import com.trust.app.service.LigneReceptionService;
 import com.trust.app.service.MarqueService;
+import com.trust.app.service.ParametreService;
 import com.trust.app.service.BonReceptionService;
 import lombok.Getter;
 import lombok.Setter;
@@ -70,6 +72,11 @@ public class NewReceptionControllers implements Serializable {
 	@Setter
 	@ManagedProperty("#{factureFournisseurService}")
 	private FactureAchatService factureFournisseurService;
+	
+	@Getter
+	@Setter
+	@ManagedProperty("#{parametreService}")
+	private ParametreService parametreService;
 
 	@Getter
 	@Setter
@@ -130,6 +137,12 @@ public class NewReceptionControllers implements Serializable {
 			}
 			bonreception.setFournisseur(selectedFournisseur);
 			bonreception.setLigneReceptions(listeLigneReceptions);
+			bonreception.setNumero(getNextNumber(Parametre.NUMEROBONRECEPTION));
+			
+			Parametre par = parametreService.getParametre(Parametre.NUMEROBONRECEPTION);
+			par.setValeur(""+(Integer.parseInt(par.getValeur())+1));
+			parametreService.updateParametre(par);
+			
 			bonreceptionService.addBonReception(bonreception);
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Bon de réception ajouter avec succès.", null));
@@ -159,7 +172,8 @@ public class NewReceptionControllers implements Serializable {
 				ligneReception = new LigneReception();
 				ligneReception.setTva(tva);
 				ligneReception.setRemise(remise);
-
+				ligneReception.setSens(1);
+				
 				Marque marque = selectedArticle.getMarque();
 				selectedArticle = new Article();
 				selectedArticle.setMarque(marque);
@@ -186,6 +200,31 @@ public class NewReceptionControllers implements Serializable {
 			totalTTC += listeLigneReceptions.get(i).getPrix_total_ttc();
 		}
 		return totalTTC;
+	}
+	
+	public String getNextNumber(String parametre) {
+
+		int nbr0 = Integer.parseInt(parametreService.getParametre("nbr0_" + parametre).getValeur()); // nombre de chifre
+																										// que comporte
+																										// le numero
+		String prefix = parametreService.getParametre("prefix_" + parametre).getValeur(); // prefix du nemero
+		String suffixe = parametreService.getParametre("suffixe_" + parametre).getValeur(); // suffixe du nemero
+
+		String numero = prefix;
+
+		Parametre para = parametreService.getParametre(parametre);
+		int num = Integer.parseInt(para.getValeur());
+		num++;
+		int nbr = String.valueOf(num).length(); // ici on utilise le ID a la place de nemero
+
+		for (int i = 0; i <= (nbr0 - nbr) - 1; i++) // on ajoute les 0 manquant
+		{
+			numero += "0";
+		}
+		numero += num + suffixe; // ici on utilise le ID a la place de nemero
+
+		para.setValeur("" + num);
+		return numero;
 	}
 
 }

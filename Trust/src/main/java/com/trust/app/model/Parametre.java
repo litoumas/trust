@@ -16,6 +16,11 @@ import lombok.Data;
 @ManagedBean(name="parametre")
 @Data
 public class Parametre {
+	
+	public static String CODEFOURNISSEUR="codeFournisseur";
+	public static String CODECLIENT="codeClient";
+	public static String NUMEROBONRECEPTION="numeroBonReception";
+	
 	@Id
     @Column(name="id")
     @GeneratedValue(strategy=GenerationType.IDENTITY)

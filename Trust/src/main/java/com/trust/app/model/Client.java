@@ -19,21 +19,8 @@ import lombok.Data;
 @Table(name="CLIENT")
 @ManagedBean(name="client")
 @Data
-public class Client {
+public class Client extends Contact{
 
-	
-	@Id
-	@Column(name = "id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
-	
-	
-	@Column(name = "nom")
-	private String nom;
-
-
-	
-	
 	
 	
 	

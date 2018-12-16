@@ -11,4 +11,5 @@ public interface ParametreService {
     public void deleteParametre(Parametre c);
     public void updateParametre(Parametre c);
     public void testLog();
+	public Parametre getParametre(String nomParametre);
 }

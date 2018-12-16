@@ -86,8 +86,17 @@
 
 					<p:commandButton value="Valider"
 						onclick="PF('WindowsValider').show();" />
-					<p:commandButton value="Remise à zéro" id="zero" />
-
+					<p:commandButton value="Remise à zéro" id="zero"
+						actionListener="#{LiveCaisseController.reset}" update="panier,recap,FormValider">
+						<p:confirm header="Confirmation" message="vous êtes sûre ?"
+							/>
+					</p:commandButton>
+					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+						<p:commandButton value="Oui" type="button"
+							styleClass="ui-confirmdialog-yes" update="panier,recap,FormValider"/>
+						<p:commandButton value="Non" type="button"
+							styleClass="ui-confirmdialog-no" />
+					</p:confirmDialog>
 				</h:panelGrid>
 
 
@@ -250,17 +259,27 @@
 					value="#{LiveCaisseController.bonLivraison.totalPrixBrute} DT" />
 
 				<h:outputText value="Remise :" />
-				<h:outputText value="#{LiveCaisseController.bonLivraison.remise}" />
+				<h:outputText value="#{LiveCaisseController.bonLivraison.remise} %" />
 
 				<h:outputText value="Total :" />
 				<h:outputText id="total"
-					value="#{LiveCaisseController.bonLivraison.totalPrixTTC}" />
+					value="#{LiveCaisseController.bonLivraison.totalPrixTTC} DT" />
 
 
 				<h:outputText value="Argent reçu :" />
-				<h:outputText value="#{LiveCaisseController.argent}" />
+
+				<p:inputNumber id="argent" value="#{LiveCaisseController.argent}"
+					label="Total" symbol="DT" symbolPosition="s" emptyValue="sign"
+					minValue="00.000">
+					<p:ajax event="keyup" update="monnaie" />
+				</p:inputNumber>
+
 				<h:outputText value="Monnaie a rendre :" />
-				<h:outputText value="#{LiveCaisseController.monnaie}" />
+				<h:outputText id="monnaie"
+					value="#{LiveCaisseController.monnaie} DT" />
+
+
+
 
 				<p:commandButton value="Valider" id="B_valider" />
 			</h:panelGrid>

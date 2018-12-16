@@ -13,7 +13,7 @@ import com.trust.app.model.Parametre;
 
 
 @Service
-@ManagedBean(name = "ParametreService")
+@ManagedBean(name = "parametreService")
 @SessionScoped
 public class ParametreServiceImpl implements ParametreService,Serializable{
 
@@ -54,6 +54,13 @@ public class ParametreServiceImpl implements ParametreService,Serializable{
 
 	@Override
 	public void testLog() {
+		
+	}
+
+	@Override
+	@Transactional
+	public Parametre getParametre(String nomParametre) {
+		return this.ParametreDAO.getParametre(nomParametre);
 		
 	}
 

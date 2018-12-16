@@ -2,12 +2,20 @@ package com.trust.app.dao;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Conjunction;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.LogicalExpression;
+import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
+
+import com.trust.app.model.Article;
+import com.trust.app.model.BonReception;
 import com.trust.app.model.Parametre;
 
 
@@ -72,6 +80,25 @@ public class ParametreDAOImpl implements ParametreDAO{
 		{
 			logger.error("Hibernate exception: "+e.getMessage());
 		}
+	}
+	@Override
+	public Parametre getParametre(String nomParametre) {
+		if((nomParametre==null)||(nomParametre==""))
+			return null;
+		
+		
+
+		Session session = this.sessionFactory.getCurrentSession();
+		String Query = "from Parametre where identifiant ='" + nomParametre+"'";
+
+		List<Parametre> parametres = session.createQuery(Query).list();
+
+
+		
+		if(parametres.size()!=0)
+		return parametres.get(0);
+		
+		return null;
 	}
 
 }

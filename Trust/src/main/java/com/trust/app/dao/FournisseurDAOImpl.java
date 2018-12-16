@@ -10,8 +10,8 @@ import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
+
 import com.trust.app.model.Fournisseur;
-import com.trust.app.model.Marque;
 /**
  * Fournisseur data access object interface implementation
  * */
@@ -94,4 +94,5 @@ public class FournisseurDAOImpl implements FournisseurDAO {
 		return null;
 		
 	}
+	
 }

@@ -17,7 +17,7 @@
 				<h:panelGrid columns="4" columnClasses="label, value">
 					<h:outputText value="Fournisseur : *" />
 					<p:inputText id="id_fournisseur"
-						value="#{NewReceptionControllers.selectedFournisseur.id}"
+						value="#{NewReceptionControllers.selectedFournisseur.code}"
 						required="true" label="Fournisseur" />
 
 					<p:commandButton icon="ui-icon-search" title="Recherche"
@@ -237,9 +237,9 @@
 						update="R_entete:id_fournisseur,R_entete:nom_fournisseur"
 						oncomplete="PF('selecteFournisseur').hide();" />
 
-					<p:column headerText="Id" filterBy="#{fournisseur.id}"
+					<p:column headerText="Code" filterBy="#{fournisseur.code}"
 						filterMatchMode="contains" width="100">
-						<h:outputText value="#{fournisseur.id}" />
+						<h:outputText value="#{fournisseur.code}" />
 					</p:column>
 
 					<p:column headerText="nom" filterBy="#{fournisseur.nom}"
