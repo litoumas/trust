@@ -67,4 +67,11 @@ public class ClientServiceImpl implements ClientService,Serializable{
 		return this.ClientDAO.findWithName(nom);
 	}
 
+	@Override
+	@Transactional
+	public Client getClientPassager() {
+		// TODO Auto-generated method stub
+		return this.ClientDAO.getClientPassager();
+	}
+
 }

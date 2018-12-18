@@ -6,8 +6,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
-import com.trust.app.Manager.PathManager;
-import com.trust.app.Manager.RedirectManager;
+import com.trust.app.manager.PathManager;
+import com.trust.app.manager.RedirectManager;
 import com.trust.app.model.Caisse;
 import com.trust.app.service.CaisseService;
 

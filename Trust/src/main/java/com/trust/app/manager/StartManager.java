@@ -1,4 +1,4 @@
-package com.trust.app.Manager;
+package com.trust.app.manager;
 
 public class StartManager {
 

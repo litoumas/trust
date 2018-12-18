@@ -72,7 +72,7 @@ public class NewReceptionControllers implements Serializable {
 	@Setter
 	@ManagedProperty("#{factureFournisseurService}")
 	private FactureAchatService factureFournisseurService;
-	
+
 	@Getter
 	@Setter
 	@ManagedProperty("#{parametreService}")
@@ -133,16 +133,17 @@ public class NewReceptionControllers implements Serializable {
 			for (int i = 0; i <= listeLigneReceptions.size() - 1; i++) {
 				listeLigneReceptions.get(i).setDate(bonreception.getDateReception());
 				listeLigneReceptions.get(i).setBlack(bonreception.isBlack());
+				listeLigneReceptions.get(i).setValider(true);
 				ligneReceptionService.addLigneReception(listeLigneReceptions.get(i));
 			}
 			bonreception.setFournisseur(selectedFournisseur);
 			bonreception.setLigneReceptions(listeLigneReceptions);
 			bonreception.setNumero(getNextNumber(Parametre.NUMEROBONRECEPTION));
-			
+
 			Parametre par = parametreService.getParametre(Parametre.NUMEROBONRECEPTION);
-			par.setValeur(""+(Integer.parseInt(par.getValeur())+1));
+			par.setValeur("" + (Integer.parseInt(par.getValeur()) + 1));
 			parametreService.updateParametre(par);
-			
+
 			bonreceptionService.addBonReception(bonreception);
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Bon de réception ajouter avec succès.", null));
@@ -163,17 +164,18 @@ public class NewReceptionControllers implements Serializable {
 						selectedArticle.getItem()) == null) // on verifie si l'article existe
 					articleService.addArticle(selectedArticle); // si non on l'ajoute a la BD
 
-				ligneReception.setArticle(selectedArticle);
+				ligneReception.setArticle(
+						articleService.findWithMarqueAndCode(selectedArticle.getMarque(), selectedArticle.getItem()));
+				ligneReception.setSens(1);
 				listeLigneReceptions.add(ligneReception);
 
-				// on remet tout a zero
+				// on remet tout a zero5
 				int tva = ligneReception.getTva();
 				int remise = ligneReception.getRemise();
 				ligneReception = new LigneReception();
 				ligneReception.setTva(tva);
 				ligneReception.setRemise(remise);
-				ligneReception.setSens(1);
-				
+
 				Marque marque = selectedArticle.getMarque();
 				selectedArticle = new Article();
 				selectedArticle.setMarque(marque);
@@ -201,7 +203,7 @@ public class NewReceptionControllers implements Serializable {
 		}
 		return totalTTC;
 	}
-	
+
 	public String getNextNumber(String parametre) {
 
 		int nbr0 = Integer.parseInt(parametreService.getParametre("nbr0_" + parametre).getValeur()); // nombre de chifre

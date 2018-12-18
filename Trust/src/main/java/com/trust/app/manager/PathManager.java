@@ -1,4 +1,4 @@
-package com.trust.app.Manager;
+package com.trust.app.manager;
 
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -22,8 +22,8 @@ import org.primefaces.context.RequestContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.trust.app.Manager.PathManager;
-import com.trust.app.Manager.RedirectManager;
+import com.trust.app.manager.PathManager;
+import com.trust.app.manager.RedirectManager;
 import com.trust.app.model.Droit;
 import com.trust.app.model.User;
 

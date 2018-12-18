@@ -16,36 +16,36 @@ import com.trust.app.model.BonLivraison;
 @SessionScoped
 public class BonLivraisonServiceImpl implements BonLivraisonService {
 
-	private BonLivraisonDAO BonLivraisonDAO;
+	private BonLivraisonDAO bonLivraisonDAO;
 
 	public void setBonLivraisonDAO(BonLivraisonDAO BonLivraisonDAO) {
-		this.BonLivraisonDAO = BonLivraisonDAO;
+		this.bonLivraisonDAO = BonLivraisonDAO;
 	}
 
 	@Override
 	@Transactional
 	public List<BonLivraison> listBonLivraisons() {
-		return this.BonLivraisonDAO.listBonLivraisons();
+		return this.bonLivraisonDAO.listBonLivraisons();
 	}
 
 	@Override
 	@Transactional
 	public void addBonLivraison(BonLivraison u) {
-		this.BonLivraisonDAO.addBonLivraison(u);
+		this.bonLivraisonDAO.addBonLivraison(u);
 
 	}
 
 	@Override
 	@Transactional
 	public void deleteBonLivraison(BonLivraison u) {
-		this.BonLivraisonDAO.deleteBonLivraison(u);
+		this.bonLivraisonDAO.deleteBonLivraison(u);
 
 	}
 
 	@Override
 	@Transactional
 	public void updateBonLivraison(BonLivraison u) {
-		this.BonLivraisonDAO.updateBonLivraison(u);
+		this.bonLivraisonDAO.updateBonLivraison(u);
 
 	}
 

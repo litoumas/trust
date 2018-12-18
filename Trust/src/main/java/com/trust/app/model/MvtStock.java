@@ -49,9 +49,11 @@ public class MvtStock {
 	@Column(name = "isblack")
 	boolean black;
 	
-	
 	@Column(name = "Sens")
 	int sens; // 1 = reception | 2 = sortie
+	
+	@Column(name = "valider")
+	boolean valider;
 	
 
 }

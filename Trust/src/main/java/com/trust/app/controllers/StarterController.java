@@ -11,10 +11,12 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
-import com.trust.app.Manager.PathManager;
-import com.trust.app.Manager.RedirectManager;
+import com.trust.app.manager.PathManager;
+import com.trust.app.manager.RedirectManager;
+import com.trust.app.model.Client;
 import com.trust.app.model.Droit;
 import com.trust.app.model.Parametre;
+import com.trust.app.service.ClientService;
 import com.trust.app.service.DroitService;
 import com.trust.app.service.ParametreService;
 import com.trust.app.service.UserService;
@@ -32,22 +34,26 @@ public class StarterController implements Serializable{
 	private static final long serialVersionUID = -7690233183716547910L;
 	
 	
+
+	@Getter
+	@Setter
 	@ManagedProperty("#{userService}")
-	@Getter
-	@Setter
 	private UserService userService;
-	
-	
+
+	@Getter
+	@Setter
 	@ManagedProperty("#{droitService}")
-	@Getter
-	@Setter
 	private DroitService droitService;
-	
-	@ManagedProperty("#{parametreService}")
+
 	@Getter
 	@Setter
+	@ManagedProperty("#{parametreService}")
 	private ParametreService parametreService;
 	
+	@Getter
+	@Setter
+	@ManagedProperty("#{clientService}")
+	private ClientService clientService;
 	
 
 	/**
@@ -95,99 +101,126 @@ public class StarterController implements Serializable{
 		// verification des parametre est les crée si besoin
 		
 		// ==== Parmetre code Fournisseur==== //
-		if(parametreService.getParametre("codeFournisseur")==null)
+		if(parametreService.getParametre(Parametre.CODEFOURNISSEUR)==null)
 		{
 			Parametre parametre=new Parametre();
-			parametre.setIdentifiant("codeFournisseur");
+			parametre.setIdentifiant(Parametre.CODEFOURNISSEUR);
 			parametre.setValeur(""+0);
 			parametreService.addParametre(parametre);
 		}
-		if(parametreService.getParametre("prefix_codeFournisseur")==null)
+		if(parametreService.getParametre("prefix_"+Parametre.CODEFOURNISSEUR)==null)
 		{
 			Parametre parametre=new Parametre();
-			parametre.setIdentifiant("prefix_codeFournisseur");
+			parametre.setIdentifiant("prefix_"+Parametre.CODEFOURNISSEUR);
 			parametre.setValeur("F");
 			parametreService.addParametre(parametre);
 		}
-		if(parametreService.getParametre("suffixe_codeFournisseur")==null)
+		if(parametreService.getParametre("suffixe_"+Parametre.CODEFOURNISSEUR)==null)
 		{
 			Parametre parametre=new Parametre();
-			parametre.setIdentifiant("suffixe_codeFournisseur");
+			parametre.setIdentifiant("suffixe_"+Parametre.CODEFOURNISSEUR);
 			parametre.setValeur("");
 			parametreService.addParametre(parametre);
 		}
-		if(parametreService.getParametre("nbr0_codeFournisseur")==null)
+		if(parametreService.getParametre("nbr0_"+Parametre.CODEFOURNISSEUR)==null)
 		{
 			Parametre parametre=new Parametre();
-			parametre.setIdentifiant("nbr0_codeFournisseur");
+			parametre.setIdentifiant("nbr0_"+Parametre.CODEFOURNISSEUR);
 			parametre.setValeur(""+5);
 			parametreService.addParametre(parametre);
 		}
 		
 		// ==== Parmetre code Client==== //
 		
-		if(parametreService.getParametre("codeClient")==null)
+		if(parametreService.getParametre(Parametre.CODECLIENT)==null)
 		{
 			Parametre parametre=new Parametre();
-			parametre.setIdentifiant("codeClient");
+			parametre.setIdentifiant(Parametre.CODECLIENT);
 			parametre.setValeur(""+0);
 			parametreService.addParametre(parametre);
 		}
-		if(parametreService.getParametre("prefix_codeClient")==null)
+		if(parametreService.getParametre("prefix_"+Parametre.CODECLIENT)==null)
 		{
 			Parametre parametre=new Parametre();
-			parametre.setIdentifiant("prefix_codeClient");
+			parametre.setIdentifiant("prefix_"+Parametre.CODECLIENT);
 			parametre.setValeur("C");
 			parametreService.addParametre(parametre);
 		}
-		if(parametreService.getParametre("suffixe_codeClient")==null)
+		if(parametreService.getParametre("suffixe_"+Parametre.CODECLIENT)==null)
 		{
 			Parametre parametre=new Parametre();
-			parametre.setIdentifiant("suffixe_codeClient");
+			parametre.setIdentifiant("suffixe_"+Parametre.CODECLIENT);
 			parametre.setValeur("");
 			parametreService.addParametre(parametre);
 		}
-		if(parametreService.getParametre("nbr0_codeClient")==null)
+		if(parametreService.getParametre("nbr0_"+Parametre.CODECLIENT)==null)
 		{
 			Parametre parametre=new Parametre();
-			parametre.setIdentifiant("nbr0_codeClient");
+			parametre.setIdentifiant("nbr0_"+Parametre.CODECLIENT);
 			parametre.setValeur(""+5);
 			parametreService.addParametre(parametre);
 		}
 		
 	// ==== Parmetre code Client==== //
 		
-		if(parametreService.getParametre("numeroBonReception")==null)
+		if(parametreService.getParametre(Parametre.NUMEROBONRECEPTION)==null)
 		{
 			Parametre parametre=new Parametre();
-			parametre.setIdentifiant("numeroBonReception");
+			parametre.setIdentifiant(Parametre.NUMEROBONRECEPTION);
 			parametre.setValeur(""+0);
 			parametreService.addParametre(parametre);
 		}
-		if(parametreService.getParametre("prefix_numeroBonReception")==null)
+		if(parametreService.getParametre("prefix_"+Parametre.NUMEROBONRECEPTION)==null)
 		{
 			Parametre parametre=new Parametre();
-			parametre.setIdentifiant("prefix_numeroBonReception");
+			parametre.setIdentifiant("prefix_"+Parametre.NUMEROBONRECEPTION);
 			parametre.setValeur("BR2019/");
 			parametreService.addParametre(parametre);
 		}
-		if(parametreService.getParametre("suffixe_numeroBonReception")==null)
+		if(parametreService.getParametre("suffixe_"+Parametre.NUMEROBONRECEPTION)==null)
 		{
 			Parametre parametre=new Parametre();
-			parametre.setIdentifiant("suffixe_numeroBonReception");
+			parametre.setIdentifiant("suffixe_"+Parametre.NUMEROBONRECEPTION);
 			parametre.setValeur("");
 			parametreService.addParametre(parametre);
 		}
-		if(parametreService.getParametre("nbr0_numeroBonReception")==null)
+		if(parametreService.getParametre("nbr0_"+Parametre.NUMEROBONRECEPTION)==null)
 		{
 			Parametre parametre=new Parametre();
-			parametre.setIdentifiant("nbr0_codeClient");
+			parametre.setIdentifiant("nbr0_"+Parametre.NUMEROBONRECEPTION);
 			parametre.setValeur(""+5);
 			parametreService.addParametre(parametre);
 		}
 		
 		
 		
+		
+		// verification du Client passager
+		
+		List<Client> listClient=clientService.listClients();
+		if(listClient.size()==0)
+		{
+			Client client=new Client();
+			client.setNom("Client Passager");
+			client.setCode(getNextNumber(Parametre.CODECLIENT));
+			clientService.addClient(client);
+			
+			
+			Parametre par = parametreService.getParametre(Parametre.CODECLIENT);
+			par.setValeur(""+(Integer.parseInt(par.getValeur())+1));
+			parametreService.updateParametre(par);
+			
+		}
+		
+		// verification du % vente
+		
+		if(parametreService.getParametre(Parametre.PAR100SVENTEDECLARER)==null)
+		{
+			Parametre parametre=new Parametre();
+			parametre.setIdentifiant(Parametre.PAR100SVENTEDECLARER);
+			parametre.setValeur("10");
+			parametreService.addParametre(parametre);
+		}
 		
 		
 		
@@ -196,7 +229,30 @@ public class StarterController implements Serializable{
 
 	
 	
-	
+	public String getNextNumber(String parametre) {
+
+		int nbr0 = Integer.parseInt(parametreService.getParametre("nbr0_" + parametre).getValeur()); // nombre de chifre
+																										// que comporte
+																										// le numero
+		String prefix = parametreService.getParametre("prefix_" + parametre).getValeur(); // prefix du nemero
+		String suffixe = parametreService.getParametre("suffixe_" + parametre).getValeur(); // suffixe du nemero
+
+		String numero = prefix;
+
+		Parametre para = parametreService.getParametre(parametre);
+		int num = Integer.parseInt(para.getValeur());
+		num++;
+		int nbr = String.valueOf(num).length(); // ici on utilise le ID a la place de nemero
+
+		for (int i = 0; i <= (nbr0 - nbr) - 1; i++) // on ajoute les 0 manquant
+		{
+			numero += "0";
+		}
+		numero += num + suffixe; // ici on utilise le ID a la place de nemero
+
+		para.setValeur("" + num);
+		return numero;
+	}
 	
 	
 	

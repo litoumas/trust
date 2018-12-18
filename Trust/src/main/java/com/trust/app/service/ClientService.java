@@ -12,4 +12,5 @@ public interface ClientService {
     public void updateClient(Client c);
     public void testLog();
 	public Client findWithName(String nom);
+	public Client getClientPassager();
 }

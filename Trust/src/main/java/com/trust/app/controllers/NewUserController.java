@@ -12,8 +12,8 @@ import javax.faces.context.FacesContext;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
-import com.trust.app.Manager.PathManager;
-import com.trust.app.Manager.RedirectManager;
+import com.trust.app.manager.PathManager;
+import com.trust.app.manager.RedirectManager;
 import com.trust.app.model.Droit;
 import com.trust.app.model.User;
 import com.trust.app.service.DroitService;

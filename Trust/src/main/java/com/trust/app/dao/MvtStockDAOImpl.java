@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import com.trust.app.model.Article;
 import com.trust.app.model.MvtStock;
 /**
  * MvtStock data access object interface implementation
@@ -77,6 +78,88 @@ public class MvtStockDAOImpl implements MvtStockDAO {
 		{
 			logger.error("Hibernate exception: "+e.getMessage());
 		}
+	}
+
+	@Override
+	public Double getStockTotal(Article article) {
+		
+		Double in=(double) 0;
+		Double out=(double) 0;
+		Session session = this.sessionFactory.getCurrentSession();
+		List<Double> lintInt = session.createQuery("SELECT sum(m.qte) from MvtStock m WHERE  article_id="+article.getId()+" AND sens=1" ).list();
+		if(lintInt.size()!=0)
+		{
+			in=lintInt.get(0);
+			if(in==null)
+				in=(double) 0;
+		}
+			
+		
+		List<Double> lintOut = session.createQuery("SELECT sum(m.qte) from MvtStock m WHERE  article_id="+article.getId()+" AND sens=2" ).list();
+		if(lintOut.size()!=0)
+		{
+			out=lintOut.get(0);
+			if(out==null)
+				out=(double) 0;
+		}
+			
+		
+		return (in-out);
+	}
+	
+	
+	@Override
+	public Double getStockBlack(Article article) {
+		
+		Double in=(double) 0;
+		Double out=(double) 0;
+		Session session = this.sessionFactory.getCurrentSession();
+		List<Double> lintInt = session.createQuery("SELECT sum(m.qte) from MvtStock m WHERE  article_id="+article.getId()+" AND sens=1 AND isblack= true AND valider=true" ).list();
+		if(lintInt.size()!=0)
+		{
+			in=lintInt.get(0);
+			if(in==null)
+				in=(double) 0;
+		}
+			
+		
+		List<Double> lintOut = session.createQuery("SELECT sum(m.qte) from MvtStock m WHERE  article_id="+article.getId()+" AND sens=2  AND isblack= true AND valider=true" ).list();
+		if(lintOut.size()!=0)
+		{
+			out=lintOut.get(0);
+			if(out==null)
+				out=(double) 0;
+		}
+			
+		
+		return (in-out);
+	}
+
+	@Override
+	public Double getStockDeclarer(Article article) {
+		
+		Double in=(double) 0;
+		Double out=(double) 0;
+		Session session = this.sessionFactory.getCurrentSession();
+		List<Double> lintInt = session.createQuery("SELECT sum(m.qte) from MvtStock m WHERE  article_id="+article.getId()+" AND sens=1 AND isblack= false AND valider=true" ).list();
+		if(lintInt.size()!=0)
+		{
+			in=lintInt.get(0);
+			if(in==null)
+				in=(double) 0;
+		}
+			
+		
+		List<Double> lintOut = session.createQuery("SELECT sum(m.qte) from MvtStock m WHERE  article_id="+article.getId()+" AND sens=2  AND isblack= false AND valider=true" ).list();
+		if(lintOut.size()!=0)
+		{
+			out=lintOut.get(0);
+			if(out==null)
+				out=(double) 0;
+		}
+			
+		
+		return (in-out);
 	}
 
 }

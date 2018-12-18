@@ -98,4 +98,9 @@ public class ClientDAOImpl implements ClientDAO {
 		return null;
 		
 	}
+
+	@Override
+	public Client getClientPassager() {
+		return findWithName("Client Passager");
+	}
 }

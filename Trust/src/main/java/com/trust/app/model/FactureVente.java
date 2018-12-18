@@ -29,7 +29,7 @@ public class FactureVente {
 	
 	
 	@OneToOne
-	Fournisseur fournisseur;
+	Client client;
 	
 	@Column(name="datefacture")
 	Date dateFacture;
@@ -50,9 +50,9 @@ public class FactureVente {
 	String note;
 	
 	
-	@OneToMany(fetch=FetchType.EAGER) 
-	@JoinColumn(name = "factureClient_id")
-	private List<BonLivraison> bonLivraison;
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinColumn(name = "Document_id")
+	private List<LigneLivraison> ligneLivraisons;
 	
 	
 }

@@ -19,30 +19,30 @@
 #{CaisseBean.getThereIsOpened()}"
 
 	<p:layout fullPage="true">
-
+<p:growl id="growl" showDetail="true" sticky="true" life="3000" />  
 
 		<p:layoutUnit position="south" size="200" header="Bottom"
 			resizable="true" collapsible="true">
 			<h:panelGrid columns="2" id="recap">
 				<h:outputText value="Total Brut:" />
 				<h:outputText
-					value="#{LiveCaisseController.bonLivraison.totalPrixBrute} DT" />
+					value="#{LiveCaisseController.venteComptoir.totalPrixBrute} DT" />
 				<h:outputText value="Remise :" />
 				<h:outputText
-					value="#{LiveCaisseController.bonLivraison.totalRemise} DT" />
+					value="#{LiveCaisseController.venteComptoir.totalRemise} DT" />
 				<h:outputText value="" />
 				<h:outputText value="--------------" />
 				<h:outputText value="Total :" />
 				<h:outputText
-					value="#{LiveCaisseController.bonLivraison.totalPrixTTC} DT" />
+					value="#{LiveCaisseController.venteComptoir.totalPrixTTC} DT" />
 
 				<h:outputText value=" Gain :" />
 				<h:outputText
-					value="#{LiveCaisseController.bonLivraison.totalGain} DT" />
+					value="#{LiveCaisseController.venteComptoir.totalGain} DT" />
 
 				<h:outputText value=" Prix mini :" />
 				<h:outputText
-					value="#{LiveCaisseController.bonLivraison.totalPrixMini} DT" />
+					value="#{LiveCaisseController.venteComptoir.totalPrixMini} DT" />
 
 
 			</h:panelGrid>
@@ -63,11 +63,11 @@
 
 					<h:outputText value="Total Brut:" />
 					<h:outputText
-						value="#{LiveCaisseController.bonLivraison.totalPrixBrute} DT" />
+						value="#{LiveCaisseController.venteComptoir.totalPrixBrute} DT" />
 
 					<h:outputText value="Remise :" />
 					<p:inputNumber id="Remise"
-						value="#{LiveCaisseController.bonLivraison.remise}" label="Remise"
+						value="#{LiveCaisseController.venteComptoir.remise}" label="Remise"
 						symbol="%" symbolPosition="s" emptyValue="sign" minValue="00.000"
 						maxValue="100">
 						<p:ajax event="keyup"
@@ -76,7 +76,7 @@
 
 					<h:outputText value="Total :" />
 					<p:inputNumber id="total"
-						value="#{LiveCaisseController.bonLivraison.totalPrixTTC}"
+						value="#{LiveCaisseController.venteComptoir.totalPrixTTC}"
 						label="Total" symbol="DT" symbolPosition="s" emptyValue="sign"
 						minValue="00.000">
 						<p:ajax event="keyup"
@@ -101,7 +101,7 @@
 
 
 				<p:dataTable id="listeLigneVente" var="lignevente"
-					value="#{LiveCaisseController.bonLivraison.ligneLivraisons}"
+					value="#{LiveCaisseController.venteComptoir.listeligneVenteComptoir}"
 					selectionMode="single"
 					selection="#{LiveCaisseController.selectedLigneVente}"
 					rowKey="#{lignevente.article.id}">
@@ -146,7 +146,8 @@
 				<p:dataTable var="article" value="#{ArticleBean.listArticles}"
 					selectionMode="single"
 					selection="#{LiveCaisseController.selectedArticle}"
-					rowKey="#{article.id}">
+					rowKey="#{article.id}"
+					reflow="true" rows="20">
 
 
 					<p:column headerText="Marque"
@@ -167,9 +168,8 @@
 						filterMatchMode="contains" width="100">
 						<h:outputText value="#{article.prixvente}" />
 					</p:column>
-					<p:column headerText="Stock" filterBy="#{article.stockTotal}"
-						filterMatchMode="contains" width="70">
-						<h:outputText value="#{article.stockTotal}" />
+					<p:column headerText="Stock" width="70">
+						<h:outputText value="#{MvtStockBean.getStockTotal(article)}" />
 					</p:column>
 					<p:column headerText="Position" filterBy="#{article.position}"
 						filterMatchMode="contains" width="100">
@@ -207,7 +207,7 @@
 						value="#{LiveCaisseController.selectedArticle.prixmini}" />
 					<h:outputText value="Stock : " />
 					<h:outputText
-						value="#{LiveCaisseController.selectedArticle.stockTotal}" />
+						value="#{MvtStockBean.getStockTotal(LiveCaisseController.selectedArticle)}" />
 					<h:outputText value="Position : " />
 					<h:outputText
 						value="#{LiveCaisseController.selectedArticle.position}" />
@@ -256,14 +256,14 @@
 
 				<h:outputText value="Total Brut:" />
 				<h:outputText
-					value="#{LiveCaisseController.bonLivraison.totalPrixBrute} DT" />
+					value="#{LiveCaisseController.venteComptoir.totalPrixBrute} DT" />
 
 				<h:outputText value="Remise :" />
-				<h:outputText value="#{LiveCaisseController.bonLivraison.remise} %" />
+				<h:outputText value="#{LiveCaisseController.venteComptoir.remise} %" />
 
 				<h:outputText value="Total :" />
 				<h:outputText id="total"
-					value="#{LiveCaisseController.bonLivraison.totalPrixTTC} DT" />
+					value="#{LiveCaisseController.venteComptoir.totalPrixTTC} DT" />
 
 
 				<h:outputText value="Argent reçu :" />
@@ -281,12 +281,12 @@
 
 
 
-				<p:commandButton value="Valider" id="B_valider" />
+				<p:commandButton value="Valider" id="B_valider" actionListener="#{LiveCaisseController.submit}" update="growl,panier,recap,FormValider,"/>
 			</h:panelGrid>
 
 
 			<p:dataTable var="lignevente"
-				value="#{LiveCaisseController.bonLivraison.ligneLivraisons}">
+				value="#{LiveCaisseController.venteComptoir.listeligneVenteComptoir}">
 				<p:column headerText="Marque" width="100">
 					<h:outputText value="#{lignevente.article.marque.designation}" />
 				</p:column>

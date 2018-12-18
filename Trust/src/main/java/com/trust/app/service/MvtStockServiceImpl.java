@@ -9,11 +9,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.trust.app.dao.MvtStockDAO;
+import com.trust.app.model.Article;
 import com.trust.app.model.MvtStock;
 
 
 @Service
-@ManagedBean(name = "mvtStockService")
+@ManagedBean(name = "MvtStockService")
 @SessionScoped
 public class MvtStockServiceImpl implements MvtStockService,Serializable{
 
@@ -58,6 +59,33 @@ public class MvtStockServiceImpl implements MvtStockService,Serializable{
 	@Override
 	public void testLog() {
 		
+	}
+
+	@Override
+	@Transactional
+	public Double getStockTotal(Article article) {
+		if(article!=null)
+		return this.MvtStockDAO.getStockTotal(article);
+		
+		return (double) 0;
+	}
+
+	@Override
+	@Transactional
+	public Double getStockBlack(Article article) {
+		if(article!=null)
+			return this.MvtStockDAO.getStockBlack(article);
+			
+			return (double) 0;
+	}
+
+	@Override
+	@Transactional
+	public Double getStockDeclarer(Article article) {
+		if(article!=null)
+			return this.MvtStockDAO.getStockDeclarer(article);
+			
+			return (double) 0;
 	}
 
 

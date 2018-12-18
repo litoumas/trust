@@ -24,8 +24,6 @@
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".xhtml" />
 	</beans:bean>
-	<context:component-scan
-		base-package="app.controllers" />
 
 	<beans:bean id="dataSource"
 		class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
@@ -47,6 +45,7 @@
 
 				<beans:value>com.trust.app.model.Article</beans:value>
 				<beans:value>com.trust.app.model.BonReception</beans:value>
+				<beans:value>com.trust.app.model.BonLivraison</beans:value>
 				<beans:value>com.trust.app.model.Caisse</beans:value>
 				<beans:value>com.trust.app.model.Client</beans:value>
 				<beans:value>com.trust.app.model.Droit</beans:value>
@@ -61,12 +60,12 @@
 				<beans:value>com.trust.app.model.MarqueTracteur</beans:value>
 				<beans:value>com.trust.app.model.MvtStock</beans:value>
 				<beans:value>com.trust.app.model.Parametre</beans:value>
-				
+
 				<beans:value>com.trust.app.model.Tracteur</beans:value>
 				<beans:value>com.trust.app.model.User</beans:value>
-				
 
-
+				<beans:value>com.trust.app.model.LigneVenteComptoir</beans:value>
+				<beans:value>com.trust.app.model.VenteComptoir</beans:value>
 
 
 			</beans:list>
@@ -115,6 +114,31 @@
 
 
 
+	<beans:bean id="ligneVenteComptoirDAO"
+		class="com.trust.app.dao.LigneVenteComptoirDAOImpl">
+		<beans:property name="sessionFactory"
+			ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+	<beans:bean id="ligneVenteComptoirService"
+		class="com.trust.app.service.LigneVenteComptoirServiceImpl">
+		<beans:property name="ligneVenteComptoirDAO"
+			ref="ligneVenteComptoirDAO"></beans:property>
+	</beans:bean>
+
+
+	<beans:bean id="venteComptoirDAO"
+		class="com.trust.app.dao.VenteComptoirDAOImpl">
+		<beans:property name="sessionFactory"
+			ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+	<beans:bean id="venteComptoirService"
+		class="com.trust.app.service.VenteComptoirServiceImpl">
+		<beans:property name="venteComptoirDAO"
+			ref="venteComptoirDAO"></beans:property>
+	</beans:bean>
+
+
+
 
 
 
@@ -148,7 +172,20 @@
 	</beans:bean>
 	<beans:bean id="bonReceptionService"
 		class="com.trust.app.service.BonReceptionServiceImpl">
-		<beans:property name="bonReceptionDAO" ref="bonReceptionDAO"></beans:property>
+		<beans:property name="bonReceptionDAO"
+			ref="bonReceptionDAO"></beans:property>
+	</beans:bean>
+
+
+	<beans:bean id="bonLivraisonDAO"
+		class="com.trust.app.dao.BonLivraisonDAOImpl">
+		<beans:property name="sessionFactory"
+			ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+	<beans:bean id="bonLivraisonService"
+		class="com.trust.app.service.BonLivraisonServiceImpl">
+		<beans:property name="bonLivraisonDAO"
+			ref="bonLivraisonDAO"></beans:property>
 	</beans:bean>
 
 
@@ -274,6 +311,7 @@
 		<beans:property name="sessionFactory"
 			ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
+
 
 	<context:component-scan
 		base-package="com.trust.app" />

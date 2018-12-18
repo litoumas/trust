@@ -20,6 +20,7 @@ public class Parametre {
 	public static String CODEFOURNISSEUR="codeFournisseur";
 	public static String CODECLIENT="codeClient";
 	public static String NUMEROBONRECEPTION="numeroBonReception";
+	public static String PAR100SVENTEDECLARER="par100ventedeclarer";
 	
 	@Id
     @Column(name="id")

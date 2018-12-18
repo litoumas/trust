@@ -17,6 +17,7 @@ import org.springframework.stereotype.Repository;
 import com.trust.app.model.Article;
 import com.trust.app.model.Item;
 import com.trust.app.model.Marque;
+import com.trust.app.model.MvtStock;
 import com.trust.app.model.User;
 
 @Repository
@@ -35,7 +36,6 @@ public class ArticleDAOImpl implements ArticleDAO {
 			Session session = this.sessionFactory.getCurrentSession();
 			@SuppressWarnings("unchecked")
 			List<Article> articleList = session.createQuery("from Article order by item_id").list();
-			System.out.println("====>" + articleList.size());
 			for (Article c : articleList) {
 				logger.info("Article List::" + c);
 			}
@@ -83,28 +83,15 @@ public class ArticleDAOImpl implements ArticleDAO {
 
 	@Override
 	public Article findWithMarqueAndCode(Marque marque, Item item) {
-
 		Session session = this.sessionFactory.openSession();
-		Criteria cr = session.createCriteria(Article.class);
-		Criterion c_marque = null;
-		if (marque != null)
-			c_marque = Restrictions.eq("marque", marque);
-
-		Criterion c_item = null;
-		if (item != null)
-			c_item = Restrictions.eq("item", item);
-
-		LogicalExpression andExp = Restrictions.and(c_marque, c_item);
-		cr.add(andExp);
-
-		List<Article> articlesList = cr.list();
-
+		String query="from Article WHERE marque_id="+marque.getId()+" AND item_id= "+item.getId()+"";
+		System.out.println("=====> query"+query);
+		List<Article> ArticleList = session.createQuery(query).list();
+		System.out.println("=====> ArticleList"+ArticleList.size());
+		
 		session.close();
-
-		if (articlesList.size() != 0) {
-			return articlesList.get(0);
-		}
-
+		if(ArticleList.size()!=0)
+			return ArticleList.get(0);
 		return null;
 	}
 

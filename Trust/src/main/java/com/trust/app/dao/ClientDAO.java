@@ -11,5 +11,6 @@ public interface ClientDAO {
     public void deleteClient(Client p);
     public void updateClient(Client p);
 	public Client findWithName(String nom);
+	public Client getClientPassager();
 	
 }

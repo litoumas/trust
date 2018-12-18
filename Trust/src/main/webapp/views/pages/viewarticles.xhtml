@@ -38,9 +38,8 @@
 					filterMatchMode="contains" width="100">
 					<h:outputText value="#{article.prixvente}" />
 				</p:column>
-				<p:column headerText="Stock" filterBy="#{article.stockTotal}"
-					filterMatchMode="contains" width="70">
-					<h:outputText value="#{article.stockTotal}" />
+				<p:column headerText="Stock" width="70">
+					<h:outputText value="#{MvtStockBean.getStockTotal(article)}" />
 				</p:column>
 				<p:column headerText="Position" filterBy="#{article.position}"
 					filterMatchMode="contains" width="100">
@@ -60,49 +59,66 @@
 
 		<p:dialog header="Detail Article" widgetVar="DetailArticle"
 			width="600">
+			<h:form id="detail_article">
+				<h:panelGrid columns="3" columnClasses="label, value">
 
-			<h:panelGrid id="detail_article" columns="3"
-				columnClasses="label, value">
-
-				<h:outputText value="" />
-				<h:outputText value="Marque : " />
-				<h:outputText
-					value="#{ViewArticlesController.selectedArticle.marque.designation}" />
-				<h:outputText value="" />
-				<h:outputText value="Code : " />
-				<h:outputText
-					value="#{ViewArticlesController.selectedArticle.item.code}" />
-				<h:outputText value="" />
-				<h:outputText value="Designation : " />
-				<h:outputText
-					value="#{ViewArticlesController.selectedArticle.item.designation}" />
-				<h:outputText value="" />
-				<h:outputText value="Stock : " />
-				<h:outputText
-					value="#{ViewArticlesController.selectedArticle.stockTotal}" />
-				<p:commandButton icon="ui-icon-pencil"
-					title="modifier Prix de vente" type="button"
-					onclick="PF('editPrixVente').show();" />
-				<h:outputText value="Prix de vente : " />
-				<h:outputText
-					value="#{ViewArticlesController.selectedArticle.prixvente} DT" />
-
-				<p:commandButton icon="ui-icon-pencil" title="modifier Prix minimal"
-					type="button" onclick="PF('editPrixMini').show();" />
-				<h:outputText value="Prix Minimal : " />
-
-				<h:outputText
-					value="#{ViewArticlesController.selectedArticle.prixmini} DT" />
+					<h:outputText value="" />
+					<h:outputText value="Marque : " />
+					<h:outputText
+						value="#{ViewArticlesController.selectedArticle.marque.designation}" />
+					<h:outputText value="" />
+					<h:outputText value="Code : " />
+					<h:outputText
+						value="#{ViewArticlesController.selectedArticle.item.code}" />
+					<h:outputText value="" />
+					<h:outputText value="Designation : " />
+					<h:outputText
+						value="#{ViewArticlesController.selectedArticle.item.designation}" />
 
 
-				<p:commandButton icon="ui-icon-pencil" title="modifier position"
-					type="button" onclick="PF('editPosition').show();" />
-				<h:outputText value="Position : " />
-				<h:outputText
-					value="#{ViewArticlesController.selectedArticle.position} " />
+					<h:outputText value="" />
+					<h:outputText value="Stock Declarer: " />
+					<h:outputText
+						value="#{MvtStockBean.getStockDeclarer(ViewArticlesController.selectedArticle)}" />
 
-			</h:panelGrid>
+					<h:outputText value="" />
+					<h:outputText value="Stock Non Declarer: " />
+					<h:outputText
+						value="#{MvtStockBean.getStockBlack(ViewArticlesController.selectedArticle)}" />
 
+					<h:outputText value="" />
+					<h:outputText value="Stock en suspens: " />
+					<h:outputText
+						value="#{MvtStockBean.getStockSuspense(ViewArticlesController.selectedArticle)}" />
+
+					<h:outputText value="" />
+					<h:outputText value="Stock Total: " />
+					<h:outputText
+						value="#{MvtStockBean.getStockTotal(ViewArticlesController.selectedArticle)}" />
+					<p:commandButton icon="ui-icon-pencil"
+						title="modifier Prix de vente" type="button"
+						onclick="PF('editPrixVente').show();" />
+					<h:outputText value="Prix de vente : " />
+					<h:outputText
+						value="#{ViewArticlesController.selectedArticle.prixvente} DT" />
+
+					<p:commandButton icon="ui-icon-pencil"
+						title="modifier Prix minimal" type="button"
+						onclick="PF('editPrixMini').show();" />
+					<h:outputText value="Prix Minimal : " />
+
+					<h:outputText
+						value="#{ViewArticlesController.selectedArticle.prixmini} DT" />
+
+
+					<p:commandButton icon="ui-icon-pencil" title="modifier position"
+						type="button" onclick="PF('editPosition').show();" />
+					<h:outputText value="Position : " />
+					<h:outputText
+						value="#{ViewArticlesController.selectedArticle.position} " />
+
+				</h:panelGrid>
+			</h:form>
 		</p:dialog>
 
 		<p:dialog header="Modifier Prix de Vente" id="editPrixVente"

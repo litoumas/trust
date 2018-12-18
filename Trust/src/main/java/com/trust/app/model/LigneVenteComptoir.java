@@ -8,10 +8,10 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "LIGNELIVRAISON")
-@ManagedBean(name = "LigneLivraison")
+@Table(name = "LIGNEVENTECOMPTOIR")
+@ManagedBean(name = "LigneVenteComptoir")
 @Data
-public class LigneLivraison extends MvtStock {
+public class LigneVenteComptoir extends MvtStock {
 
 	@Column(name = "prix_ttc")
 	float prix_ttc;
