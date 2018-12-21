@@ -9,4 +9,5 @@ public interface ExerciceDAO {
     public List<Exercice> listExercices();
     public void deleteExercice(Exercice Exercice);
     public void updateExercice(Exercice Exercice);
+	public Exercice getLastOne();
 }

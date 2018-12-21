@@ -11,4 +11,5 @@ public interface ExerciceService {
     public void deleteExercice(Exercice c);
     public void updateExercice(Exercice c);
     public void testLog();
+	public Exercice getLastOne();
 }

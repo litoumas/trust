@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import com.trust.app.model.LigneVenteComptoir;
 import com.trust.app.model.User;
+import com.trust.app.model.VenteComptoir;
 
 /**
  * LigneVenteComptoir data access object interface implementation
@@ -83,6 +84,7 @@ public class LigneVenteComptoirDAOImpl implements LigneVenteComptoirDAO{
 	
 	
 	}
+
 
 	
 	

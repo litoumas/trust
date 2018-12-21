@@ -24,16 +24,15 @@ import lombok.Data;
 @Table(name = "BonReception")
 @ManagedBean(name = "BonReception")
 @Data
-public class BonReception implements Document {
+public class BonReception implements Document  {
 
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-
+	
 	@Column(name = "numero")
 	private String numero;
-	
 	
 	@Column(name = "numero_bl")
 	private String numero_bl;
@@ -50,8 +49,8 @@ public class BonReception implements Document {
 	@Column(name = "isblack")
 	boolean black;
 
-	@OneToMany(fetch=FetchType.EAGER) 
-	@JoinColumn(name = "Document_id")
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "BonReception_id")
 	private List<LigneReception> ligneReceptions;
 	
 	

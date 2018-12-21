@@ -77,19 +77,26 @@
 
 
 					<h:outputText value="" />
-					<h:outputText value="Stock Declarer: " />
+					<h:outputText value="Stock Declarer: "
+						rendered="#{SecurityManager.hasPermissionToSeeBlack}" />
 					<h:outputText
-						value="#{MvtStockBean.getStockDeclarer(ViewArticlesController.selectedArticle)}" />
+						value="#{MvtStockBean.getStockDeclarer(ViewArticlesController.selectedArticle)}"
+						rendered="#{SecurityManager.hasPermissionToSeeBlack}" />
+
+					<h:outputText value=""
+						rendered="#{SecurityManager.hasPermissionToSeeBlack}" />
+					<h:outputText value="Stock Non Declarer: "
+						rendered="#{SecurityManager.hasPermissionToSeeBlack}" />
+					<h:outputText
+						value="#{MvtStockBean.getStockBlack(ViewArticlesController.selectedArticle)}"
+						rendered="#{SecurityManager.hasPermissionToSeeBlack}" />
 
 					<h:outputText value="" />
-					<h:outputText value="Stock Non Declarer: " />
+					<h:outputText value="Stock en suspens: "
+						rendered="#{SecurityManager.hasPermissionToSeeBlack}" />
 					<h:outputText
-						value="#{MvtStockBean.getStockBlack(ViewArticlesController.selectedArticle)}" />
-
-					<h:outputText value="" />
-					<h:outputText value="Stock en suspens: " />
-					<h:outputText
-						value="#{MvtStockBean.getStockSuspense(ViewArticlesController.selectedArticle)}" />
+						value="#{MvtStockBean.getStockSuspense(ViewArticlesController.selectedArticle)}"
+						rendered="#{SecurityManager.hasPermissionToSeeBlack}" />
 
 					<h:outputText value="" />
 					<h:outputText value="Stock Total: " />
@@ -101,6 +108,15 @@
 					<h:outputText value="Prix de vente : " />
 					<h:outputText
 						value="#{ViewArticlesController.selectedArticle.prixvente} DT" />
+
+					<p:commandButton icon="ui-icon-pencil"
+						title="modifier Prix de vente Declarer" type="button"
+						onclick="PF('editPrixVenteDeclarer').show();" />
+					<h:outputText value="Prix de vente Declarer: " />
+					<h:outputText
+						value="#{ViewArticlesController.selectedArticle.prixVenteDeclare} DT" />
+
+
 
 					<p:commandButton icon="ui-icon-pencil"
 						title="modifier Prix minimal" type="button"
@@ -134,6 +150,26 @@
 					actionListener="#{ViewArticlesController.editprixvente}" />
 			</h:form>
 		</p:dialog>
+
+		<p:dialog header="Modifier Prix de Vente Declarer"
+			id="editPrixVenteDeclarer" widgetVar="editPrixVenteDeclarer">
+			<h:form>
+				<p:inputNumber id="prix_vente"
+					value="#{ViewArticlesController.prixVenteDeclare}"
+					label="Prix vente" symbol=" DT" symbolPosition="s"
+					emptyValue="sign" minValue="000.000"></p:inputNumber>
+				<p:commandButton value="Valider" id="ajax"
+					update="detail_article,tab_listeArticle"
+					onclick="PF('editPrixVenteDeclarer').hide();"
+					actionListener="#{ViewArticlesController.editprixventeDeclarer}" />
+			</h:form>
+		</p:dialog>
+
+
+
+
+
+
 		<p:dialog header="Modifier Prix Minimal" id="editPrixMini"
 			widgetVar="editPrixMini">
 			<h:form>

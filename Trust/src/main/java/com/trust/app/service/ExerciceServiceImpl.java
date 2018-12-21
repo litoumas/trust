@@ -57,4 +57,11 @@ public class ExerciceServiceImpl implements ExerciceService,Serializable{
 		
 	}
 
+	@Override
+	@Transactional
+	public Exercice getLastOne() {
+		// TODO Auto-generated method stub
+		return this.ExerciceDAO.getLastOne();
+	}
+
 }

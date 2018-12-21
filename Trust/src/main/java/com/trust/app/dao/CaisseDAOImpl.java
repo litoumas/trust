@@ -90,12 +90,6 @@ public class CaisseDAOImpl implements CaisseDAO {
 				logger.info("Caisse List::" + u);
 			}
 			session.close();
-			System.out.println("=============NUL===========");
-			System.out.println("=============NUL===========");
-			System.out.println("=============NUL===========");
-			System.out.println("CaissesList.size()="+CaissesList.size());
-			System.out.println("=============NUL===========");
-			System.out.println("=============NUL===========");
 			if (CaissesList.size() == 0)
 				return null;
 

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.trust.app.model.LigneVenteComptoir;
 import com.trust.app.model.User;
+import com.trust.app.model.VenteComptoir;
 /**
  * LigneVenteComptoir data access object interface
  * */
@@ -16,6 +17,7 @@ public interface LigneVenteComptoirDAO {
 	public void deleteLigneVenteComptoir(LigneVenteComptoir u);
 
 	public void updateLigneVenteComptoir(LigneVenteComptoir u);
+
 
 
 

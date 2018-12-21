@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.trust.app.model.VenteComptoir;
+import com.trust.app.model.LigneVenteComptoir;
 import com.trust.app.model.User;
 
 /**
@@ -83,6 +84,7 @@ public class VenteComptoirDAOImpl implements VenteComptoirDAO{
 	
 	
 	}
+
 
 	
 	

@@ -8,6 +8,8 @@ import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
+
+import com.trust.app.model.Caisse;
 import com.trust.app.model.Exercice;
 
 
@@ -71,6 +73,26 @@ public class ExerciceDAOImpl implements ExerciceDAO{
 		catch(HibernateException e)
 		{
 			logger.error("Hibernate exception: "+e.getMessage());
+		}
+	}
+	@Override
+	public Exercice getLastOne() {
+
+		try {
+			Session session = this.sessionFactory.openSession();
+
+			List<Exercice> exerciceList = session.createQuery("from Exercice").list();
+			for (Exercice u : exerciceList) {
+				logger.info("Exercice List::" + u);
+			}
+			session.close();
+			if (exerciceList.size() == 0)
+				return null;
+
+			return exerciceList.get(exerciceList.size() - 1);
+		} catch (HibernateException e) {
+			logger.error("Hibernate exception: " + e.getMessage());
+			return null;
 		}
 	}
 

@@ -2,6 +2,9 @@ package com.trust.app.controllers;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -15,9 +18,11 @@ import com.trust.app.manager.PathManager;
 import com.trust.app.manager.RedirectManager;
 import com.trust.app.model.Client;
 import com.trust.app.model.Droit;
+import com.trust.app.model.Exercice;
 import com.trust.app.model.Parametre;
 import com.trust.app.service.ClientService;
 import com.trust.app.service.DroitService;
+import com.trust.app.service.ExerciceService;
 import com.trust.app.service.ParametreService;
 import com.trust.app.service.UserService;
 
@@ -55,8 +60,15 @@ public class StarterController implements Serializable{
 	@ManagedProperty("#{clientService}")
 	private ClientService clientService;
 	
+	@Getter
+	@Setter
+	@ManagedProperty("#{exerciceService}")
+	private ExerciceService exerciceService;
+	
+	
 
 	/**
+	 * @throws ParseException 
 	 * @PostConstruct public void init() {
 	 *                System.out.println("=========================================================");
 	 *                System.out.println("=========================================================");
@@ -74,7 +86,7 @@ public class StarterController implements Serializable{
 	 *                }
 	 **/
 
-	public String getControleall() { // verifie si tout les parametre sont disponible dans la BD si elle ne le sont
+	public String getControleall() throws ParseException { // verifie si tout les parametre sont disponible dans la BD si elle ne le sont
 										// pas elle rederige l'utilisateur vere la page de parametrage
 
 	
@@ -222,6 +234,19 @@ public class StarterController implements Serializable{
 			parametreService.addParametre(parametre);
 		}
 		
+		
+		
+		if(exerciceService.listExercices().size()==0)
+		{
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+			String date1 = "01/01/2019";
+			Exercice exercice=new Exercice();
+			Date  date = simpleDateFormat.parse(date1);
+			
+			exercice.setDate_debut(date);
+			exerciceService.addExercice(exercice);
+			
+		}
 		
 		
 		return null;

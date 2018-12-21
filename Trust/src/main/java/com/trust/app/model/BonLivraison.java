@@ -45,8 +45,8 @@ public class BonLivraison {
 	@Column(name = "isblack")
 	boolean black;
 
-	@OneToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name = "Document_id")
+	@OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+	@JoinColumn(name = "BonLivraison_id")
 	private List<LigneLivraison> ligneLivraisons;
 
 	public void addLigne(LigneLivraison ligneLivraison) {

@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.trust.app.dao.LigneVenteComptoirDAO;
 import com.trust.app.model.LigneVenteComptoir;
+import com.trust.app.model.VenteComptoir;
 
 @Service
 @ManagedBean(name = "ligneVenteComptoirService")

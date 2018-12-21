@@ -32,6 +32,10 @@ public class ViewArticlesController {
 	
 	@Getter
 	@Setter
+	float prixVenteDeclare;
+	
+	@Getter
+	@Setter
 	float prixMini;
 	
 	@Getter
@@ -48,8 +52,11 @@ public class ViewArticlesController {
 		articleService.updateArticle(selectedArticle);
 	}
 	public void editPosition() {
-		System.out.println("position="+position);
 		selectedArticle.setPosition(position);
+		articleService.updateArticle(selectedArticle);
+	}
+	public void editprixventeDeclarer() {
+		selectedArticle.setPrixVenteDeclare(prixVenteDeclare);
 		articleService.updateArticle(selectedArticle);
 	}
 	

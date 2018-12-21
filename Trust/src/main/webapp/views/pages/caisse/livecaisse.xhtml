@@ -19,33 +19,54 @@
 #{CaisseBean.getThereIsOpened()}"
 
 	<p:layout fullPage="true">
-<p:growl id="growl" showDetail="true" sticky="true" life="3000" />  
+		<p:growl id="growl" showDetail="true" sticky="true" life="3000" />
 
-		<p:layoutUnit position="south" size="200" header="Bottom"
+		<p:layoutUnit position="south" size="220" header="Bottom"
 			resizable="true" collapsible="true">
-			<h:panelGrid columns="2" id="recap">
-				<h:outputText value="Total Brut:" />
-				<h:outputText
-					value="#{LiveCaisseController.venteComptoir.totalPrixBrute} DT" />
-				<h:outputText value="Remise :" />
-				<h:outputText
-					value="#{LiveCaisseController.venteComptoir.totalRemise} DT" />
-				<h:outputText value="" />
-				<h:outputText value="--------------" />
-				<h:outputText value="Total :" />
-				<h:outputText
-					value="#{LiveCaisseController.venteComptoir.totalPrixTTC} DT" />
-
-				<h:outputText value=" Gain :" />
-				<h:outputText
-					value="#{LiveCaisseController.venteComptoir.totalGain} DT" />
-
-				<h:outputText value=" Prix mini :" />
-				<h:outputText
-					value="#{LiveCaisseController.venteComptoir.totalPrixMini} DT" />
 
 
-			</h:panelGrid>
+			<p:layout style="min-width:400px;min-height:200px;">
+				<p:layoutUnit position="west" resizable="true" header="Recap"
+					collapsible="true" size="200" minSize="40" maxSize="200">
+					<h:panelGrid columns="2" id="recap">
+						<h:outputText value="Total Brut:" />
+						<h:outputText
+							value="#{LiveCaisseController.venteComptoir.totalPrixBrute} DT" />
+						<h:outputText value="Remise :" />
+						<h:outputText
+							value="#{LiveCaisseController.venteComptoir.totalRemise} DT" />
+						<h:outputText value="" />
+						<h:outputText value="--------------" />
+						<h:outputText value="Total :" />
+						<h:outputText
+							value="#{LiveCaisseController.venteComptoir.totalPrixTTC} DT" />
+
+						<h:outputText value=" Prix mini :" />
+						<h:outputText
+							value="#{LiveCaisseController.venteComptoir.totalPrixMini} DT" />
+
+						<h:outputText value=" Gain :" />
+						<h:outputText
+							value="#{LiveCaisseController.venteComptoir.totalGain} DT" />
+
+
+					</h:panelGrid>
+				</p:layoutUnit>
+
+				<p:layoutUnit position="center">
+					<h:outputText value=" Gain :" />
+				</p:layoutUnit>
+
+				<p:layoutUnit position="east" size="200" resizable="true">
+					<h:form>
+						<p:commandButton value="Clôturer  la caisse" id="ajax"
+							style="margin-right:20px;" styleClass="ui-priority-primary"
+							actionListener="#{CloseCaisseController.prepereColse}"
+							update="form_WindowsCloture" onclick="PF('WindowsCloture').show();" />
+					</h:form>
+				</p:layoutUnit>
+			</p:layout>
+
 		</p:layoutUnit>
 
 		<p:layoutUnit header="Panier" position="west" size="800"
@@ -67,9 +88,9 @@
 
 					<h:outputText value="Remise :" />
 					<p:inputNumber id="Remise"
-						value="#{LiveCaisseController.venteComptoir.remise}" label="Remise"
-						symbol="%" symbolPosition="s" emptyValue="sign" minValue="00.000"
-						maxValue="100">
+						value="#{LiveCaisseController.venteComptoir.remise}"
+						label="Remise" symbol="%" symbolPosition="s" emptyValue="sign"
+						minValue="00.000" maxValue="100">
 						<p:ajax event="keyup"
 							update="total,listeLigneVente,recap,FormValider" />
 					</p:inputNumber>
@@ -87,13 +108,14 @@
 					<p:commandButton value="Valider"
 						onclick="PF('WindowsValider').show();" />
 					<p:commandButton value="Remise à zéro" id="zero"
-						actionListener="#{LiveCaisseController.reset}" update="panier,recap,FormValider">
-						<p:confirm header="Confirmation" message="vous êtes sûre ?"
-							/>
+						actionListener="#{LiveCaisseController.reset}"
+						update="panier,recap,FormValider">
+						<p:confirm header="Confirmation" message="vous êtes sûre ?" />
 					</p:commandButton>
 					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
 						<p:commandButton value="Oui" type="button"
-							styleClass="ui-confirmdialog-yes" update="panier,recap,FormValider"/>
+							styleClass="ui-confirmdialog-yes"
+							update="panier,recap,FormValider" />
 						<p:commandButton value="Non" type="button"
 							styleClass="ui-confirmdialog-no" />
 					</p:confirmDialog>
@@ -146,8 +168,7 @@
 				<p:dataTable var="article" value="#{ArticleBean.listArticles}"
 					selectionMode="single"
 					selection="#{LiveCaisseController.selectedArticle}"
-					rowKey="#{article.id}"
-					reflow="true" rows="20">
+					rowKey="#{article.id}" reflow="true" rows="20">
 
 
 					<p:column headerText="Marque"
@@ -281,7 +302,9 @@
 
 
 
-				<p:commandButton value="Valider" id="B_valider" actionListener="#{LiveCaisseController.submit}" update="growl,panier,recap,FormValider,"/>
+				<p:commandButton value="Valider" id="B_valider"
+					actionListener="#{LiveCaisseController.submit}"
+					update="growl,panier,recap,FormValider," onclick="PF('WindowsValider').hide();" />
 			</h:panelGrid>
 
 
@@ -315,6 +338,92 @@
 
 		</h:form>
 
+
+	</p:dialog>
+
+
+
+	<p:dialog header="Clôturer  la caisse" widgetVar="WindowsCloture"
+		modal="true" width="1000">
+		<h:form id="form_WindowsCloture">
+			<h:panelGrid columns="2">
+				<h:outputText value="Argent de deptart :" />
+				<h:outputText value="000.000 DT" />
+				<h:outputText value="Argent de cloture :" />
+				<h:outputText value="000.000 DT" />
+			</h:panelGrid>
+			<p:panel id="basic" header="Liste Article en suspens"
+				style="margin-bottom:20px">
+
+				<p:dataTable id="tab_WindowsCloture" var="ligneCloseCaisse"
+					value="#{CloseCaisseController.listeLigneCloseCaisses}"
+					editable="true" editMode="cell" >
+
+					<p:ajax event="cellEdit"
+						listener="#{CloseCaisseController.onCellEdit}" />
+					<p:column headerText="Marque" width="100">
+						<h:outputText
+							value="#{ligneCloseCaisse.ligneVenteComptoir.article.marque.designation}" />
+					</p:column>
+
+					<p:column headerText="Code" width="70">
+						<h:outputText
+							value="#{ligneCloseCaisse.ligneVenteComptoir.article.item.code}" />
+					</p:column>
+
+					<p:column headerText="Designation">
+						<h:outputText
+							value="#{ligneCloseCaisse.ligneVenteComptoir.article.item.designation}" />
+					</p:column>
+
+					<p:column headerText="prix" width="60">
+						<h:outputText
+							value="#{ligneCloseCaisse.ligneVenteComptoir.prix_ttc}" />
+					</p:column>
+
+					<p:column headerText="Qte T" width="60">
+						<h:outputText value="#{ligneCloseCaisse.ligneVenteComptoir.qte}" />
+					</p:column>
+					<p:column headerText="Stock D" width="60">
+						<h:outputText
+							value="#{MvtStockBean.getStockDeclarer(ligneCloseCaisse.ligneVenteComptoir.article)}" />
+					</p:column>
+					<p:column headerText="Stock N" width="60">
+						<h:outputText
+							value="#{MvtStockBean.getStockBlack(ligneCloseCaisse.ligneVenteComptoir.article)}" />
+					</p:column>
+					<p:column headerText="Qte D" width="60">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{ligneCloseCaisse.qteDeclarer}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{ligneCloseCaisse.qteDeclarer}"
+									style="width:96%" label="Year" >
+									<p:ajax event="blur"
+									update="tab_WindowsCloture" />
+									</p:inputText>
+							</f:facet>
+						</p:cellEditor>
+
+					</p:column>
+					<p:column  headerText="Qte N" width="60">
+					
+						<h:outputText  value="#{ligneCloseCaisse.qteNoir}" />
+					</p:column>
+
+
+				</p:dataTable>
+				
+				<p:commandButton value="Clôturer  la caisse" id="ajax"
+					style="margin-right:20px;" styleClass="ui-priority-primary"
+					actionListener="#{CloseCaisseController.submit}"
+					update="form_WindowsCloture" onclick="PF('WindowsCloture').hide();" />
+
+
+			</p:panel>
+
+		</h:form>
 
 	</p:dialog>
 

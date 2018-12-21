@@ -212,7 +212,7 @@ public class LiveCaisseController {
 				
 				
 						
-				ligneVenteComptoirService.addLigneVenteComptoir(lbl);
+			//	ligneVenteComptoirService.addLigneVenteComptoir(lbl);
 			}
 
 			
@@ -222,6 +222,7 @@ public class LiveCaisseController {
 			
 			Caisse caisse=caisseService.getLastOne();
 			caisse.addVente(venteComptoir);
+			caisse.setArgentCloture(caisse.getArgentCloture()+venteComptoir.getTotal_ttc());
 			caisseService.updateCaisse(caisse);
 			
 			reset();
@@ -232,7 +233,8 @@ public class LiveCaisseController {
 		}
 
 	}
-
+	
+	
 	public double getMonnaie() {
 
 		return arrondir(argent - venteComptoir.getTotalPrixTTC());

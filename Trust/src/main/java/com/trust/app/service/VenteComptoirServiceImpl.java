@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.trust.app.dao.VenteComptoirDAO;
+import com.trust.app.model.LigneVenteComptoir;
 import com.trust.app.model.VenteComptoir;
 
 @Service
@@ -48,6 +49,7 @@ public class VenteComptoirServiceImpl implements VenteComptoirService {
 		this.venteComptoirDAO.updateVenteComptoir(u);
 
 	}
+
 
 
 }
