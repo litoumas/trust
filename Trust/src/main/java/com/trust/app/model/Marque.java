@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name="Maque")
+@Table(name="MARQUE")
 @ManagedBean(name="Maque")
 @Data
 public class Marque {

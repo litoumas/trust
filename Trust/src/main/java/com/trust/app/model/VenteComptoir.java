@@ -23,34 +23,21 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "VenteComptoir")
+@Table(name = "VENTECOMPTOIR")
 @ManagedBean(name = "venteComptoir")
 @Data
-public class VenteComptoir implements Document {
+public class VenteComptoir  extends Facture {
 
 
-	@Id
-	@Column(name = "id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
-	
-	@Column(name = "datefacture")
-	Date heur;
-
-	@Column(name = "total_ttc")
-	float total_ttc;
-
-	@Column(name = "Payee")
-	boolean Payee;
-
-	@Column(name = "note")
-	String note;
 
 	@OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
 	@JoinColumn(name = "VenteComptoir_id")
 	private List<LigneVenteComptoir> listeligneVenteComptoir;
 
 	public void addLigne(LigneVenteComptoir ligneVenteComptoir) {
+		if(listeligneVenteComptoir==null)
+			listeligneVenteComptoir= new ArrayList<LigneVenteComptoir>();
+			
 		listeligneVenteComptoir.add(ligneVenteComptoir);
 	}
 

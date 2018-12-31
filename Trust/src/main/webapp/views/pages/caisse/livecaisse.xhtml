@@ -164,8 +164,8 @@
 		<p:layoutUnit header="Liste Article" position="center"
 			collapsible="true">
 
-			<h:form>
-				<p:dataTable var="article" value="#{ArticleBean.listArticles}"
+			<h:form id="tabListeArticle">
+				<p:dataTable  var="article" value="#{ArticleBean.listArticles}"
 					selectionMode="single"
 					selection="#{LiveCaisseController.selectedArticle}"
 					rowKey="#{article.id}" reflow="true" rows="20">
@@ -304,7 +304,7 @@
 
 				<p:commandButton value="Valider" id="B_valider"
 					actionListener="#{LiveCaisseController.submit}"
-					update="growl,panier,recap,FormValider," onclick="PF('WindowsValider').hide();" />
+					update="growl,panier,recap,FormValider,tabListeArticle" onclick="PF('WindowsValider').hide();" />
 			</h:panelGrid>
 
 

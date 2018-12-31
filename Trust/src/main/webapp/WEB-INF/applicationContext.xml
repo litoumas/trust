@@ -52,6 +52,8 @@
 				<beans:value>com.trust.app.model.Exercice</beans:value>
 				<beans:value>com.trust.app.model.FactureAchat
 				</beans:value>
+				<beans:value>com.trust.app.model.FactureVente
+				</beans:value>
 				<beans:value>com.trust.app.model.Fournisseur</beans:value>
 				<beans:value>com.trust.app.model.Item</beans:value>
 				<beans:value>com.trust.app.model.LigneReception</beans:value>
@@ -63,7 +65,7 @@
 
 				<beans:value>com.trust.app.model.Tracteur</beans:value>
 				<beans:value>com.trust.app.model.User</beans:value>
-
+				<beans:value>com.trust.app.model.GrandLivre</beans:value>
 				<beans:value>com.trust.app.model.LigneVenteComptoir</beans:value>
 				<beans:value>com.trust.app.model.VenteComptoir</beans:value>
 
@@ -91,6 +93,22 @@
 		class="com.trust.app.service.ArticleServiceImpl">
 		<beans:property name="articleDAO" ref="articleDAO"></beans:property>
 	</beans:bean>
+	
+	
+	<beans:bean id="grandLivreDAO"
+		class="com.trust.app.dao.GrandLivreDAOImpl">
+		<beans:property name="sessionFactory"
+			ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+	<beans:bean id="grandLivreService"
+		class="com.trust.app.service.GrandLivreServiceImpl">
+		<beans:property name="grandLivreDAO" ref="grandLivreDAO"></beans:property>
+	</beans:bean>
+	
+	
+	
+	
+	
 	<beans:bean id="clientDAO"
 		class="com.trust.app.dao.ClientDAOImpl">
 		<beans:property name="sessionFactory"
@@ -210,6 +228,18 @@
 		class="com.trust.app.service.FactureAchatServiceImpl">
 		<beans:property name="factureAchatDAO"
 			ref="factureAchatDAO"></beans:property>
+	</beans:bean>
+	
+	
+		<beans:bean id="factureVenteDAO"
+		class="com.trust.app.dao.FactureVenteDAOImpl">
+		<beans:property name="sessionFactory"
+			ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+	<beans:bean id="factureVenteService"
+		class="com.trust.app.service.FactureVenteServiceImpl">
+		<beans:property name="factureVenteDAO"
+			ref="factureVenteDAO"></beans:property>
 	</beans:bean>
 
 

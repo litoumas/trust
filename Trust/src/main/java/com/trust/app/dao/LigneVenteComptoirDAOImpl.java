@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import com.trust.app.model.BonReception;
 import com.trust.app.model.LigneVenteComptoir;
 import com.trust.app.model.User;
 import com.trust.app.model.VenteComptoir;
@@ -83,6 +84,33 @@ public class LigneVenteComptoirDAOImpl implements LigneVenteComptoirDAO{
 		}
 	
 	
+	}
+
+	@Override
+	public VenteComptoir getVenteComptoirOf(LigneVenteComptoir ligneVenteComptoir) {
+
+		
+		
+		
+		try {
+			Session session = this.sessionFactory.openSession();
+			String Query = "select VenteComptoir from LigneVenteComptoir where id="+ligneVenteComptoir.getId();
+			List<VenteComptoir> listventeComptoir =session.createQuery(Query).list();
+			
+			System.out.println("============================================");
+			System.out.println("============================================");
+			System.out.println(listventeComptoir.size());
+			System.out.println("============================================");
+			System.out.println("============================================");
+			session.close();
+			
+			
+		}
+		catch(HibernateException e)
+		{
+			logger.error("Hibernate exception: "+e.getMessage());
+		}
+		return null;
 	}
 
 

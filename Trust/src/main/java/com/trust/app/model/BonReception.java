@@ -21,7 +21,7 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "BonReception")
+@Table(name = "BONRECEPTION")
 @ManagedBean(name = "BonReception")
 @Data
 public class BonReception implements Document  {

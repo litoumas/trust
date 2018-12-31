@@ -1,6 +1,7 @@
 package com.trust.app.controllers;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -10,8 +11,10 @@ import javax.faces.context.FacesContext;
 
 import com.trust.app.model.FactureAchat;
 import com.trust.app.model.Fournisseur;
+import com.trust.app.model.GrandLivre;
 import com.trust.app.service.BonReceptionService;
 import com.trust.app.service.FactureAchatService;
+import com.trust.app.service.GrandLivreService;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -33,6 +36,13 @@ public class NewFactureFournisseurController implements Serializable {
 	@Setter
 	@ManagedProperty("#{bonReceptionService}")
 	private BonReceptionService bonReceptionService;
+	
+	
+	@Getter
+	@Setter
+	@ManagedProperty("#{grandLivreService}")
+	private GrandLivreService grandLivreService;
+	
 
 	@Getter
 	@Setter
@@ -44,10 +54,19 @@ public class NewFactureFournisseurController implements Serializable {
 
 	public void submit() {
 
-		factureAchat.setFournisseur(selectedFournisseur);
+		factureAchat.setContact(selectedFournisseur);
 
 		factureAchatService.addFactureAchat(factureAchat);
 
+		
+		GrandLivre grandLivre=new GrandLivre();
+		grandLivre.setBlack(factureAchat.isBlack());
+		grandLivre.setFacture(factureAchat);
+		grandLivre.setMontant(factureAchat.getTotal_ttc());
+		grandLivre.setSens(2);
+		grandLivre.setDate(new Date());
+		grandLivreService.addGrandLivre(grandLivre);
+		
 		selectedFournisseur = new Fournisseur();
 		factureAchat = new FactureAchat();
 

@@ -16,7 +16,6 @@ import org.primefaces.event.UnselectEvent;
 
 import com.trust.app.model.Article;
 import com.trust.app.model.Caisse;
-import com.trust.app.model.LigneLivraison;
 import com.trust.app.model.LigneVenteComptoir;
 import com.trust.app.model.VenteComptoir;
 import com.trust.app.service.ArticleService;
@@ -28,8 +27,6 @@ import com.trust.app.service.VenteComptoirService;
 
 import lombok.Getter;
 import lombok.Setter;
-
-
 
 @ManagedBean(name = "LiveCaisseController")
 @SessionScoped
@@ -61,12 +58,12 @@ public class LiveCaisseController {
 	@Setter
 	@ManagedProperty("#{mvtStockService}")
 	private MvtStockService mvtStockService;
-	
+
 	@Getter
 	@Setter
 	@ManagedProperty("#{venteComptoirService}")
 	private VenteComptoirService venteComptoirService;
-	
+
 	@Getter
 	@Setter
 	@ManagedProperty("#{ligneVenteComptoirService}")
@@ -76,8 +73,6 @@ public class LiveCaisseController {
 	@Setter
 	@ManagedProperty("#{caisseService}")
 	private CaisseService caisseService;
-	
-	
 
 	@Getter
 	@Setter
@@ -86,7 +81,7 @@ public class LiveCaisseController {
 	@Getter
 	@Setter
 	double argent;
-	
+
 	SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
 	public void onRowSelectArticle(SelectEvent event) {
@@ -102,7 +97,7 @@ public class LiveCaisseController {
 
 	public void onRowSelectLignevente(SelectEvent event) {
 
-		if ((LigneLivraison) event.getObject() != null) {
+		if ((LigneVenteComptoir) event.getObject() != null) {
 			this.selectedArticle = selectedLigneVente.getArticle();
 
 		}
@@ -112,7 +107,7 @@ public class LiveCaisseController {
 
 	}
 
-	public void addLigneToPanier(LigneLivraison ligneVente) {
+	public void addLigneToPanier(LigneVenteComptoir ligneVente) {
 		addLigneToPanier(ligneVente.getArticle());
 	}
 
@@ -156,7 +151,7 @@ public class LiveCaisseController {
 		qteToAdd = 1;
 	}
 
-	public void removeLigneFromPanier(LigneLivraison ligneVente) {
+	public void removeLigneFromPanier(LigneVenteComptoir ligneVente) {
 		removeLigneFromPanier(ligneVente.getArticle());
 	}
 
@@ -188,7 +183,7 @@ public class LiveCaisseController {
 
 		if (venteComptoir.getListeligneVenteComptoir() != null) {
 
-			//venteComptoir.setClient(clientService.getClientPassager());
+			// venteComptoir.setClient(clientService.getClientPassager());
 
 			Iterator<LigneVenteComptoir> iterator = venteComptoir.getListeligneVenteComptoir().iterator();
 			while (iterator.hasNext()) {
@@ -197,44 +192,44 @@ public class LiveCaisseController {
 				boolean isblack = false;
 				double stock_D = mvtStockService.getStockDeclarer(lbl.getArticle());
 				double stock_B = mvtStockService.getStockBlack(lbl.getArticle());
-				if (stock_D == 0) {
+				if (stock_D <= 0) {
 					valider = true;
 					isblack = true;
-				}else if ((stock_B==0)&&((stock_D-lbl.getQte())>=0)) {
-					valider = true;
-					isblack = false;
+				} else {
+							
+					if ((stock_B == 0) && ((stock_D - lbl.getQte()) >= 0)) {
+						valider = true;
+						isblack = false;
+					}
+
 				}
-				
+
 				lbl.setBlack(isblack);
 				lbl.setValider(valider);
 				lbl.setSens(2);
 				lbl.setDate(new Date());
-				
-				
-						
-			//	ligneVenteComptoirService.addLigneVenteComptoir(lbl);
-			}
 
-			
+			}
 			venteComptoir.setPayee(true);
-			venteComptoir.setHeur(new Date());
+			venteComptoir.setDate(new Date());
 			venteComptoirService.addVenteComptoir(venteComptoir);
-			
-			Caisse caisse=caisseService.getLastOne();
+
+			Caisse caisse = caisseService.getLastOne();
 			caisse.addVente(venteComptoir);
-			caisse.setArgentCloture(caisse.getArgentCloture()+venteComptoir.getTotal_ttc());
+			caisse.setArgentCloture(caisse.getArgentCloture() + venteComptoir.getTotal_ttc());
 			caisseService.updateCaisse(caisse);
-			
+
 			reset();
-		} else {
+		} else
+
+		{
 			FacesContext context = FacesContext.getCurrentInstance();
 
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur", "le panier est vide !"));
 		}
 
 	}
-	
-	
+
 	public double getMonnaie() {
 
 		return arrondir(argent - venteComptoir.getTotalPrixTTC());
@@ -244,6 +239,5 @@ public class LiveCaisseController {
 	private double arrondir(double d) {
 		return (double) ((double) ((int) (d * Math.pow(10, 3) + .5)) / Math.pow(10, 3));
 	}
-
 
 }

@@ -12,5 +12,6 @@ public interface LigneVenteComptoirService {
 	public List<LigneVenteComptoir> listLigneVenteComptoirs();
 	public void deleteLigneVenteComptoir(LigneVenteComptoir d);
 	public void updateLigneVenteComptoir(LigneVenteComptoir d);
+	public VenteComptoir getVenteComptoirOf(LigneVenteComptoir ligneVenteComptoirBlack);
 	
 }

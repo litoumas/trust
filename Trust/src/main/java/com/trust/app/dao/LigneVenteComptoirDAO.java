@@ -18,6 +18,8 @@ public interface LigneVenteComptoirDAO {
 
 	public void updateLigneVenteComptoir(LigneVenteComptoir u);
 
+	public VenteComptoir getVenteComptoirOf(LigneVenteComptoir ligneVenteComptoirBlack);
+
 
 
 

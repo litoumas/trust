@@ -19,5 +19,9 @@ public class LigneCloseCaisse {
 	@Getter
 	@Setter
 	float qteDeclarer;
+	
+	@Getter
+	@Setter
+	VenteComptoir venteComptoir;
 
 }

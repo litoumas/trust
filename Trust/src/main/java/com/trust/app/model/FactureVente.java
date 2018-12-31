@@ -18,40 +18,15 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name="factureVente")
+@Table(name="FACTUREVENTE")
 @ManagedBean(name="factureVente")
 @Data
-public class FactureVente {
-	@Id
-	@Column(name = "id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+public class FactureVente extends Facture{
 	
-	
-	@OneToOne
-	Client client;
-	
-	@Column(name="datefacture")
-	Date dateFacture;
 
-	@Column(name="isblack")
-	boolean black;
-	
-	@Column(name="timbre")
-	float timbre;
-	
-	@Column(name="total_ttc")
-	float total_ttc;
-	
-	@Column(name="Payee")
-	boolean Payee;
-
-	@Column(name="note")
-	String note;
-	
 	
 	@OneToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name = "Document_id")
+	@JoinColumn(name = "factureVente_id")
 	private List<LigneLivraison> ligneLivraisons;
 	
 	

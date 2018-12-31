@@ -50,5 +50,12 @@ public class LigneVenteComptoirServiceImpl implements LigneVenteComptoirService 
 
 	}
 
+	@Override
+	@Transactional
+	public VenteComptoir getVenteComptoirOf(LigneVenteComptoir ligneVenteComptoirBlack) {
+		// TODO Auto-generated method stub
+		return 	this.ligneVenteComptoirDAO.getVenteComptoirOf(ligneVenteComptoirBlack);
+	}
+
 
 }
