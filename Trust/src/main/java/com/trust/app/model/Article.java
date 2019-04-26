@@ -59,17 +59,4 @@ public class Article {
 	
 
 
-	public float getStockTotal() {
-		
-		return 0;
-	}
-
-	public float getStockDeclarer() {
-		return 0;
-	}
-
-	public float getStockNoir() {
-		return 0;
-	}
-
 }

@@ -38,4 +38,8 @@ public class ArticleBean implements Serializable{
 	
 	
 	
+	
+	
+	
+	
 }

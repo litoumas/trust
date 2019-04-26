@@ -87,6 +87,15 @@ public class CloseCaisseController {
 	}
 
 	public void submit() {
+		
+		
+
+		
+		
+		/**
+		 
+		 
+		 
 		Caisse caisse = caisseService.getLastOne();
 		listLigneVenteComptoirs = new ArrayList<LigneVenteComptoir>();
 		Iterator<LigneCloseCaisse> iterator = listeLigneCloseCaisses.iterator();
@@ -156,7 +165,7 @@ public class CloseCaisseController {
 			venteComptoirService.updateVenteComptoir(venteComptoirBlack);
 
 		}
-
+*/
 	}
 
 }
